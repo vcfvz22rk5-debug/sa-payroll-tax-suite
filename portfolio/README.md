@@ -161,11 +161,14 @@ and run the Python tests too.
 The site is pure static files, so GitHub Pages is the easiest way to put
 it online — free, no card, and every push updates the site.
 
-1. Push this repository to GitHub
-2. Repo → **Settings** → **Pages** → Source: **Deploy from a branch** →
-   `main` / **`/portfolio`** → Save
-3. It is live at
-   `https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/`
+It is already deployed:
+
+**https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/**
+
+The repository has a workflow, `.github/workflows/pages.yml`, that
+publishes this folder whenever anything in it changes. You can watch it
+under **Actions** in the repository, and re-run it from there if you
+ever need to.
 
 The full walkthrough, including a custom domain and how to host the
 payroll app, is in [`../DEPLOY.md`](../DEPLOY.md).
@@ -173,10 +176,6 @@ payroll app, is in [`../DEPLOY.md`](../DEPLOY.md).
 Because the site uses relative paths for everything, it also works from
 the root of a repository, from a sub-folder, or from any static host
 (Netlify, Cloudflare Pages, Vercel) without changing a line.
-
-> If you deploy the portfolio *inside* the tax-calculator repository, use
-> `https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/`
-> and set the Pages source to `/portfolio` — not the branch root.
 
 ---
 

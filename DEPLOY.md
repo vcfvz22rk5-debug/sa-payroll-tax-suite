@@ -20,18 +20,18 @@ the payroll app is a nice-to-have that you can add later.
 GitHub Pages serves static files straight from your repository. No build
 step, no server, nothing to maintain — every push updates the site.
 
-### Step 1 — make the repository
+### Step 1 — the repository
 
-On [github.com/new](https://github.com/new):
+Already done:
 
-- **Repository name:** `sa-salary-tax-calculator`
-- **Public** (it has to be public for the free Pages plan)
-- Do **not** tick "Add a README" — you already have one
-- Click **Create repository**
+```
+https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite
+```
 
-### Step 2 — push your code
+It is public (the free Pages plan needs that) and `main` is the default
+branch.
 
-In this folder:
+### Step 2 — push the code
 
 ```bash
 git add -A
@@ -41,33 +41,26 @@ git remote add origin https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite.g
 git push -u origin main
 ```
 
-GitHub will ask you to sign in (a personal access token or the browser).
+### Step 3 — the site publishes itself
 
-### Step 3 — turn on Pages
+The repository has a workflow, `.github/workflows/pages.yml`, that
+publishes the `portfolio` folder to GitHub Pages every time you push to
+it. The first push starts it automatically.
 
-In the repository:
-
-1. **Settings** → **Pages** (under "Code and automation")
-2. **Source:** Deploy from a branch
-3. **Branch:** `main` / **/portfolio**
-4. **Save**
-
-GitHub builds the site and, in about a minute, it is live at:
+The site is live at:
 
 ```
-https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/
+https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/
 ```
 
-> **Why `/portfolio` and not the root?**
-> The repository holds the Python projects as well as the site. Pointing
-> Pages at the `portfolio` folder keeps the code and the website in one
-> place, so an employer can read the code *and* look at the site from the
-> same link.
->
-> If you would rather have the site on its own, make a separate
-> repository called `portfolio`, push the `portfolio` folder into it as
-> the root, and choose `/ (root)` as the source. The URL becomes
-> `https://vcfvz22rk5-debug.github.io/portfolio/`.
+You can watch it happen in the repository under **Actions**. If it ever
+needs re-running, open the workflow and press **Re-run all jobs**.
+
+> **Why a workflow and not "Deploy from a branch"?**
+> GitHub Pages will only publish the root of a branch or a `/docs`
+> folder — it cannot point at an arbitrary folder like `portfolio`.
+> A workflow can, and it also means the site is only rebuilt when
+> something in it actually changes.
 
 ### Step 4 — fix the social preview
 
@@ -78,10 +71,10 @@ where the site actually is. Two places to change:
 **`portfolio/index.html`** — the `<head>`:
 
 ```html
-<meta property="og:url" content="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/" />
-<meta property="og:image" content="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/assets/img/og-image.png" />
-<meta name="twitter:image" content="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/assets/img/og-image.png" />
-<link rel="canonical" href="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/" />
+<meta property="og:url" content="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/" />
+<meta property="og:image" content="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/assets/img/og-image.png" />
+<meta name="twitter:image" content="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/assets/img/og-image.png" />
+<link rel="canonical" href="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/" />
 ```
 
 Those are already set to that URL, so **you only need to change them if
