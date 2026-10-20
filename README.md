@@ -13,6 +13,9 @@ Three tools in one repository, built as a portfolio project that combines
 > also has live browser versions of the engines.
 > See [`portfolio/`](portfolio/) — or open `portfolio/index.html` directly.
 
+> 🚀 **Want to put this online?** See **[DEPLOY.md](DEPLOY.md)** — the
+> website on GitHub Pages, free forever, about fifteen minutes.
+
 ---
 
 ## The payroll suite (the big one)

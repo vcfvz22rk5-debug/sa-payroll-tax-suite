@@ -158,18 +158,25 @@ and run the Python tests too.
 
 ## Deploying to GitHub Pages (free)
 
-1. Put this folder in its own Git repository
-2. Push to GitHub
-3. Repo → **Settings** → **Pages** → Source: **Deploy from a branch** →
-   `main` / `(root)` → Save
-4. Your site goes live at `https://ayanda-shongwe.github.io/portfolio/`
+The site is pure static files, so GitHub Pages is the easiest way to put
+it online — free, no card, and every push updates the site.
 
-Because the site is pure static files, it also deploys to Netlify, Vercel,
-Cloudflare Pages or any web host — just upload the folder.
+1. Push this repository to GitHub
+2. Repo → **Settings** → **Pages** → Source: **Deploy from a branch** →
+   `main` / **`/portfolio`** → Save
+3. It is live at
+   `https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/`
+
+The full walkthrough, including a custom domain and how to host the
+payroll app, is in [`../DEPLOY.md`](../DEPLOY.md).
+
+Because the site uses relative paths for everything, it also works from
+the root of a repository, from a sub-folder, or from any static host
+(Netlify, Cloudflare Pages, Vercel) without changing a line.
 
 > If you deploy the portfolio *inside* the tax-calculator repository, use
 > `https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/`
-> and set the Pages source to the branch root instead.
+> and set the Pages source to `/portfolio` — not the branch root.
 
 ---
 

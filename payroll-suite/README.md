@@ -217,6 +217,33 @@ are the places where this one simplifies, and they are all deliberate:
 
 ---
 
+## Hosting it for free
+
+The dashboard is a WSGI application, so it runs on any Python host. Point
+the host at:
+
+```python
+from payroll_suite.wsgi import application
+```
+
+Set the database path with the `PAYROLL_DB` environment variable (or the
+`PAYROLL_DB` variable in the host's settings) so it points at a folder
+that persists.
+
+**PythonAnywhere** is the easiest free option: Manual configuration →
+Python 3.11 → set the working directory → paste the import above into the
+WSGI file → Reload.
+
+**Render** works too: build `pip install -e .`, start
+`gunicorn payroll_suite.wsgi:application` (the `Procfile` already says so).
+The free tier sleeps when idle and its filesystem is ephemeral, so the
+database is rebuilt on every deploy.
+
+More detail, and a checklist for the website, in
+[`../DEPLOY.md`](../DEPLOY.md).
+
+---
+
 ## Sources
 
 - [SARS — Rates of tax for individuals](https://www.sars.gov.za/tax-rates/income-tax/rates-of-tax-for-individuals/)
