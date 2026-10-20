@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "payroll-suite"
+version = "1.0.0"
+description = "A small-business payroll and SARS compliance system, in pure Python."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["payroll", "PAYE", "SARS", "EMP201", "IRP5", "UIF", "SDL", "south-africa"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Environment :: Console",
+    "Topic :: Office/Business :: Financial :: Accounting",
+]
+dependencies = []
+
+[project.scripts]
+payroll-suite = "payroll_suite.cli:main"
+
+[tool.setuptools]
+packages = ["payroll_suite"]
+include-package-data = true

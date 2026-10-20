@@ -1,0 +1,11 @@
+# The database is created by `payroll-suite init`
+data/*.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/

@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ayanda Shongwe — Portfolio</title>
+<meta name="description" content="Ayanda Shongwe — BCom Accounting student building practical software with real South African tax logic. Projects, live demos and what I learn along the way." />
+<meta name="author" content="Ayanda Shongwe" />
+<meta name="theme-color" content="#05070d" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Ayanda Shongwe — Portfolio" />
+<meta property="og:description" content="BCom Accounting student building practical software with real South African tax logic." />
+<!-- The social preview image has to be an ABSOLUTE url - Facebook,
+     LinkedIn, X and WhatsApp all ignore a relative one. Change these
+     three lines if you move the site to a custom domain. -->
+<meta property="og:url" content="https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/" />
+<meta property="og:image" content="https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/assets/img/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Ayanda Shongwe — AS monogram on a dark gradient" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/assets/img/og-image.png" />
+<link rel="canonical" href="https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/" />
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/styles.css" />
+
+<!-- Progressive enhancement: only hide reveal-animated content if JS is alive -->
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     ICON SPRITE — referenced by <use href="#i-name"> anywhere
+     ══════════════════════════════════════════════════════════════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-calculator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="2" width="16" height="20" rx="3"/><rect x="7.5" y="5.5" width="9" height="4" rx="1"/><circle cx="8.5" cy="14" r=".9"/><circle cx="12" cy="14" r=".9"/><circle cx="15.5" cy="14" r=".9"/><circle cx="8.5" cy="17.5" r=".9"/><circle cx="12" cy="17.5" r=".9"/><circle cx="15.5" cy="17.5" r=".9"/>
+  </symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3.5v17l2.5-1.8 2.5 1.8 2-1.8 2 1.8 2.5-1.8L19 20.5v-17z"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4"/>
+  </symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 21h18"/><path d="M6 21V11M11 21V5M16 21v-7M21 21v-4"/>
+  </symbol>
+  <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8.5 8 4 12.5 8.5 17M15.5 8 20 12.5 15.5 17M13.5 5l-3 14"/>
+  </symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H19v-3"/>
+  </symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3c3.5 2 5.5 5.5 5.5 9.5L12 18l-5.5-5.5C6.5 8.5 8.5 5 12 3Z"/><circle cx="12" cy="10" r="1.6"/><path d="M8 17c-1.5 1-2 3-2 4 1 0 3-.5 4-2M16 17c1.5 1 2 3 2 4-1 0-3-.5-4-2"/>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m4.5 12.5 5 5 10-11"/>
+  </symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14M13 6l6 6-6 6"/>
+  </symbol>
+  <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/><path d="M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/>
+  </symbol>
+  <symbol id="i-github" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 1.8a10.2 10.2 0 0 0-3.23 19.88c.51.1.7-.22.7-.49l-.01-1.9c-2.7.6-3.27-1.14-3.27-1.14-.44-1.13-1.08-1.43-1.08-1.43-.88-.6.07-.59.07-.59.98.07 1.49 1 1.49 1 .87 1.49 2.28 1.06 2.83.81.09-.63.34-1.06.62-1.3-2.16-.25-4.43-1.08-4.43-4.8 0-1.06.38-1.93 1-2.61-.1-.25-.43-1.24.1-2.58 0 0 .81-.27 2.67 1a9.3 9.3 0 0 1 4.87 0c1.85-1.27 2.66-1 2.66-1 .54 1.34.2 2.33.1 2.58.62.68 1 1.55 1 2.61 0 3.73-2.27 4.55-4.44 4.79.35.3.66.89.66 1.8l-.01 2.67c0 .27.18.6.7.49A10.2 10.2 0 0 0 12 1.8Z"/>
+  </symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3zM9.5 9h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05 4.02 0 4.76 2.6 4.76 5.98V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.19 1.45-2.19 2.96V21h-4Z"/>
+  </symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="m3 7 9 6 9-6"/>
+  </symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.5 8.5 0 1 0 10.2 10.2Z"/>
+  </symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/>
+  </symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/>
+  </symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m6 6 12 12M18 6 6 18"/>
+  </symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="m6.5 10 2.5 2.5L6.5 15M12.5 15.5h5"/>
+  </symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>
+  </symbol>
+  <symbol id="i-percent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m19 5-14 14"/><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/>
+  </symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"/><circle cx="9" cy="7" r="3.5"/><path d="M22 20v-1.5a4 4 0 0 0-3-3.87M16.5 4a3.5 3.5 0 0 1 0 6"/>
+  </symbol>
+  <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 21h18M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M15 21V9h3a2 2 0 0 1 2 2v10"/><path d="M8.5 7h3M8.5 11h3M8.5 15h3"/>
+  </symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/>
+  </symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="M12 7v5.5l3.5 2"/>
+  </symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20V4M6 10l6-6 6 6"/>
+  </symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 2.5 4.5 5.5v6c0 4.6 3.1 8.4 7.5 10 4.4-1.6 7.5-5.4 7.5-10v-6z"/><path d="m9 12 2 2 4-4"/>
+  </symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 17.5a9.5 9.5 0 1 1 17 0"/><path d="m12 14 3.5-5.5"/><circle cx="12" cy="14.5" r="1.7"/>
+  </symbol>
+</svg>
+
+<!-- ══════════════════════════════════════════════════════════════
+     BACKGROUND FX
+     ══════════════════════════════════════════════════════════════ -->
+<div class="fx" aria-hidden="true">
+  <div class="fx__aurora">
+    <span class="blob blob--1"></span>
+    <span class="blob blob--2"></span>
+    <span class="blob blob--3"></span>
+    <span class="blob blob--4"></span>
+  </div>
+  <div class="fx__grid"></div>
+  <div class="fx__noise"></div>
+  <div class="fx__cursor"></div>
+</div>
+
+<a class="skip-link" href="#home">Skip to content</a>
+
+<!-- Scroll progress: how far down the page you are -->
+<div class="progress" aria-hidden="true"><span class="progress__bar" id="progress-bar"></span></div>
+
+<!-- Small messages, e.g. when performance mode switches itself on -->
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     NAV
+     ══════════════════════════════════════════════════════════════ -->
+<header class="nav" id="nav">
+  <div class="container nav__inner">
+    <a href="#home" class="brand" aria-label="Ayanda Shongwe — home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none">
+          <defs>
+            <linearGradient id="bg1" x1="0" y1="0" x2="40" y2="40">
+              <stop offset="0%" stop-color="#67e8f9"/><stop offset="55%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#f472b6"/>
+            </linearGradient>
+          </defs>
+          <rect x="1.5" y="1.5" width="37" height="37" rx="11" stroke="url(#bg1)" stroke-width="2"/>
+          <path d="M8.5 27 15 13h1.6L23 27M11.1 22.4h9.1" stroke="url(#bg1)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M37 15.52C37 13.28 28 13.28 28 16.08C28 18.88 37 21.12 37 23.92C37 26.72 28 26.72 28 24.48" stroke="url(#bg1)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="brand__text">
+        <strong>Ayanda Shongwe</strong>
+        <em>Portfolio</em>
+      </span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <span class="nav__indicator" id="nav-indicator" aria-hidden="true"></span>
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#demo">Live Demo</a>
+      <a href="#case-study">Case Study</a>
+      <a href="#journey">Journey</a>
+      <a href="#stack">Stack</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav__actions">
+      <button type="button" class="icon-btn" id="cmd-trigger" title="Search (Ctrl+K)" aria-label="Open search">
+        <svg class="ico"><use href="#i-search"/></svg>
+        <span class="kbd">⌘K</span>
+      </button>
+      <button type="button" class="icon-btn" id="theme-toggle" title="Toggle theme" aria-label="Toggle colour theme">
+        <svg class="ico ico--sun"><use href="#i-sun"/></svg>
+        <svg class="ico ico--moon"><use href="#i-moon"/></svg>
+      </button>
+      <button type="button" class="icon-btn" id="lite-toggle" title="Performance mode" aria-label="Toggle performance mode" aria-pressed="false">
+        <svg class="ico"><use href="#i-gauge"/></svg>
+      </button>
+      <a href="#contact" class="btn btn--sm btn--primary nav__cta">Get in touch</a>
+      <button type="button" class="icon-btn nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="nav__drawer" id="drawer" hidden>
+  <a href="#about">About</a>
+  <a href="#work">Work</a>
+  <a href="#demo">Live Demo</a>
+  <a href="#case-study">Case Study</a>
+  <a href="#journey">Journey</a>
+  <a href="#stack">Stack</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main>
+<!-- ══════════════════════════════════════════════════════════════
+     HERO
+     ══════════════════════════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <div class="pill reveal" data-reveal>
+        <span class="pill__dot"></span>
+        Available for internships &amp; junior roles
+      </div>
+
+      <h1 class="hero__title reveal" data-reveal data-reveal-delay="1">
+        <span class="line">Hi, I'm</span>
+        <span class="grad-text">Ayanda Shongwe.</span>
+        <span class="line">I turn tax rules into</span>
+        <span class="grad-text grad-text--2">working software.</span>
+      </h1>
+
+      <p class="hero__lead reveal" data-reveal data-reveal-delay="2">
+        BCom Accounting student in South Africa, building software that
+        <strong>actually solves accounting problems</strong> — starting with
+        the SARS tax tables nobody wants to work through by hand.
+      </p>
+
+      <div class="hero__cta reveal" data-reveal data-reveal-delay="3">
+        <a href="#work" class="btn btn--primary">
+          View my work <svg class="ico"><use href="#i-arrow"/></svg>
+        </a>
+        <a href="#demo" class="btn btn--ghost">
+          <svg class="ico"><use href="#i-spark"/></svg> Try the live calculator
+        </a>
+      </div>
+
+      <dl class="hero__stats reveal" data-reveal data-reveal-delay="4" id="hero-stats"></dl>
+    </div>
+
+    <div class="hero__visual reveal" data-reveal data-reveal-delay="3">
+      <div class="term" id="term">
+        <div class="term__bar">
+          <span class="term__dots"><i></i><i></i><i></i></span>
+          <span class="term__title">
+            <svg class="ico"><use href="#i-terminal"/></svg>
+            sa-salary-tax-calculator — python3 cli.py
+          </span>
+        </div>
+        <pre class="term__body" id="term-body"></pre>
+      </div>
+      <div class="hero__glow" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <a href="#about" class="scroll-cue" aria-label="Scroll to about">
+    <span class="scroll-cue__line"></span>
+    <span class="scroll-cue__text">scroll</span>
+  </a>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     MARQUEE
+     ══════════════════════════════════════════════════════════════ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track" id="marquee-track"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     ABOUT
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="section__head reveal" data-reveal>
+      <span class="eyebrow">01 — About</span>
+      <h2 class="section__title">Accounting brain, <span class="grad-text">engineer's hands</span></h2>
+    </div>
+
+    <div class="about">
+      <div class="about__text reveal" data-reveal>
+        <p>
+          I study accounting at university, but I spend most of my evenings
+          writing code. The overlap is the sweet spot: I know what a
+          progressive tax slab, a rebate and a payslip actually
+          <em>mean</em> — so when I build software, it models the real
+          rule instead of a made-up one.
+        </p>
+        <p>
+          My first project was a command-line PAYE and UIF calculator built
+          on the official SARS tax tables for the 2026 and 2027 tax years,
+          with a test suite that proves the maths matches SARS's own
+          figures. The version below runs entirely in your browser — the
+          same logic, ported to JavaScript.
+        </p>
+        <p>
+          I'm looking for an internship or junior role where I can keep
+          learning, and where someone who actually understands the domain
+          will notice the difference.
+        </p>
+
+        <div class="about__meta">
+          <span class="tag"><svg class="ico"><use href="#i-book"/></svg> BCom Accounting</span>
+          <span class="tag"><svg class="ico"><use href="#i-terminal"/></svg> Python &amp; JavaScript</span>
+          <span class="tag"><svg class="ico"><use href="#i-chart"/></svg> South Africa</span>
+        </div>
+      </div>
+
+      <aside class="about__card glass reveal" data-reveal data-reveal-delay="1">
+        <h3 class="about__card-title">What I'm working on</h3>
+        <ul class="about__list" id="focus-list"></ul>
+        <div class="about__card-foot">
+          <span class="pulse" aria-hidden="true"></span>
+          Currently deep in SARS tax rules &amp; payroll logic
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PROJECTS
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="work">
+  <div class="container">
+    <div class="section__head reveal" data-reveal>
+      <span class="eyebrow">02 — Selected work</span>
+      <h2 class="section__title">Projects that <span class="grad-text">actually run</span></h2>
+      <p class="section__sub">
+        Each one is built from a real problem, tested, and documented.
+        More land here as I finish them.
+      </p>
+    </div>
+
+    <div class="filters reveal" data-reveal role="group" aria-label="Filter projects">
+      <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+      <button class="filter" type="button" data-filter="live" aria-pressed="false">Live</button>
+      <button class="filter" type="button" data-filter="in-progress" aria-pressed="false">In progress</button>
+      <button class="filter" type="button" data-filter="planned" aria-pressed="false">Planned</button>
+    </div>
+
+    <div class="grid grid--projects" id="project-grid"></div>
+
+    <p class="grid__empty" id="project-empty" hidden>Nothing here yet — check back soon.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     LIVE DEMO
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="demo">
+  <div class="container">
+    <div class="section__head reveal" data-reveal>
+      <span class="eyebrow">03 — Live demo</span>
+      <h2 class="section__title">Run the <span class="grad-text">PAYE calculator</span> yourself</h2>
+      <p class="section__sub">
+        The exact logic from the Python project, ported to JavaScript.
+        Type a salary and watch the maths happen — no install, no server.
+      </p>
+    </div>
+
+    <div class="demo glass reveal" data-reveal>
+      <div class="demo__tabs" role="tablist" aria-label="Live demos">
+        <button class="demo__tab is-active" type="button" role="tab" id="tab-paye"
+                aria-controls="panel-paye" aria-selected="true" data-tab="paye">
+          <svg class="ico"><use href="#i-calculator"/></svg>
+          <span>PAYE calculator</span>
+        </button>
+        <button class="demo__tab" type="button" role="tab" id="tab-vat"
+                aria-controls="panel-vat" aria-selected="false" tabindex="-1" data-tab="vat">
+          <svg class="ico"><use href="#i-percent"/></svg>
+          <span>VAT 201</span>
+        </button>
+        <button class="demo__tab" type="button" role="tab" id="tab-payroll"
+                aria-controls="panel-payroll" aria-selected="false" tabindex="-1" data-tab="payroll">
+          <svg class="ico"><use href="#i-users"/></svg>
+          <span>Payroll &amp; EMP201</span>
+        </button>
+      </div>
+
+      <!-- ── PAYE ─────────────────────────────────────────────────── -->
+      <div class="demo__panel" role="tabpanel" id="panel-paye" aria-labelledby="tab-paye">
+        <div class="calc">
+          <form class="calc__form" id="calc-form" autocomplete="off">
+            <div class="field">
+              <label for="c-salary">Gross monthly salary</label>
+              <div class="input-wrap">
+                <span class="input-prefix">R</span>
+                <input type="number" id="c-salary" value="30000" min="0" step="500" inputmode="decimal" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="c-age">Age at 28 February of the tax year</label>
+              <div class="input-wrap">
+                <input type="number" id="c-age" value="30" min="18" max="99" step="1" inputmode="numeric" />
+                <span class="input-suffix" id="c-age-note">primary rebate</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <span class="field__label" id="taxyear-label">Tax year</span>
+              <div class="segmented" role="radiogroup" aria-labelledby="taxyear-label">
+                <label class="seg">
+                  <input type="radio" name="taxyear" value="2026" />
+                  <span>2026</span>
+                </label>
+                <label class="seg">
+                  <input type="radio" name="taxyear" value="2027" checked />
+                  <span>2027</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="c-ra">Monthly pension / RA contribution</label>
+              <div class="input-wrap">
+                <span class="input-prefix">R</span>
+                <input type="number" id="c-ra" value="0" min="0" step="100" inputmode="decimal" />
+              </div>
+              <p class="field__hint" id="c-ra-hint">Deducted before tax, capped by s11F.</p>
+            </div>
+
+            <div class="field">
+              <label for="c-medical">Your monthly medical scheme contribution</label>
+              <div class="input-wrap">
+                <span class="input-prefix">R</span>
+                <input type="number" id="c-medical" value="0" min="0" step="100" inputmode="decimal" />
+                <input type="number" id="c-dependants" value="1" min="0" max="20" step="1"
+                       inputmode="numeric" aria-label="People on the medical scheme, including you" />
+                <span class="input-suffix" id="c-medical-note">on scheme</span>
+              </div>
+              <p class="field__hint">The medical scheme fees tax credit is a rebate against your tax.</p>
+            </div>
+          </form>
+
+          <div class="calc__out">
+            <div class="calc__headline">
+              <span class="calc__label">Net monthly pay</span>
+              <span class="calc__net" id="o-net">R 0.00</span>
+            </div>
+
+            <div class="bar" id="o-bar" role="img" aria-label="Breakdown of gross salary">
+              <span class="bar__seg bar__seg--tax" id="o-seg-tax"></span>
+              <span class="bar__seg bar__seg--uif" id="o-seg-uif"></span>
+              <span class="bar__seg bar__seg--ra" id="o-seg-ra"></span>
+              <span class="bar__seg bar__seg--net" id="o-seg-net"></span>
+            </div>
+
+            <ul class="legend">
+              <li><i class="dot dot--tax"></i> PAYE <b id="o-paye">R 0.00</b></li>
+              <li><i class="dot dot--uif"></i> UIF <b id="o-uif">R 0.00</b></li>
+              <li><i class="dot dot--ra"></i> Retirement <b id="o-ra">R 0.00</b></li>
+              <li><i class="dot dot--net"></i> Net <b id="o-net-legend">R 0.00</b></li>
+            </ul>
+
+            <dl class="calc__rows" id="o-rows"></dl>
+
+            <div class="calc__slabs">
+              <h4>Which tax slab are you in?</h4>
+              <div class="slabs" id="o-slabs"></div>
+            </div>
+
+            <p class="calc__disclaimer">
+              <svg class="ico"><use href="#i-spark"/></svg>
+              Study &amp; portfolio tool — not an official SARS payscale result.
+              Always verify against sars.gov.za.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── VAT 201 ──────────────────────────────────────────────── -->
+      <div class="demo__panel" role="tabpanel" id="panel-vat" aria-labelledby="tab-vat" hidden>
+        <div class="calc">
+          <form class="calc__form" id="vat-form" autocomplete="off">
+            <div class="field">
+              <label for="v-sales">Taxable supplies (your sales, no VAT)</label>
+              <div class="input-wrap">
+                <span class="input-prefix">R</span>
+                <input type="number" id="v-sales" value="150000" min="0" step="1000" inputmode="decimal" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="v-purchases">Taxable purchases you can claim back</label>
+              <div class="input-wrap">
+                <span class="input-prefix">R</span>
+                <input type="number" id="v-purchases" value="75000" min="0" step="1000" inputmode="decimal" />
+              </div>
+            </div>
+
+            <div class="field">
+              <span class="field__label" id="vatyear-label">Tax year</span>
+              <div class="segmented" role="radiogroup" aria-labelledby="vatyear-label">
+                <label class="seg">
+                  <input type="radio" name="vatyear" value="2026" />
+                  <span>2026</span>
+                </label>
+                <label class="seg">
+                  <input type="radio" name="vatyear" value="2027" checked />
+                  <span>2027</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="v-turnover">Annual taxable supplies (12 months)</label>
+              <div class="input-wrap">
+                <span class="input-prefix">R</span>
+                <input type="number" id="v-turnover" value="2400000" min="0" step="50000" inputmode="decimal" />
+              </div>
+              <p class="field__hint" id="v-reg-hint">Checking the registration thresholds…</p>
+            </div>
+          </form>
+
+          <div class="calc__out">
+            <div class="calc__headline">
+              <span class="calc__label" id="v-net-label">Net VAT payable to SARS</span>
+              <span class="calc__net" id="v-net">R 0.00</span>
+            </div>
+
+            <div class="bar" id="v-bar" role="img" aria-label="Output tax against input tax">
+              <span class="bar__seg bar__seg--out" id="v-seg-out"></span>
+              <span class="bar__seg bar__seg--in" id="v-seg-in"></span>
+            </div>
+
+            <ul class="legend">
+              <li><i class="dot dot--out"></i> Output tax <b id="v-output">R 0.00</b></li>
+              <li><i class="dot dot--in"></i> Input tax <b id="v-input">R 0.00</b></li>
+            </ul>
+
+            <dl class="calc__rows" id="v-rows"></dl>
+
+            <div class="calc__slabs">
+              <h4>VAT periods &amp; deadlines</h4>
+              <ul class="periods" id="v-periods"></ul>
+            </div>
+
+            <p class="calc__disclaimer">
+              <svg class="ico"><use href="#i-shield"/></svg>
+              The VAT201 for a bi-monthly period is due in the month after the
+              period ends. Always verify against sars.gov.za.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PAYROLL ──────────────────────────────────────────────── -->
+      <div class="demo__panel" role="tabpanel" id="panel-payroll" aria-labelledby="tab-payroll" hidden>
+        <div class="payroll">
+          <div class="payroll__bar">
+            <div class="payroll__bar-copy">
+              <h3 class="payroll__title">A five-employee payroll run</h3>
+              <p class="payroll__sub">
+                The same demo data as <code>data/employees.csv</code> in the Python
+                project. Every figure below is calculated live.
+              </p>
+            </div>
+            <div class="field field--inline">
+              <label for="p-month">Payroll month</label>
+              <input type="month" id="p-month" value="2026-10" />
+            </div>
+          </div>
+
+          <div class="payroll__grid">
+            <div class="payroll__table-wrap">
+              <table class="ledger">
+                <caption class="sr-only">Payslips for the five demo employees</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Employee</th>
+                    <th scope="col" class="num">Gross</th>
+                    <th scope="col" class="num">PAYE</th>
+                    <th scope="col" class="num">UIF</th>
+                    <th scope="col" class="num">SDL</th>
+                    <th scope="col" class="num">Net pay</th>
+                  </tr>
+                </thead>
+                <tbody id="p-rows"></tbody>
+                <tfoot id="p-foot"></tfoot>
+              </table>
+            </div>
+
+            <aside class="payroll__cards" id="p-cards"></aside>
+          </div>
+
+          <p class="calc__disclaimer">
+            <svg class="ico"><use href="#i-spark"/></svg>
+            SDL is 1% of the leviable amount and is a business cost — employers
+            with an annual payroll below R500 000 are exempt.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     CASE STUDY
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="case-study">
+  <div class="container">
+    <div class="section__head reveal" data-reveal>
+      <span class="eyebrow">04 — Case study</span>
+      <h2 class="section__title">How I built the <span class="grad-text">payroll suite</span></h2>
+      <p class="section__sub">
+        One project, written up properly: the problem, the design decisions
+        that mattered, and how the thing is put together.
+      </p>
+    </div>
+
+    <div class="case">
+      <div class="case__story reveal" data-reveal>
+        <h3 class="case__heading">The problem</h3>
+        <p>
+          My first tool calculated one employee's take-home pay. That is
+          the easy half. The half that actually keeps a business in
+          trouble is the employer's side: the forms, the deadlines, and
+          the cases that break the simple maths — an employee who joined
+          in November, a month with a bonus, a commission earner who is
+          not a UIF contributor.
+        </p>
+
+        <h3 class="case__heading">The decision that mattered</h3>
+        <p>
+          The interesting problem was the tax itself. SARS's brackets are
+          built around a <em>year</em> of income, so a month cannot be
+          taxed on its own. The engine annualises the month's taxable
+          income, taxes that, and divides by twelve — which is what a
+          real payroll does, and what smooths out bonuses and gaps in
+          overtime.
+        </p>
+        <p>
+          The consequence is subtle: an employee who joins in November
+          is taxed as if they would earn a full year, so the employer
+          over-deducts. A real system fixes that on the last payslip of
+          the year, so the suite has a <strong>year-end reconciliation</strong>
+          that works out the employee's real liability and the
+          adjustment the employer owes them.
+        </p>
+
+        <ul class="case__points">
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Section 11F: the pension is capped at 27.5% of the remuneration and R350 000 a year</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Overtime at 1.5x for the first 45 hours, 2x after that, 2x for Sundays and public holidays</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>PAYE rounded to the nearest rand, the way SARS asks for it</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Deadlines that know the 7th of the month is sometimes a Saturday</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Every figure traceable back to a SARS source</span></li>
+        </ul>
+      </div>
+
+      <aside class="case__side reveal" data-reveal data-reveal-delay="1">
+        <div class="arch" aria-label="How the project is put together">
+          <div class="arch__row">
+            <div class="arch__box arch__box--front">web/ dashboard</div>
+            <div class="arch__box arch__box--front">cli.py</div>
+          </div>
+          <div class="arch__arrow">▼</div>
+          <div class="arch__box arch__box--mid">engine.py — the maths</div>
+          <div class="arch__arrow">▼</div>
+          <div class="arch__box arch__box--data">tax_tables.py — the SARS rates</div>
+          <div class="arch__row arch__row--split">
+            <div class="arch__box">db.py — SQLite</div>
+            <div class="arch__box">compliance.py — the forms</div>
+          </div>
+          <div class="arch__foot">
+            Python standard library only — 0 dependencies
+          </div>
+        </div>
+
+        <div class="case__numbers">
+          <div><b>148</b><span>checks in the test suite</span></div>
+          <div><b>9</b><span>modules, each with one job</span></div>
+          <div><b>0</b><span>third-party dependencies</span></div>
+          <div><b>8</b><span>JSON endpoints behind the dashboard</span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     JOURNEY
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="journey">
+  <div class="container">
+    <div class="section__head reveal" data-reveal>
+      <span class="eyebrow">05 — The journey</span>
+      <h2 class="section__title">Built in the <span class="grad-text">open</span></h2>
+      <p class="section__sub">
+        Every project follows a plan, and the plan is public. Here is where
+        the current one stands.
+      </p>
+    </div>
+
+    <ol class="timeline" id="timeline"></ol>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     STACK
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="stack">
+  <div class="container">
+    <div class="section__head reveal" data-reveal>
+      <span class="eyebrow">06 — Toolkit</span>
+      <h2 class="section__title">What I work <span class="grad-text">with</span></h2>
+    </div>
+
+    <div class="grid grid--skills" id="skill-grid"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     CONTACT
+     ══════════════════════════════════════════════════════════════ -->
+<section class="section section--contact" id="contact">
+  <div class="container">
+    <div class="contact glass reveal" data-reveal>
+      <div class="contact__copy">
+        <span class="eyebrow">07 — Contact</span>
+        <h2 class="section__title">Let's talk about <span class="grad-text">tax, code &amp; internships</span></h2>
+        <p>
+          Got a role that needs someone who understands both the numbers
+          and the tooling? I'd love to hear about it. I reply to everything.
+        </p>
+        <div class="contact__links" id="contact-links"></div>
+      </div>
+      <div class="contact__card">
+        <div class="contact__card-glow" aria-hidden="true"></div>
+        <span class="contact__label">Email me</span>
+        <a class="contact__email" id="contact-email" href="#">
+          ayanda.shongwe@example.com
+        </a>
+        <button class="btn btn--ghost btn--sm" id="copy-email" type="button">
+          <svg class="ico"><use href="#i-code"/></svg> Copy address
+        </button>
+        <span class="contact__note" id="copy-note" role="status" aria-live="polite"></span>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ══════════════════════════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <p>© <span id="year"></span> Ayanda Shongwe — built by hand, no frameworks.</p>
+    <p class="footer__made">Designed &amp; coded in South Africa <span aria-hidden="true">🇿🇦</span></p>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════════
+     COMMAND PALETTE
+     ══════════════════════════════════════════════════════════════ -->
+<div class="palette" id="palette" hidden>
+  <div class="palette__backdrop" data-close-palette></div>
+  <div class="palette__panel glass" role="dialog" aria-modal="true" aria-label="Quick search">
+    <div class="palette__input">
+      <svg class="ico"><use href="#i-search"/></svg>
+      <input type="text" id="palette-input" placeholder="Jump to a section or project…" aria-label="Search" />
+      <button type="button" class="icon-btn" data-close-palette aria-label="Close search">
+        <svg class="ico"><use href="#i-close"/></svg>
+      </button>
+    </div>
+    <ul class="palette__list" id="palette-list"></ul>
+    <div class="palette__foot">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+
+<noscript>
+  <div class="noscript">
+    This portfolio uses a little JavaScript to render projects and the tax
+    calculator. Please enable JavaScript — or email me directly and I'll
+    send you the details.
+  </div>
+</noscript>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/tax.js"></script>
+<script src="assets/js/vat.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
