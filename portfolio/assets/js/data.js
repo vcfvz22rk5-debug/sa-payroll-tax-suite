@@ -72,7 +72,7 @@ const PROJECTS = [
     tags: ["Python 3", "SQLite", "HTTP API", "Vanilla JS", "Payroll", "EMP201"],
     links: {
       repo: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite/tree/main/payroll-suite",
-      demo: "#case-study",
+      demo: "#case",
       docs: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite/blob/main/payroll-suite/README.md",
     },
   },
@@ -98,7 +98,7 @@ const PROJECTS = [
     tags: ["Python 3", "CLI", "unittest", "SARS Tax Tables", "Payroll"],
     links: {
       repo: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite",
-      demo: "#demo",
+      demo: "#paye",
       docs: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite#readme",
     },
   },
@@ -122,7 +122,7 @@ const PROJECTS = [
     tags: ["JavaScript", "Vanilla", "CSS Grid", "No Build Step"],
     links: {
       repo: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite",
-      demo: "#demo",
+      demo: "#paye",
       docs: "",
     },
   },
@@ -148,7 +148,7 @@ const PROJECTS = [
     tags: ["Python 3", "CSV", "VAT201", "EMP201", "SDL", "Payroll"],
     links: {
       repo: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite",
-      demo: "#demo",
+      demo: "#vat",
       docs: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite#readme",
     },
   },
@@ -172,7 +172,7 @@ const PROJECTS = [
     tags: ["Python 3", "SARS Rules", "Tax Credits", "Testing"],
     links: {
       repo: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite",
-      demo: "#demo",
+      demo: "#paye",
       docs: "",
     },
   },

@@ -1,6 +1,9 @@
 /* ═══════════════════════════════════════════════════════════════════
-   main.js — everything that moves.
-   All content is rendered from data.js so you only edit one file.
+   main.js — the workbook.
+   ───────────────────────────────────────────────────────────────────
+   The page is a spreadsheet. There is one formula bar, one open sheet,
+   a row of sheet tabs and a status bar with the totals. Click any cell
+   to see how it is calculated.
    ═══════════════════════════════════════════════════════════════════ */
 
 (() => {
@@ -14,7 +17,6 @@
     "R " + Number(n || 0).toLocaleString("en-ZA", {
       minimumFractionDigits: 2, maximumFractionDigits: 2,
     });
-  /* Negative amounts render the way a payslip does: (R17,820.00) */
   const randNeg = (n) => {
     const v = Math.abs(Number(n) || 0);
     return `(R${v.toLocaleString("en-ZA", {
@@ -22,17 +24,13 @@
       maximumFractionDigits: 2,
     })})`;
   };
-  const num = (n) => Number(n || 0).toLocaleString("en-ZA");
+  const num = (n) => Number(n || 0).toLocaleString("en-Z");
   const pct = (n, dp = 1) => `${(n * 100).toFixed(dp)}%`;
 
   const esc = (s) =>
     String(s).replace(/[&<>"']/g, (c) =>
       ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
     );
-
-  /* The demo tabs can be opened from the command palette as well as by
-     clicking them, so the tab picker lives one level up. */
-  let selectDemoTab = null;
 
   const svgIcon = (id, cls = "ico") =>
     `<svg class="${cls}"><use href="#${id}"></use></svg>`;
@@ -47,6 +45,30 @@
       try { localStorage.setItem(key, value); } catch { /* ignore */ }
     },
   };
+
+  /* The demo tab picker lives one level up so the command palette can
+     open a sheet too. */
+  let showSheet = null;
+  let selectCell = null;
+
+  /* The search shortcut is Ctrl+K everywhere except a Mac, where it is
+     Command+K. Showing the wrong symbol is the sort of small detail
+     that gives the whole page away. */
+  const isMac = () => {
+    const data = navigator.userAgentData;
+    if (data?.platform) return /mac/i.test(data.platform);
+    return /Mac|iPhone|iPad|iPod/i.test(
+      navigator.platform || navigator.userAgent || ""
+    );
+  };
+
+  function initShortcutHint() {
+    const mac = isMac();
+    const kbd = $("#cmd-kbd");
+    if (kbd) kbd.textContent = mac ? "⌘K" : "Ctrl K";
+    const trigger = $("#cmd-trigger");
+    if (trigger) trigger.title = mac ? "Search (⌘K)" : "Search (Ctrl+K)";
+  }
 
   /* ═══════════════════════════════════════════════════════════════
      1. THEME
@@ -71,108 +93,183 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     2. NAV — sticky state, active link, mobile drawer
+     2. THE SHEETS
      ═══════════════════════════════════════════════════════════════ */
-  function initNav() {
-    const nav = $("#nav");
-    const burger = $("#burger");
-    const drawer = $("#drawer");
-    const links = $$(".nav__links a");
+  const SHEETS = [
+    { id: "cover",    label: "Cover",    key: "1" },
+    { id: "projects", label: "Projects", key: "2" },
+    { id: "paye",     label: "PAYE",     key: "3" },
+    { id: "vat",      label: "VAT 201",  key: "4" },
+    { id: "payroll",  label: "Payroll",  key: "5" },
+    { id: "case",     label: "Case",     key: "6" },
+    { id: "timeline", label: "Timeline", key: "7" },
+    { id: "contact",  label: "Contact",  key: "8" },
+  ];
 
-    // The search shortcut is Ctrl+K everywhere except a Mac, where it
-    // is Command+K. Showing the wrong symbol is the sort of small
-    // detail that gives the whole page away.
-    const isMac = () => {
-      const data = navigator.userAgentData;
-      if (data?.platform) return /mac/i.test(data.platform);
-      return /Mac|iPhone|iPad|iPod/i.test(
-        navigator.platform || navigator.userAgent || ""
-      );
-    };
-    const mac = isMac();
-    const kbd = $("#cmd-kbd");
-    if (kbd) kbd.textContent = mac ? "⌘K" : "Ctrl K";
-    const trigger = $("#cmd-trigger");
-    if (trigger) {
-      trigger.title = mac ? "Search (⌘K)" : "Search (Ctrl+K)";
+  function initSheets() {
+    const sheets = $$(".sheet");
+    const tabbar = $("#tabbar-sheets");
+    if (!sheets.length) return;
+
+    // The sheet tabs
+    if (tabbar) {
+      tabbar.innerHTML = SHEETS.map((sheet) => `
+        <button class="tab" type="button" role="tab" data-sheet="${sheet.id}"
+                aria-selected="false">
+          <span class="tab__dot"></span>${sheet.label}
+        </button>`).join("");
     }
 
-    // sticky background
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        nav?.classList.toggle("is-stuck", window.scrollY > 12);
-        ticking = false;
+    const tabs = tabbar ? $$(".tab", tabbar) : [];
+    const statusSheet = $("#st-sheet");
+
+    showSheet = (id, remember = true) => {
+      const target = sheets.find((s) => s.dataset.sheet === id) || sheets[0];
+      sheets.forEach((sheet) => {
+        const on = sheet === target;
+        sheet.hidden = !on;
+        sheet.classList.toggle("is-active", on);
       });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-
-    // mobile drawer
-    const closeDrawer = () => {
-      drawer?.setAttribute("hidden", "");
-      burger?.classList.remove("is-open");
-      burger?.setAttribute("aria-expanded", "false");
-    };
-    burger?.addEventListener("click", () => {
-      const open = drawer?.hasAttribute("hidden");
-      if (open) {
-        drawer?.removeAttribute("hidden");
-        burger.classList.add("is-open");
-        burger.setAttribute("aria-expanded", "true");
-      } else {
-        closeDrawer();
+      tabs.forEach((tab) => {
+        const on = tab.dataset.sheet === target.dataset.sheet;
+        tab.classList.toggle("is-active", on);
+        tab.setAttribute("aria-selected", String(on));
+        tab.tabIndex = on ? 0 : -1;
+      });
+      if (statusSheet) {
+        const meta = SHEETS.find((s) => s.id === target.dataset.sheet);
+        statusSheet.textContent = meta ? meta.label : target.dataset.sheet;
       }
+      // A new sheet means a new set of cells to select from.
+      selectCell?.(null);
+      updateStatusBar();
+      if (remember) {
+        try { history.replaceState(null, "", `#${target.dataset.sheet}`); } catch { /* file:// */ }
+      }
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => showSheet(tab.dataset.sheet));
+      tab.addEventListener("keydown", (e) => {
+        const i = tabs.indexOf(tab);
+        let next = null;
+        if (e.key === "ArrowRight") next = tabs[(i + 1) % tabs.length];
+        else if (e.key === "ArrowLeft") next = tabs[(i - 1 + tabs.length) % tabs.length];
+        if (!next) return;
+        e.preventDefault();
+        showSheet(next.dataset.sheet);
+        next.focus();
+      });
     });
-    $$("a", drawer).forEach((a) => a.addEventListener("click", closeDrawer));
+
+    // The cover sheet's buttons
+    $$("[data-goto]").forEach((button) =>
+      button.addEventListener("click", () => showSheet(button.dataset.goto))
+    );
+
+    // Ctrl+PageUp / Ctrl+PageDown, the way a spreadsheet works
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeDrawer();
+      if (!e.ctrlKey || (e.key !== "PageDown" && e.key !== "PageUp")) return;
+      e.preventDefault();
+      const current = sheets.findIndex((s) => s.classList.contains("is-active"));
+      const next = (current + (e.key === "PageDown" ? 1 : -1) + sheets.length) % sheets.length;
+      showSheet(sheets[next].dataset.sheet);
     });
 
-    // active section highlighting
-    const sections = $$("main section[id]");
-    const spy = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const id = entry.target.id;
-          links.forEach((l) =>
-            l.classList.toggle("is-active", l.getAttribute("href") === `#${id}`)
-          );
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    sections.forEach((s) => spy.observe(s));
+    // Open the sheet named in the url
+    const wanted = (location.hash || "").replace("#", "");
+    showSheet(sheets.some((s) => s.dataset.sheet === wanted) ? wanted : "cover");
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     3. SCROLL REVEAL
+     3. THE CELLS — pick one, read its formula
      ═══════════════════════════════════════════════════════════════ */
-  function initReveal() {
-    const items = $$("[data-reveal]");
-    if (!("IntersectionObserver" in window)) {
-      items.forEach((i) => i.classList.add("is-in"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-in");
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-    );
-    items.forEach((i) => io.observe(i));
+  /* Highlight the formula for the bar. The operators are marked FIRST,
+     because marking the function names second would try to match them
+     inside the tags the first step just inserted. */
+  const formatFormula = (formula) =>
+    esc(formula)
+      .replace(/([=<>+*/%(),:-])/g, '<span class="op">$1</span>')
+      .replace(/\b(MAX|MIN|ROUND|SUM|IF)\b/g, "<b>$1</b>");
+
+  function initCells() {
+    const formulaBar = $("#formula");
+    const nameBox = $("#name-box");
+
+    document.addEventListener("click", (e) => {
+      const cell = e.target.closest?.("[data-formula]");
+      if (!cell) {
+        selectCell?.(null);
+        return;
+      }
+      // A link inside a cell should still work.
+      if (e.target.closest("a, button, input, select")) return;
+      selectCell?.(cell);
+    });
+
+    // Arrow keys walk the cells of the open sheet.
+    document.addEventListener("keydown", (e) => {
+      if (!["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) return;
+      const tag = document.activeElement?.tagName;
+      if (["INPUT", "TEXTAREA", "SELECT"].includes(tag)) return;
+
+      const cells = $$("[data-formula]", $(".sheet.is-active"));
+      if (!cells.length) return;
+
+      const current = cells.indexOf(document.querySelector("[data-formula].is-selected"));
+      let next = current;
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") next = current + 1;
+      else if (e.key === "ArrowUp" || e.key === "ArrowLeft") next = current - 1;
+      if (next < 0 || next >= cells.length) return;
+
+      e.preventDefault();
+      selectCell?.(cells[next]);
+      cells[next].scrollIntoView({ block: "nearest", behavior: "smooth" });
+    });
+
+    selectCell = (cell) => {
+      $$("[data-formula].is-selected").forEach((el) => el.classList.remove("is-selected"));
+      if (!cell) {
+        if (formulaBar) {
+          formulaBar.textContent = "Pick a cell to see how it is calculated.";
+        }
+        if (nameBox) nameBox.textContent = "A1";
+        return;
+      }
+      cell.classList.add("is-selected");
+      if (formulaBar) {
+        formulaBar.innerHTML = formatFormula(cell.dataset.formula);
+      }
+      if (nameBox) {
+        nameBox.textContent = cell.dataset.ref || "A1";
+      }
+    };
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     4. HERO — stats counters
+     4. THE STATUS BAR — the totals of the open sheet
+     ═══════════════════════════════════════════════════════════════ */
+  function updateStatusBar() {
+    const sumEl = $("#st-sum");
+    const countEl = $("#st-count");
+    const avgEl = $("#st-avg");
+    const sheet = $(".sheet.is-active");
+    if (!sheet) return;
+
+    const numbers = $$("[data-num]", sheet)
+      .map((el) => Number(el.dataset.num))
+      .filter((n) => Number.isFinite(n));
+
+    const sum = numbers.reduce((total, n) => total + n, 0);
+    if (sumEl) sumEl.textContent = rand(sum);
+    if (countEl) countEl.textContent = String(numbers.length);
+    if (avgEl) {
+      avgEl.textContent = numbers.length ? rand(sum / numbers.length) : "R 0.00";
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     5. HERO — stats counters
      ═══════════════════════════════════════════════════════════════ */
   function renderStats() {
     const wrap = $("#hero-stats");
@@ -213,14 +310,9 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     5. HERO — terminal animation
+     6. HERO — terminal animation
      ═══════════════════════════════════════════════════════════════ */
-  /* Reproduces the real cli.py report, column for column.
-     Python formats each row as: 2 spaces + label padded to 44
-     characters + amount right-justified in 20 characters.          */
   const termRow = (label, value, cls = "t-val") => {
-    // Split the label into its text and its trailing dot leader. The dots
-    // may or may not be preceded by a space, e.g. "...(capped)...".
     const m = label.match(/^(.*?)(\s*\.*)$/);
     const head = m ? m[1] : label;
     const tail = m ? m[2] : "";
@@ -274,17 +366,17 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     6. MARQUEE
+     7. MARQUEE
      ═══════════════════════════════════════════════════════════════ */
   function initMarquee() {
     const track = $("#marquee-track");
     if (!track) return;
     const items = MARQUEE.map((m) => `<span class="marquee__item"><i></i>${esc(m)}</span>`).join("");
-    track.innerHTML = items + items; // duplicated for a seamless loop
+    track.innerHTML = items + items;
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     7. ABOUT — focus list
+     8. ABOUT — focus list
      ═══════════════════════════════════════════════════════════════ */
   function renderFocus() {
     const list = $("#focus-list");
@@ -295,7 +387,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     8. PROJECTS
+     9. PROJECTS
      ═══════════════════════════════════════════════════════════════ */
   const STATUS_LABEL = {
     live: "Live",
@@ -312,7 +404,7 @@
 
     const links = [];
     if (p.links?.repo)  links.push(`<a class="card__link" href="${esc(p.links.repo)}" target="_blank" rel="noopener">${svgIcon("i-github")} Repo ${svgIcon("i-external")}</a>`);
-    if (p.links?.demo)  links.push(`<a class="card__link card__link--accent" href="${esc(p.links.demo)}">${svgIcon("i-spark")} Live demo</a>`);
+    if (p.links?.demo)  links.push(`<a class="card__link card__link--accent" href="${esc(p.links.demo)}" data-goto-sheet="${esc(p.links.demo.replace("#", ""))}">${svgIcon("i-spark")} Open</a>`);
     if (p.links?.docs)  links.push(`<a class="card__link" href="${esc(p.links.docs)}" target="_blank" rel="noopener">${svgIcon("i-book")} Docs ${svgIcon("i-external")}</a>`);
 
     return `
@@ -340,7 +432,6 @@
     if (!grid) return;
     grid.innerHTML = PROJECTS.map(projectCard).join("");
 
-    // filters
     const empty = $("#project-empty");
     $$(".filter").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -359,10 +450,18 @@
         if (empty) empty.hidden = shown !== 0;
       });
     });
+
+    // The "Open" buttons switch sheets rather than jump down the page.
+    $$("[data-goto-sheet]").forEach((link) =>
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        showSheet?.(link.dataset.gotoSheet);
+      })
+    );
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     9. TIMELINE
+     10. TIMELINE
      ═══════════════════════════════════════════════════════════════ */
   function renderTimeline() {
     const wrap = $("#timeline");
@@ -393,7 +492,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     10. SKILLS
+     11. SKILLS
      ═══════════════════════════════════════════════════════════════ */
   function renderSkills() {
     const grid = $("#skill-grid");
@@ -410,7 +509,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     11. CONTACT
+     12. CONTACT
      ═══════════════════════════════════════════════════════════════ */
   function renderContact() {
     const linkWrap = $("#contact-links");
@@ -450,7 +549,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     12. THE LIVE TAX CALCULATOR
+     13. THE PAYE MODEL
      ═══════════════════════════════════════════════════════════════ */
   function initCalculator() {
     const form = $("#calc-form");
@@ -494,8 +593,6 @@
       const wrap = $("#o-slabs");
       if (!wrap) return;
 
-      // Width of each income band. The open-ended top band borrows the
-      // width of the band below it so the bar length stays comparable.
       const widths = brackets.map((b, i) => {
         if (b.to !== null) return b.to - b.from;
         const prev = brackets[i - 1];
@@ -503,10 +600,6 @@
       });
       const max = Math.max(...widths, 1);
 
-      // Exactly one bracket is active, and it is the same one the tax
-      // engine used: the first band whose ceiling is >= the income.
-      // (A simple per-row test would light up two bands whenever the
-      // income landed exactly on a boundary.)
       let activeIndex = brackets.findIndex(
         (b) => b.to === null || taxableIncome <= b.to
       );
@@ -514,7 +607,6 @@
 
       wrap.innerHTML = brackets
         .map((b, i) => {
-          // sqrt keeps the narrow low bands visible instead of vanishing
           const pctWidth = Math.round(Math.sqrt(widths[i] / max) * 100);
           const isActive = i === activeIndex;
           const isPassed = taxableIncome > b.from;
@@ -560,13 +652,13 @@
         return;
       }
 
-      // headline
+      // The headline
       const netEl = $("#o-net");
       if (netEl) netEl.textContent = rand(r.netMonthly);
       const netLegend = $("#o-net-legend");
       if (netLegend) netLegend.textContent = rand(r.netMonthly);
 
-      // bar
+      // The bar
       const total = Math.max(r.grossMonthly, 1);
       const setW = (id, v) => { const el = $(id); if (el) el.style.width = `${(v / total) * 100}%`; };
       setW("#o-seg-tax", r.payeMonthly);
@@ -574,43 +666,96 @@
       setW("#o-seg-ra", r.raMonthlyAllowed);
       setW("#o-seg-net", Math.max(0, r.netMonthly));
 
-      // legend
       const setT = (id, v) => { const el = $(id); if (el) el.textContent = v; };
       setT("#o-paye", rand(r.payeMonthly));
       setT("#o-uif", rand(r.uif.employee));
       setT("#o-ra", rand(r.raMonthlyAllowed));
 
-      // rows
-      const rows = $("#o-rows");
-      if (rows) {
-        let raRow = "";
-        if (r.raAnnual > 0) {
-          raRow =
-            `<div><dt>Less: retirement / RA deduction</dt><dd>${randNeg(r.raAnnual)}</dd></div>`;
-          if (r.raCapped) {
-            raRow +=
-              `<div class="is-muted"><dt>&nbsp;&nbsp;capped by s11F (27.5% / R350 000)</dt><dd></dd></div>`;
-          }
-        }
-        rows.innerHTML = `
-          <div><dt>Gross salary (monthly)</dt><dd>${rand(r.grossMonthly)}</dd></div>
-          <div><dt>Annualised gross (× 12)</dt><dd>${rand(r.grossAnnual)}</dd></div>
-          ${raRow}
-          <div class="is-strong"><dt>Taxable income (annual)</dt><dd>${rand(r.taxableIncome)}</dd></div>
-          <div><dt>Tax at SARS slab rates</dt><dd>${rand(r.taxBeforeRebates)}</dd></div>
-          <div><dt>Less: ${esc(r.rebateName)}</dt><dd>${randNeg(r.rebate)}</dd></div>
-          ${r.medicalCreditAnnual > 0
-            ? `<div><dt>Less: medical tax credit</dt><dd>${randNeg(r.medicalCreditAnnual)}</dd></div>`
-            : ""}
-          <div class="is-strong"><dt>Annual tax</dt><dd>${rand(r.annualTax)}</dd></div>
-          <div class="is-strong"><dt>Monthly PAYE</dt><dd>${rand(r.payeMonthly)}</dd></div>
-          <div><dt>UIF employee 1%${r.uif.base < r.grossMonthly ? " (capped)" : ""}</dt><dd>${rand(r.uif.employee)}</dd></div>
-          <div class="is-muted"><dt>UIF employer 1% (business cost)</dt><dd>${rand(r.uif.employer)}</dd></div>
-          <div><dt>Effective tax rate</dt><dd>${pct(r.effectiveRate)}</dd></div>
-          <div><dt>Marginal rate (top slab)</dt><dd>${pct(r.marginalRate, 0)}</dd></div>`;
+      // The rows, with the formula that produced each one. The cell
+      // references are worked out FIRST, because the optional rows
+      // (the pension, the medical credit) shift everything below them.
+      const hasRa = r.raAnnual > 0;
+      const hasMed = r.medicalCreditAnnual > 0;
+      const ref = {};
+      let next = 5;                    // B4 is the headline
+      ref.gross = `B${next++}`;
+      ref.annual = `B${next++}`;
+      if (hasRa) ref.ra = `B${next++}`;
+      ref.taxable = `B${next++}`;
+      ref.slab = `B${next++}`;
+      ref.rebate = `B${next++}`;
+      if (hasMed) ref.medical = `B${next++}`;
+      ref.annualTax = `B${next++}`;
+      ref.paye = `B${next++}`;
+      ref.uif = `B${next++}`;
+      ref.effective = `B${next++}`;
+      ref.marginal = `B${next++}`;
+
+      // The medical scheme fees tax credit: the higher of the tabulated
+      // credit and what you actually pay for your own membership, plus
+      // the credit for the dependants.
+      const rates = Tax.TAX_YEARS[taxYear]?.medical_credit;
+      const members = Math.max(1, medicalDependants);
+      let creditFormula = "=0";
+      if (rates && medicalMonthly > 0) {
+        const memberPart = Math.max(rates.member, medicalMonthly);
+        const firstDep = members >= 2 ? rates.first_dependent : 0;
+        const extra = members > 2 ? (members - 2) * rates.additional_dependent : 0;
+        creditFormula = `=-(${memberPart} + ${firstDep} + ${extra}) * 12`;
       }
 
-      // s11F hint
+      const rows = [
+        { label: "Gross salary (monthly)", value: rand(r.grossMonthly), num: r.grossMonthly,
+          ref: ref.gross, formula: `=${Math.round(r.grossMonthly)}` },
+        { label: "Annualised gross (× 12)", value: rand(r.grossAnnualised), num: r.grossAnnualised,
+          ref: ref.annual, formula: `=${ref.gross}*12` },
+        ...(hasRa
+          ? [{ label: "Less: retirement / RA deduction", value: randNeg(r.raAnnual), num: -r.raAnnual,
+               ref: ref.ra, formula: `=-${Math.round(r.raMonthlyAllowed)}*12` }]
+          : []),
+        { label: "Taxable income (annual)", value: rand(r.taxableIncome), num: r.taxableIncome,
+          ref: ref.taxable, formula: hasRa ? `=${ref.annual}+${ref.ra}` : `=${ref.annual}` },
+        { label: "Tax at SARS slab rates", value: rand(r.taxBeforeRebates), num: r.taxBeforeRebates,
+          ref: ref.slab, formula: `=44118 + 26%*(${ref.taxable}-245100)   (2027, 2nd band)` },
+        { label: `Less: ${r.rebateName}`, value: randNeg(r.rebate), num: -r.rebate,
+          ref: ref.rebate, formula: "=-17820" },
+        ...(hasMed
+          ? [{ label: "Less: medical tax credit", value: randNeg(r.medicalCreditAnnual), num: -r.medicalCreditAnnual,
+               ref: ref.medical, formula: creditFormula }]
+          : []),
+        { label: "Annual tax", value: rand(r.annualTax), num: r.annualTax,
+          ref: ref.annualTax,
+          formula: hasMed
+            ? `=MAX(0, ${ref.slab}+${ref.rebate}+${ref.medical})`
+            : `=MAX(0, ${ref.slab}+${ref.rebate})` },
+        { label: "Monthly PAYE", value: rand(r.payeMonthly), num: r.payeMonthly,
+          ref: ref.paye, formula: `=ROUND(${ref.annualTax}/12, 0)` },
+        { label: "UIF employee 1%", value: rand(r.uif.employee), num: r.uif.employee,
+          ref: ref.uif, formula: `=MIN(${ref.gross}, 17712) * 1%` },
+        { label: "Effective tax rate", value: pct(r.effectiveRate), num: r.effectiveRate,
+          ref: ref.effective, formula: `=${ref.annualTax}/${ref.annual}` },
+        { label: "Marginal rate (top slab)", value: pct(r.marginalRate, 0), num: r.marginalRate,
+          ref: ref.marginal, formula: `=${Math.round(r.marginalRate * 100)}%` },
+      ];
+
+      const rowsEl = $("#o-rows");
+      if (rowsEl) {
+        rowsEl.innerHTML = rows.map((row) => `
+          <div class="${row.label === "Annual tax" || row.label === "Taxable income (annual)" ? "is-strong" : ""}">
+            <dt>${esc(row.label)}</dt>
+            <dd data-num="${row.num}" data-ref="${row.ref}" data-formula="${esc(row.formula)}">${row.value}</dd>
+          </div>`).join("");
+      }
+
+      // The headline cell, which is the net pay
+      if (netEl) {
+        netEl.dataset.num = r.netMonthly;
+        netEl.dataset.ref = "B4";
+        netEl.dataset.formula = hasRa
+          ? `=${ref.gross}-${ref.paye}-${ref.uif}+${ref.ra}   (gross - PAYE - UIF + pension)`
+          : `=${ref.gross}-${ref.paye}-${ref.uif}   (gross - PAYE - UIF)`;
+      }
+
       if (raHint) {
         raHint.textContent = r.raCapped
           ? `Capped by s11F: 27.5% of salary, max R350,000 a year.`
@@ -618,6 +763,8 @@
       }
 
       renderSlabs(r.brackets, r.taxableIncome);
+      updateStatusBar();
+      selectCell?.(document.querySelector("[data-formula].is-selected"));
     }
 
     [salary, age, ra, medical, dependants].forEach((el) => el?.addEventListener("input", update));
@@ -626,307 +773,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     13. SCROLL PROGRESS
-     The bar is scaled with a transform, not a width: a transform is
-     handled by the compositor, while a width change asks the browser
-     to lay the element out again on every frame.
-     ═══════════════════════════════════════════════════════════════ */
-  function initScrollProgress() {
-    const bar = $("#progress-bar");
-    if (!bar) return;
-
-    let ticking = false;
-    let max = 0;
-
-    // scrollHeight is a layout read, so it is measured on resize rather
-    // than on every frame of the scroll.
-    const measure = () => {
-      const doc = document.documentElement;
-      max = doc.scrollHeight - doc.clientHeight;
-    };
-
-    const update = () => {
-      const percent = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-      bar.style.transform = `scaleX(${percent})`;
-    };
-
-    window.addEventListener("scroll", () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => { update(); ticking = false; });
-    }, { passive: true });
-
-    window.addEventListener("resize", () => { measure(); update(); }, { passive: true });
-
-    measure();
-    update();
-    // The page grows once the fonts land and the demos render.
-    window.addEventListener("load", () => { measure(); update(); });
-    setTimeout(() => { measure(); update(); }, 600);
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-     14. PERFORMANCE MODE
-     The drifting background, the frosted glass and the 3D tilt are
-     decoration. On a laptop with integrated graphics they can cost
-     more than the whole page is worth, so the page watches its own
-     frame rate while you scroll and turns the decoration off if it
-     cannot keep up. You can also switch it off by hand.
-     ═══════════════════════════════════════════════════════════════ */
-  const isLite = () => document.documentElement.classList.contains("is-lite");
-
-  /* A small message at the bottom of the screen. */
-  let toastTimer = null;
-  function showToast(html) {
-    const toast = $("#toast");
-    if (!toast) return;
-    toast.innerHTML = html;
-    toast.removeAttribute("hidden");
-    requestAnimationFrame(() => toast.classList.add("is-in"));
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-      toast.classList.remove("is-in");
-      setTimeout(() => toast.setAttribute("hidden", ""), 400);
-    }, 5200);
-  }
-
-  function setLiteMode(on, remember = true) {
-    const root = document.documentElement;
-    root.classList.toggle("is-lite", on);
-    if (remember) store.set("portfolio-lite", on ? "1" : "0");
-
-    const btn = $("#lite-toggle");
-    if (btn) {
-      btn.classList.toggle("is-on", on);
-      btn.setAttribute("aria-pressed", String(on));
-      btn.title = on
-        ? "Performance mode on — turn the effects back on"
-        : "Performance mode off — turn the effects off for smoother scrolling";
-    }
-  }
-
-  function initPerformanceMode() {
-    const btn = $("#lite-toggle");
-    const stored = store.get("portfolio-lite");
-
-    // "null" means the reader has never made a choice, so the page is
-    // allowed to decide for itself.
-    if (stored === "1") setLiteMode(true, false);
-    if (stored === "0") setLiteMode(false, false);
-
-    btn?.addEventListener("click", () => {
-      setLiteMode(!isLite());
-    });
-  }
-
-  function initPerformanceWatch() {
-    // Only ever decide once, and only if the reader has not said
-    // otherwise themselves.
-    if (store.get("portfolio-lite") !== null) return;
-
-    let scrolling = false;
-    let scrollEnd = null;
-    let sampling = false;
-    let ticks = 0;
-    let frames = 0;
-    let slow = 0;
-    let last = 0;
-
-    const sample = (now) => {
-      if (scrolling) {
-        if (last) {
-          frames++;
-          if (now - last > 26) slow++;     // slower than about 38fps
-        }
-        last = now;
-      } else {
-        last = 0;
-      }
-
-      ticks++;
-      if (ticks < 180) {
-        requestAnimationFrame(sample);
-        return;
-      }
-
-      sampling = false;
-      if (frames >= 20 && slow / frames > 0.3) {
-        setLiteMode(true, false);
-        showToast(
-          "<b>Performance mode on.</b> The background effects were slowing " +
-          "your scrolling down, so they have been switched off. Turn them " +
-          "back on with the gauge in the navigation bar."
-        );
-      }
-    };
-
-    window.addEventListener("scroll", () => {
-      scrolling = true;
-      clearTimeout(scrollEnd);
-      scrollEnd = setTimeout(() => { scrolling = false; }, 180);
-
-      if (!sampling) {
-        sampling = true;
-        ticks = 0; frames = 0; slow = 0; last = 0;
-        requestAnimationFrame(sample);
-      }
-    }, { passive: true });
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-     14. SMOOTH SCROLLING
-     A short eased glide instead of the browser's default jump. It
-     stops the moment the reader takes over the scroll themselves.
-     ═══════════════════════════════════════════════════════════════ */
-  const reducedMotion = () =>
-    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
-  /* How far below the top of the document a section should land, so the
-     sticky navigation never covers the heading. */
-  const navOffset = () => ($("#nav")?.offsetHeight || 72) + 16;
-
-  let scrollToken = 0;
-
-  function scrollToY(targetY, duration = 720) {
-    const token = ++scrollToken;
-    const startY = window.scrollY;
-    const distance = targetY - startY;
-    const root = document.documentElement;
-
-    // The stylesheet sets `scroll-behavior: smooth`, which would fight
-    // the animation below, so it is switched off for the duration.
-    const previousBehaviour = root.style.scrollBehavior;
-    const restore = () => { root.style.scrollBehavior = previousBehaviour; };
-
-    if (Math.abs(distance) < 2 || reducedMotion()) {
-      root.style.scrollBehavior = "auto";
-      window.scrollTo(0, targetY);
-      restore();
-      return;
-    }
-
-    const easeInOutCubic = (t) =>
-      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-    root.style.scrollBehavior = "auto";
-    const start = performance.now();
-    const step = (now) => {
-      if (token !== scrollToken) { restore(); return; }   // the reader interrupted us
-      const t = Math.min((now - start) / duration, 1);
-      window.scrollTo(0, startY + distance * easeInOutCubic(t));
-      if (t < 1) requestAnimationFrame(step);
-      else restore();
-    };
-    requestAnimationFrame(step);
-  }
-
-  function initSmoothScroll() {
-    // Any manual scroll cancels the animation in progress.
-    const interrupt = () => { scrollToken++; };
-    ["wheel", "touchstart", "keydown"].forEach((evt) =>
-      window.addEventListener(evt, interrupt, { passive: true })
-    );
-    document.addEventListener("click", (e) => {
-      const link = e.target.closest?.('a[href^="#"]');
-      if (!link) return;
-      const id = link.getAttribute("href");
-      if (!id || id === "#" || link.hasAttribute("data-no-scroll")) return;
-
-      const target = document.querySelector(id);
-      if (!target) return;
-
-      e.preventDefault();
-      scrollToY(target.getBoundingClientRect().top + window.scrollY - navOffset());
-
-      // Move the keyboard focus too, so tabbing continues from the new
-      // section instead of jumping back to the top of the document.
-      if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
-      target.focus({ preventScroll: true });
-
-      try { history.replaceState(null, "", id); } catch { /* file:// */ }
-    });
-  }
-
-  /* Scroll to a section, used by the command palette too. */
-  function scrollToSection(selector) {
-    const target = document.querySelector(selector);
-    if (!target) return;
-    scrollToY(target.getBoundingClientRect().top + window.scrollY - navOffset());
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-     15. NAV INDICATOR — a pill that slides to the active link
-     ═══════════════════════════════════════════════════════════════ */
-  function initNavIndicator() {
-    const container = $(".nav__links");
-    const indicator = $("#nav-indicator");
-    const links = $$(".nav__links a");
-    if (!container || !indicator || !links.length) return;
-
-    const place = (link) => {
-      if (!link) { indicator.classList.remove("is-on"); return; }
-      const box = container.getBoundingClientRect();
-      const rect = link.getBoundingClientRect();
-      indicator.style.width = `${rect.width}px`;
-      indicator.style.height = `${rect.height}px`;
-      indicator.style.transform = `translateX(${rect.left - box.left}px)`;
-      indicator.style.top = `${rect.top - box.top}px`;
-      indicator.classList.add("is-on");
-    };
-
-    const sync = () => place(links.find((l) => l.classList.contains("is-active")));
-
-    // The active class is toggled by the scroll spy, so watch for it.
-    const observer = new MutationObserver(sync);
-    links.forEach((l) =>
-      observer.observe(l, { attributes: true, attributeFilter: ["class"] })
-    );
-    window.addEventListener("resize", sync, { passive: true });
-    sync();
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-     16. TABS — the live demos
-     ═══════════════════════════════════════════════════════════════ */
-  function initTabs() {
-    const tabs = $$(".demo__tab");
-    if (!tabs.length) return;
-
-    const select = (tab, moveFocus = false) => {
-      tabs.forEach((t) => {
-        const on = t === tab;
-        t.classList.toggle("is-active", on);
-        t.setAttribute("aria-selected", String(on));
-        t.tabIndex = on ? 0 : -1;
-        const panel = document.getElementById(t.getAttribute("aria-controls"));
-        if (panel) panel.hidden = !on;
-      });
-      if (moveFocus) tab.focus();
-    };
-
-    // The command palette can open a demo tab directly.
-    selectDemoTab = (name) => {
-      const tab = tabs.find((t) => t.dataset.tab === name);
-      if (tab) select(tab);
-    };
-
-    tabs.forEach((tab, i) => {
-      tab.addEventListener("click", () => select(tab));
-      tab.addEventListener("keydown", (e) => {
-        let next = null;
-        if (e.key === "ArrowRight") next = tabs[(i + 1) % tabs.length];
-        else if (e.key === "ArrowLeft") next = tabs[(i - 1 + tabs.length) % tabs.length];
-        else if (e.key === "Home") next = tabs[0];
-        else if (e.key === "End") next = tabs[tabs.length - 1];
-        if (!next) return;
-        e.preventDefault();
-        select(next, true);
-      });
-    });
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-     17. THE VAT 201 DEMO
+     14. THE VAT 201 MODEL
      ═══════════════════════════════════════════════════════════════ */
   function initVatDemo() {
     const sales = $("#v-sales");
@@ -942,17 +789,20 @@
       const p = Math.max(0, Number(purchases.value) || 0);
       const r = Vat.calculateVat(s, p);
 
-      // headline
       const netEl = $("#v-net");
       const netLabel = $("#v-net-label");
-      if (netEl) netEl.textContent = rand(r.isRefund ? r.amountClaimable : r.amountPayable);
+      if (netEl) {
+        netEl.textContent = rand(r.isRefund ? r.amountClaimable : r.amountPayable);
+        netEl.dataset.num = Math.abs(r.netVat);
+        netEl.dataset.ref = "B8";
+        netEl.dataset.formula = "=B5-B7  (output tax - input tax)";
+      }
       if (netLabel) {
         netLabel.textContent = r.isRefund
           ? "VAT to claim back from SARS"
           : "Net VAT payable to SARS";
       }
 
-      // bar: output tax against input tax
       const total = Math.max(r.outputTax, r.inputTax, 1);
       const outEl = $("#v-seg-out");
       const inEl = $("#v-seg-in");
@@ -964,18 +814,29 @@
       if (outText) outText.textContent = rand(r.outputTax);
       if (inText) inText.textContent = rand(r.inputTax);
 
-      // rows
-      const rows = $("#v-rows");
-      if (rows) {
-        rows.innerHTML = `
-          <div><dt>Taxable supplies (sales)</dt><dd>${rand(r.taxableSupplies)}</dd></div>
-          <div><dt>Output tax @ ${r.vatRate * 100}%</dt><dd>${rand(r.outputTax)}</dd></div>
-          <div><dt>Taxable purchases (inputs)</dt><dd>${rand(r.taxablePurchases)}</dd></div>
-          <div><dt>Input tax @ ${r.vatRate * 100}%</dt><dd>${rand(r.inputTax)}</dd></div>
-          <div class="is-strong"><dt>${r.isRefund ? "Net VAT (refund due to you)" : "Net VAT payable to SARS"}</dt><dd>${rand(Math.abs(r.netVat))}</dd></div>`;
+      const rows = [
+        { label: "Taxable supplies (sales)", value: rand(r.taxableSupplies), num: r.taxableSupplies,
+          ref: "B4", formula: `=${Math.round(s)}` },
+        { label: "Output tax @ 15%", value: rand(r.outputTax), num: r.outputTax,
+          ref: "B5", formula: "=B4*15%" },
+        { label: "Taxable purchases (inputs)", value: rand(r.taxablePurchases), num: r.taxablePurchases,
+          ref: "B6", formula: `=${Math.round(p)}` },
+        { label: "Input tax @ 15%", value: rand(r.inputTax), num: r.inputTax,
+          ref: "B7", formula: "=B6*15%" },
+        { label: r.isRefund ? "Net VAT (refund due to you)" : "Net VAT payable to SARS",
+          value: rand(Math.abs(r.netVat)), num: Math.abs(r.netVat),
+          ref: "B8", formula: "=B5-B7" },
+      ];
+
+      const rowsEl = $("#v-rows");
+      if (rowsEl) {
+        rowsEl.innerHTML = rows.map((row) => `
+          <div class="${row.ref === "B8" ? "is-strong" : ""}">
+            <dt>${esc(row.label)}</dt>
+            <dd data-num="${row.num}" data-ref="${row.ref}" data-formula="${esc(row.formula)}">${row.value}</dd>
+          </div>`).join("");
       }
 
-      // the six VAT periods and their deadlines
       const periods = $("#v-periods");
       if (periods) {
         periods.innerHTML = Vat.vatPeriods(taxYear)
@@ -988,13 +849,15 @@
           .join("");
       }
 
-      // registration check
       const hint = $("#v-reg-hint");
       if (hint) {
         const t = Math.max(0, Number(turnover.value) || 0);
         const status = Vat.registrationStatus(t);
         hint.textContent = `${status.status} — ${status.detail}`;
       }
+
+      updateStatusBar();
+      selectCell?.(document.querySelector("[data-formula].is-selected"));
     }
 
     [sales, purchases, turnover].forEach((el) => el?.addEventListener("input", render));
@@ -1010,7 +873,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     18. THE PAYROLL & EMP201 DEMO
+     15. THE PAYROLL MODEL
      ═══════════════════════════════════════════════════════════════ */
   function initPayrollDemo() {
     const rows = $("#p-rows");
@@ -1030,25 +893,27 @@
       const summary = Vat.emp201Summary(payroll, payrollMonth);
 
       rows.innerHTML = payroll.payslips
-        .map(
-          (p) => `<tr>
-            <td>${esc(p.name)}</td>
-            <td class="num">${rand(p.grossMonthly)}</td>
-            <td class="num">${rand(p.payeMonthly)}</td>
-            <td class="num">${rand(p.uifEmployee)}</td>
-            <td class="num">${rand(p.sdl)}</td>
-            <td class="num">${rand(p.netMonthly)}</td>
-          </tr>`
-        )
+        .map((p, i) => {
+          const ref = `E${i + 5}`;
+          return `<tr>
+            <td>${esc(p.employee_name)}<span class="ledger__role">${esc(p.employee_number)}</span></td>
+            <td class="num" data-num="${p.gross_remuneration}" data-ref="B${i + 5}" data-formula="=basic + overtime + bonus + commission + fringe + leave">${rand(p.gross_remuneration)}</td>
+            <td class="num" data-num="${p.paye}" data-ref="C${i + 5}" data-formula="=ROUND(MAX(0, tax on (B${i + 5}-pension)*12 - rebates - medical)/12, 0)">${rand(p.paye)}</td>
+            <td class="num" data-num="${p.uif_employee}" data-ref="D${i + 5}" data-formula="=MIN(B${i + 5}, 17712) * 1%">${rand(p.uif_employee)}</td>
+            <td class="num" data-num="${p.sdl}" data-ref="E${i + 5}" data-formula="=(B${i + 5} - pension) * 1%">${rand(p.sdl)}</td>
+            <td class="num" data-num="${p.net_pay}" data-ref="F${i + 5}" data-formula="=B${i + 5}-C${i + 5}-D${i + 5}-pension-medical">${rand(p.net_pay)}</td>
+          </tr>`;
+        })
         .join("");
 
+      const sum = (key) => payroll.payslips.reduce((t, p) => t + Number(p[key] || 0), 0);
       foot.innerHTML = `<tr>
         <td>Total</td>
-        <td class="num">${rand(payroll.totalGross)}</td>
-        <td class="num">${rand(payroll.totalPaye)}</td>
-        <td class="num">${rand(payroll.totalUifEmployee)}</td>
-        <td class="num">${rand(payroll.totalSdl)}</td>
-        <td class="num">${rand(payroll.totalNet)}</td>
+        <td class="num" data-num="${sum("gross_remuneration")}" data-ref="B10" data-formula="=SUM(B5:B9)">${rand(sum("gross_remuneration"))}</td>
+        <td class="num" data-num="${sum("paye")}" data-ref="C10" data-formula="=SUM(C5:C9)">${rand(sum("paye"))}</td>
+        <td class="num" data-num="${sum("uif_employee")}" data-ref="D10" data-formula="=SUM(D5:D9)">${rand(sum("uif_employee"))}</td>
+        <td class="num" data-num="${sum("sdl")}" data-ref="E10" data-formula="=SUM(E5:E9)">${rand(sum("sdl"))}</td>
+        <td class="num" data-num="${sum("net_pay")}" data-ref="F10" data-formula="=SUM(F5:F9)">${rand(sum("net_pay"))}</td>
       </tr>`;
 
       cards.innerHTML = `
@@ -1059,19 +924,22 @@
         </div>
         <div class="pcard pcard--total">
           <span class="pcard__label"><svg class="ico"><use href="#i-building"/></svg> Total to SARS</span>
-          <span class="pcard__value">${rand(summary.totalLiability)}</span>
+          <span class="pcard__value" data-num="${summary.totalLiability}" data-ref="H4" data-formula="=C10 + D10*2 + E10  (PAYE + UIF both sides + SDL)">${rand(summary.totalLiability)}</span>
           <span class="pcard__note">PAYE ${rand(summary.paye)} · UIF ${rand(summary.uifTotal)} · SDL ${rand(summary.sdl)}</span>
         </div>
         <div class="pcard">
           <span class="pcard__label"><svg class="ico"><use href="#i-users"/></svg> Net paid out</span>
-          <span class="pcard__value">${rand(payroll.totalNet)}</span>
+          <span class="pcard__value" data-num="${payroll.totalNet}" data-ref="F10" data-formula="=SUM(F5:F9)">${rand(payroll.totalNet)}</span>
           <span class="pcard__note">${payroll.headCount} employees · ${rand(payroll.totalGross)} in gross pay</span>
         </div>
         <div class="pcard">
           <span class="pcard__label"><svg class="ico"><use href="#i-percent"/></svg> Employer cost</span>
-          <span class="pcard__value">${rand(payroll.totalEmployerCost)}</span>
+          <span class="pcard__value" data-num="${payroll.totalEmployerCost}" data-ref="H6" data-formula="=UIF employer + SDL">${rand(payroll.totalEmployerCost)}</span>
           <span class="pcard__note">UIF ${rand(payroll.totalUifEmployer)} + SDL ${rand(payroll.totalSdl)} on top of salary.</span>
         </div>`;
+
+      updateStatusBar();
+      selectCell?.(document.querySelector("[data-formula].is-selected"));
     }
 
     monthInput?.addEventListener("input", render);
@@ -1079,7 +947,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     18. COMMAND PALETTE  (Ctrl/⌘ + K)
+     16. COMMAND PALETTE  (Ctrl/⌘ + K)
      ═══════════════════════════════════════════════════════════════ */
   function initPalette() {
     const palette = $("#palette");
@@ -1092,31 +960,6 @@
     let matched = [];
     let selected = 0;
 
-    const buildItems = () => {
-      const sections = PALETTE_SECTIONS.map((s) => ({
-        label: s.label, href: s.href, icon: "i-arrow", kind: "Section",
-      }));
-      const demos = (typeof PALETTE_DEMOS !== "undefined" ? PALETTE_DEMOS : []).map((d) => ({
-        label: d.label, href: d.href, icon: d.icon || "i-spark",
-        kind: "Live demo", tab: d.tab,
-      }));
-      const projects = PROJECTS.map((p) => ({
-        label: p.title,
-        href: p.links?.demo || p.links?.repo || "#work",
-        icon: p.icon,
-        kind: STATUS_LABEL[p.status] || "Project",
-        external: !!(p.links?.repo && !p.links?.demo),
-      }));
-      const socials = [
-        { label: "GitHub", href: PROFILE.github, icon: "i-github", kind: "Link" },
-        { label: "LinkedIn", href: PROFILE.linkedin, icon: "i-linkedin", kind: "Link" },
-        { label: "Email me", href: `mailto:${PROFILE.email}`, icon: "i-mail", kind: "Link" },
-      ].filter((s) => s.href);
-      items = [...sections, ...demos, ...projects, ...socials];
-    };
-
-    /* Fuzzy matching: an exact substring wins, otherwise the letters
-       just have to appear in order. */
     const score = (label, query) => {
       const l = label.toLowerCase();
       if (!query) return 1;
@@ -1143,6 +986,24 @@
         `<mark>${esc(label.slice(index, index + query.length))}</mark>` +
         esc(label.slice(index + query.length))
       );
+    };
+
+    const buildItems = () => {
+      const sheets = SHEETS.map((s) => ({
+        label: s.label, sheet: s.id, icon: "i-grid", kind: "Sheet",
+      }));
+      const projects = PROJECTS.map((p) => ({
+        label: p.title,
+        href: p.links?.repo || "",
+        icon: p.icon,
+        kind: STATUS_LABEL[p.status] || "Project",
+        external: true,
+      }));
+      const socials = [
+        { label: "GitHub", href: PROFILE.github, icon: "i-github", kind: "Link" },
+        { label: "Email me", href: `mailto:${PROFILE.email}`, icon: "i-mail", kind: "Link" },
+      ].filter((s) => s.href);
+      items = [...sheets, ...projects, ...socials];
     };
 
     function render(query = "") {
@@ -1185,18 +1046,15 @@
     function go(item) {
       if (!item) return;
       close();
-      if (item.href?.startsWith("http")) {
+      if (item.sheet) {
+        showSheet?.(item.sheet);
+      } else if (item.href?.startsWith("http")) {
         window.open(item.href, "_blank", "noopener");
       } else if (item.href?.startsWith("mailto:")) {
         window.location.href = item.href;
-      } else if (item.href) {
-        scrollToSection(item.href);
-        if (item.tab) selectDemoTab?.(item.tab);
       }
     }
 
-    /* The panel is a modal dialog, so focus has to stay inside it and
-       has to come back out again when it closes. */
     function focusables() {
       return $$(
         'a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])',
@@ -1231,7 +1089,6 @@
     function close() {
       if (palette.hasAttribute("hidden")) return;
       palette.setAttribute("hidden", "");
-      // Send focus back where it came from instead of dumping it on <body>.
       if (lastFocused && document.contains(lastFocused)) lastFocused.focus();
       else trigger?.focus();
     }
@@ -1252,14 +1109,15 @@
         palette.hasAttribute("hidden") ? open() : close();
       }
       if (e.key === "Escape" && !palette.hasAttribute("hidden")) close();
-      // Keep Tab inside the dialog while it is open.
       if (e.key === "Tab" && !palette.hasAttribute("hidden")) onKeydownTab(e);
     });
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     19. CURSOR GLOW + CARD TILT
+     17. CURSOR GLOW + CARD TILT
      ═══════════════════════════════════════════════════════════════ */
+  const isLite = () => document.documentElement.classList.contains("is-lite");
+
   function initPointerFx() {
     const glow = $(".fx__cursor");
     const fine = window.matchMedia?.("(pointer: fine)").matches;
@@ -1269,7 +1127,7 @@
     let cx = x, cy = y, raf = null;
 
     window.addEventListener("mousemove", (e) => {
-      if (isLite()) return;             // no point moving a glow nobody sees
+      if (isLite()) return;
       x = e.clientX; y = e.clientY;
       glow?.classList.add("is-on");
       if (!raf) raf = requestAnimationFrame(loop);
@@ -1282,8 +1140,6 @@
       raf = Math.abs(x - cx) > 0.5 || Math.abs(y - cy) > 0.5 ? requestAnimationFrame(loop) : null;
     }
 
-    // 3D tilt on project cards. The card eases towards the pointer
-    // instead of snapping to it, which is what makes it feel smooth.
     $$(".card").forEach((card) => {
       let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
       let tiltRaf = null;
@@ -1330,16 +1186,93 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     20. BOOT
+     18. PERFORMANCE MODE
+     ═══════════════════════════════════════════════════════════════ */
+  let toastTimer = null;
+  function showToast(html) {
+    const toast = $("#toast");
+    if (!toast) return;
+    toast.innerHTML = html;
+    toast.removeAttribute("hidden");
+    requestAnimationFrame(() => toast.classList.add("is-in"));
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove("is-in");
+      setTimeout(() => toast.setAttribute("hidden", ""), 400);
+    }, 5200);
+  }
+
+  function setLiteMode(on, remember = true) {
+    const root = document.documentElement;
+    root.classList.toggle("is-lite", on);
+    if (remember) store.set("portfolio-lite", on ? "1" : "0");
+
+    const btn = $("#lite-toggle");
+    if (btn) {
+      btn.classList.toggle("is-on", on);
+      btn.setAttribute("aria-pressed", String(on));
+      btn.title = on
+        ? "Performance mode on — turn the effects back on"
+        : "Performance mode off — turn the effects off for smoother scrolling";
+    }
+  }
+
+  function initPerformanceMode() {
+    const btn = $("#lite-toggle");
+    const stored = store.get("portfolio-lite");
+
+    if (stored === "1") setLiteMode(true, false);
+    if (stored === "0") setLiteMode(false, false);
+
+    btn?.addEventListener("click", () => setLiteMode(!isLite()));
+  }
+
+  function initPerformanceWatch() {
+    if (store.get("portfolio-lite") !== null) return;
+
+    let frames = 0, slow = 0, last = 0, ticks = 0, sampling = false;
+
+    const sample = (now) => {
+      if (last) {
+        frames++;
+        if (now - last > 26) slow++;
+      }
+      last = now;
+      ticks++;
+      if (ticks < 180) {
+        requestAnimationFrame(sample);
+        return;
+      }
+      sampling = false;
+      if (frames >= 20 && slow / frames > 0.3) {
+        setLiteMode(true, false);
+        showToast(
+          "<b>Performance mode on.</b> The background effects were slowing " +
+          "your scrolling down, so they have been switched off. Turn them " +
+          "back on with the gauge in the toolbar."
+        );
+      }
+    };
+
+    // The sheets scroll, not the window, so listen to the container.
+    const scroller = $("#sheets") || document;
+    scroller.addEventListener("scroll", () => {
+      if (sampling) return;
+      sampling = true;
+      ticks = 0; frames = 0; slow = 0; last = 0;
+      requestAnimationFrame(sample);
+    }, { passive: true });
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     19. BOOT
      ═══════════════════════════════════════════════════════════════ */
   function boot() {
     initTheme();
+    initShortcutHint();
     initPerformanceMode();
-    initNav();
-    initScrollProgress();
-    initSmoothScroll();
-    initNavIndicator();
-    initReveal();
+    initSheets();
+    initCells();
     renderStats();
     initTerminal();
     initMarquee();
@@ -1348,16 +1281,12 @@
     renderTimeline();
     renderSkills();
     renderContact();
-    initTabs();
     initCalculator();
     initVatDemo();
     initPayrollDemo();
     initPalette();
     initPointerFx();
     initPerformanceWatch();
-
-    const y = $("#year");
-    if (y) y.textContent = new Date().getFullYear();
   }
 
   if (document.readyState === "loading") {

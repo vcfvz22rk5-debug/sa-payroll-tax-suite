@@ -3,6 +3,11 @@
 A personal portfolio site where all my projects live. Static HTML, CSS and
 vanilla JavaScript — no build step, no dependencies, no `npm install`.
 
+**The site is a spreadsheet.** There is one formula bar across the top, one
+sheet open at a time, a row of sheet tabs underneath and a status bar with
+the totals along the bottom. Click any cell and the formula bar shows you
+how that number was worked out — in accounting terms, not code.
+
 ---
 
 ## Run it
@@ -213,34 +218,33 @@ portfolio/
 
 ## Features
 
-- **Dark-first design** with a gradient aurora background, frosted glass
-  cards and a grain overlay. Light theme included — the toggle in the nav
+- **It is a spreadsheet.** A formula bar, sheet tabs, a status bar with live
+  SUM / COUNT / AVERAGE, and a name box that shows the cell you have
+  selected. Click any number and the formula bar shows the working:
+  `=MAX(0, 44118 + 26%*(342000-245100) - 17820 - 18912) / 12`.
+- **Dark-first design** with a graph-paper grid, frosted glass cards and a
+  grain overlay. Light theme included — the toggle in the toolbar
   remembers your choice.
-- **Command palette** — press `Ctrl/⌘ + K` to jump to any section, project
-  or live demo. It does fuzzy matching, so "vt" finds "VAT 201 calculator".
+- **Command palette** — press `Ctrl/⌘ + K` to jump to any sheet, project
+  or link. It does fuzzy matching, so "vt" finds "VAT 201".
 - **Filterable project grid** — live / in progress / planned.
-- **Three live demos** — PAYE, VAT 201 and a payroll run, all calculated in
+- **Three live models** — PAYE, VAT 201 and a payroll run, all calculated in
   the browser, with income-breakdown bars, a tax-slab visualiser and the
   real VAT/EMP201 deadlines.
 - **A case study** for the flagship project: the problem, the design
   decisions that mattered, and a diagram of how the code fits together.
-- **Smooth scrolling** — a short eased glide to each section that stops the
-  moment you take over the scroll yourself.
-- **Scroll progress bar** and a **sliding nav indicator** that follows the
-  section you are reading.
+- **Keyboard driven** — `Ctrl+PageUp` / `Ctrl+PageDown` changes sheet, the
+  arrow keys walk the cells of the open sheet, `Ctrl+K` searches.
 - **Performance mode** — the page measures its own frame rate while you
   scroll and turns the decoration off if it cannot keep up. You can also
-  switch it by hand with the gauge in the nav.
-- **Scroll animations**, count-up statistics, a typed terminal in the hero,
-  eased 3D tilt on project cards and a cursor glow.
-- **Responsive** from 320px up, with a mobile menu.
+  switch it by hand with the gauge in the toolbar.
+- **Responsive** from 320px up.
 - **Accessible** — semantic landmarks, skip link, visible focus rings,
-  labelled inputs, real ARIA tabs with arrow-key navigation, and
-  `aria-live` on the copy-to-clipboard confirmation.
+  labelled inputs, and `aria-live` on the copy-to-clipboard confirmation.
 - **Respects `prefers-reduced-motion`** — animations switch off for anyone
   who asks the OS for them.
-- **Works without JavaScript** — the page is readable and the content is
-  still there; JS only adds the interactive layers.
+- **Works without JavaScript** — the content is still in the page; JS only
+  adds the interactive layers.
 
 ---
 
