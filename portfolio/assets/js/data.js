@@ -23,10 +23,12 @@ const PROFILE = {
   name: "Ayanda Shongwe",
   role: "BCom Accounting student & developer",
   location: "South Africa",
-  email: "ayanda.shongwe@example.com",   // ← replace with your real address
+  email: "ayandayeshongwe@icloud.com",
   availability: "Available for internships & junior roles",
-  github: "https://github.com/vcfvz22rk5-debug",        // ← replace
-  linkedin: "https://www.linkedin.com/in/ayanda-shongwe", // ← replace
+  github: "https://github.com/vcfvz22rk5-debug",
+  // Leave this empty until you have a profile. The contact card and the
+  // command palette both hide an empty link.
+  linkedin: "",
   twitter: "",                                         // optional
 };
 

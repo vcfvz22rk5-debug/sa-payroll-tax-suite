@@ -86,8 +86,9 @@ python3 tests/run_all.py               # 148 checks
 | What | Where |
 |---|---|
 | Your name, email, GitHub, LinkedIn | `assets/js/data.js` → `PROFILE` |
-| Your real email address | `PROFILE.email` (currently a placeholder) |
-| Your GitHub / LinkedIn URLs | `PROFILE.github`, `PROFILE.linkedin` |
+| Your real email address | `PROFILE.email` — already set to `ayandayeshongwe@icloud.com` |
+| Your GitHub URL | `PROFILE.github` — already set |
+| Your LinkedIn URL | `PROFILE.linkedin` — leave it as `""` until you have a profile. The contact card and the command palette both hide an empty link, so nothing broken shows up. |
 | Repo links on each project card | `PROJECTS[].links.repo` |
 | The hero headline and intro | `index.html` → the `<h1>` and `<p class="hero__lead">` |
 | The about paragraphs | `index.html` → `.about__text` |

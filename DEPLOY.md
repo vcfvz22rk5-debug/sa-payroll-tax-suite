@@ -172,15 +172,16 @@ free tiers start to hurt.
 
 ## 5. A checklist before you share the link
 
-- [ ] `PROFILE.email` in `portfolio/assets/js/data.js` is your real address
+- [x] `PROFILE.email` in `portfolio/assets/js/data.js` is your real address
       (it is the one in the contact card and the one people will copy)
-- [ ] The GitHub and LinkedIn links in `PROFILE` point at your profiles
-- [ ] The `og:url` and `og:image` lines match where the site really is
-- [ ] The project cards link to your real repositories
-- [ ] You have replaced `ayanda.shongwe@example.com` in
-      `portfolio/index.html` too (the fallback in the contact card)
-- [ ] You have read the disclaimer — it says this is study work, not
-      advice, and that is worth keeping
+- [x] The GitHub link in `PROFILE` points at your profile
+- [ ] The LinkedIn link in `PROFILE` — it is set to `""` on purpose, and
+      the contact card hides it until you fill it in
+- [x] The `og:url` and `og:image` lines match where the site really is
+- [x] The project cards link to your real repositories
+- [x] The `ayandayeshongwe@icloud.com` address in
+      `portfolio/index.html` matches the one in `data.js` (it is the
+      fallback shown before JavaScript runs)
 
 ---
 

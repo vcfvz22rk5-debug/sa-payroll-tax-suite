@@ -352,11 +352,20 @@ em { font-style: normal; color: var(--a1); }
   width: 40px; height: 40px; border-radius: 12px;
   border: 1px solid var(--border); background: var(--surface);
   color: var(--text-soft);
+  user-select: none;      /* clicking a button should not highlight its label */
   transition: all .25s var(--ease);
 }
 .icon-btn:hover { color: var(--a1); border-color: var(--a1); background: var(--surface-2); }
 .icon-btn .ico { font-size: 1.1rem; }
-.icon-btn .kbd { font-family: var(--ff-mono); font-size: 0.66rem; opacity: .65; }
+.icon-btn .kbd {
+  font-family: var(--ff-mono); font-size: 0.64rem; letter-spacing: .02em;
+  line-height: 1.5; padding: 2px 6px; border-radius: 6px;
+  background: var(--surface-3); border: 1px solid var(--border);
+  color: var(--faint);
+}
+/* The search button carries a key hint, so it needs to be wider than
+   the square icon buttons next to it. */
+.icon-btn--cmd { width: auto; padding: 0 10px; }
 .icon-btn.is-on { color: var(--a4); border-color: rgba(52, 211, 153, .5); background: rgba(52, 211, 153, .1); }
 
 .ico--moon { display: none; }
@@ -930,6 +939,9 @@ em { font-style: normal; color: var(--a1); }
   .calc__form, .calc__out { padding: 22px; }
   /* the performance toggle is a nicety - the page decides for itself */
   #lite-toggle { display: none; }
+  /* the key hint would push the navigation off a narrow screen */
+  .icon-btn--cmd { width: 40px; padding: 0; }
+  .icon-btn--cmd .kbd { display: none; }
 }
 
 /* ---------- 23. CASE STUDY ---------- */

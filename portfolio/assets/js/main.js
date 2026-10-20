@@ -79,6 +79,24 @@
     const drawer = $("#drawer");
     const links = $$(".nav__links a");
 
+    // The search shortcut is Ctrl+K everywhere except a Mac, where it
+    // is Command+K. Showing the wrong symbol is the sort of small
+    // detail that gives the whole page away.
+    const isMac = () => {
+      const data = navigator.userAgentData;
+      if (data?.platform) return /mac/i.test(data.platform);
+      return /Mac|iPhone|iPad|iPod/i.test(
+        navigator.platform || navigator.userAgent || ""
+      );
+    };
+    const mac = isMac();
+    const kbd = $("#cmd-kbd");
+    if (kbd) kbd.textContent = mac ? "⌘K" : "Ctrl K";
+    const trigger = $("#cmd-trigger");
+    if (trigger) {
+      trigger.title = mac ? "Search (⌘K)" : "Search (Ctrl+K)";
+    }
+
     // sticky background
     let ticking = false;
     const onScroll = () => {
