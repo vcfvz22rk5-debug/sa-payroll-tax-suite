@@ -37,7 +37,7 @@ In this folder:
 git add -A
 git commit -m "SA payroll, tax and compliance suite"
 git branch -M main
-git remote add origin https://github.com/ayanda-shongwe/sa-salary-tax-calculator.git
+git remote add origin https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite.git
 git push -u origin main
 ```
 
@@ -55,7 +55,7 @@ In the repository:
 GitHub builds the site and, in about a minute, it is live at:
 
 ```
-https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/
+https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/
 ```
 
 > **Why `/portfolio` and not the root?**
@@ -67,7 +67,7 @@ https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/
 > If you would rather have the site on its own, make a separate
 > repository called `portfolio`, push the `portfolio` folder into it as
 > the root, and choose `/ (root)` as the source. The URL becomes
-> `https://ayanda-shongwe.github.io/portfolio/`.
+> `https://vcfvz22rk5-debug.github.io/portfolio/`.
 
 ### Step 4 — fix the social preview
 
@@ -78,10 +78,10 @@ where the site actually is. Two places to change:
 **`portfolio/index.html`** — the `<head>`:
 
 ```html
-<meta property="og:url" content="https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/" />
-<meta property="og:image" content="https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/assets/img/og-image.png" />
-<meta name="twitter:image" content="https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/assets/img/og-image.png" />
-<link rel="canonical" href="https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/" />
+<meta property="og:url" content="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/" />
+<meta property="og:image" content="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/assets/img/og-image.png" />
+<meta name="twitter:image" content="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/assets/img/og-image.png" />
+<link rel="canonical" href="https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/" />
 ```
 
 Those are already set to that URL, so **you only need to change them if

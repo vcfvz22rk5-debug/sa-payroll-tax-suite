@@ -165,7 +165,7 @@ it online — free, no card, and every push updates the site.
 2. Repo → **Settings** → **Pages** → Source: **Deploy from a branch** →
    `main` / **`/portfolio`** → Save
 3. It is live at
-   `https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/`
+   `https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/`
 
 The full walkthrough, including a custom domain and how to host the
 payroll app, is in [`../DEPLOY.md`](../DEPLOY.md).
@@ -175,7 +175,7 @@ the root of a repository, from a sub-folder, or from any static host
 (Netlify, Cloudflare Pages, Vercel) without changing a line.
 
 > If you deploy the portfolio *inside* the tax-calculator repository, use
-> `https://ayanda-shongwe.github.io/sa-salary-tax-calculator/portfolio/`
+> `https://vcfvz22rk5-debug.github.io/sa-payroll-tax-suite/portfolio/`
 > and set the Pages source to `/portfolio` — not the branch root.
 
 ---

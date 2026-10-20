@@ -25,7 +25,7 @@ const PROFILE = {
   location: "South Africa",
   email: "ayanda.shongwe@example.com",   // ← replace with your real address
   availability: "Available for internships & junior roles",
-  github: "https://github.com/ayanda-shongwe",        // ← replace
+  github: "https://github.com/vcfvz22rk5-debug",        // ← replace
   linkedin: "https://www.linkedin.com/in/ayanda-shongwe", // ← replace
   twitter: "",                                         // optional
 };
@@ -69,9 +69,9 @@ const PROJECTS = [
     ],
     tags: ["Python 3", "SQLite", "HTTP API", "Vanilla JS", "Payroll", "EMP201"],
     links: {
-      repo: "https://github.com/ayanda-shongwe/payroll-suite",
+      repo: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite/tree/main/payroll-suite",
       demo: "#case-study",
-      docs: "https://github.com/ayanda-shongwe/payroll-suite#readme",
+      docs: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite/blob/main/payroll-suite/README.md",
     },
   },
 
@@ -95,9 +95,9 @@ const PROJECTS = [
     ],
     tags: ["Python 3", "CLI", "unittest", "SARS Tax Tables", "Payroll"],
     links: {
-      repo: "https://github.com/ayanda-shongwe/sa-salary-tax-calculator",
+      repo: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite",
       demo: "#demo",
-      docs: "https://github.com/ayanda-shongwe/sa-salary-tax-calculator#readme",
+      docs: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite#readme",
     },
   },
 
@@ -119,7 +119,7 @@ const PROJECTS = [
     ],
     tags: ["JavaScript", "Vanilla", "CSS Grid", "No Build Step"],
     links: {
-      repo: "https://github.com/ayanda-shongwe/sa-salary-tax-calculator",
+      repo: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite",
       demo: "#demo",
       docs: "",
     },
@@ -145,9 +145,9 @@ const PROJECTS = [
     ],
     tags: ["Python 3", "CSV", "VAT201", "EMP201", "SDL", "Payroll"],
     links: {
-      repo: "https://github.com/ayanda-shongwe/sa-salary-tax-calculator",
+      repo: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite",
       demo: "#demo",
-      docs: "https://github.com/ayanda-shongwe/sa-salary-tax-calculator#readme",
+      docs: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite#readme",
     },
   },
 
@@ -169,7 +169,7 @@ const PROJECTS = [
     ],
     tags: ["Python 3", "SARS Rules", "Tax Credits", "Testing"],
     links: {
-      repo: "https://github.com/ayanda-shongwe/sa-salary-tax-calculator",
+      repo: "https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite",
       demo: "#demo",
       docs: "",
     },

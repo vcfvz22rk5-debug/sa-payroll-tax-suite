@@ -1,5 +1,7 @@
 # Payroll Suite
 
+[![Tests](https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite/actions/workflows/tests.yml/badge.svg)](https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite/actions/workflows/tests.yml)
+
 A payroll and SARS compliance system for a small South African business.
 
 It calculates payslips the way a real payroll does, keeps everything in

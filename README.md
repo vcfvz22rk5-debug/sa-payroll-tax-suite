@@ -1,5 +1,8 @@
 # South African Salary, Tax & Payroll Suite
 
+[![Tests](https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite/actions/workflows/tests.yml/badge.svg)](https://github.com/vcfvz22rk5-debug/sa-payroll-tax-suite/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Three tools in one repository, built as a portfolio project that combines
 **accounting knowledge** with **practical coding skills**.
 
