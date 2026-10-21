@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Ayanda Shongwe — Payroll Portfolio: A Complete Walkthrough</title>
+<meta name="description" content="Every project, every concept, and how to explain it — the complete guide to the payroll portfolio." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:wght@600&display=swap" rel="stylesheet" />
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   THE DOCUMENT
+   A4, print-first. The palette is the same one the site uses.
+   ═══════════════════════════════════════════════════════════════════ */
+:root {
+  --ink:      #1b1917;
+  --ink-2:    #45403a;
+  --ink-3:    #6f675b;
+  --ink-4:    #9a938a;
+  --paper:    #fdfcf9;
+  --paper-2:  #f6f2e9;
+  --rule:     #e2dcd0;
+  --rule-2:   #cfc6b6;
+
+  --brass:    #8a6a1f;
+  --brass-l:  #d4a94f;
+  --olive:    #4f6b3c;
+  --olive-l:  #8aa070;
+  --clay:     #a8452c;
+  --slate:    #3d6270;
+  --plum:     #6f4a7a;
+
+  --dark:     #0d0c0a;
+  --dark-2:   #1a1815;
+
+  --ff:    "IBM Plex Sans", system-ui, sans-serif;
+  --ff-m:  "IBM Plex Mono", ui-monospace, monospace;
+  --ff-s:  "IBM Plex Serif", Georgia, serif;
+}
+
+@page { size: A4; margin: 0; }
+
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--ff);
+  font-size: 10.2pt;
+  line-height: 1.62;
+}
+h1, h2, h3, h4 { margin: 0; line-height: 1.18; letter-spacing: -0.015em; font-weight: 600; }
+p { margin: 0 0 9pt; }
+ul, ol { margin: 0 0 10pt; padding-left: 15pt; }
+li { margin-bottom: 4pt; }
+strong { font-weight: 600; }
+em { font-style: normal; color: var(--brass); }
+a { color: var(--brass); text-decoration: none; }
+code { font-family: var(--ff-m); font-size: 0.88em; background: #efeade; padding: 1px 4px; border-radius: 3px; }
+
+.page { page-break-after: always; padding: 16mm 15mm 18mm; }
+.cover, .opener, .end { padding: 0; }
+.page:last-child { page-break-after: auto; }
+.avoid { page-break-inside: avoid; }
+
+/* ── cover ───────────────────────────────────────────────────────── */
+.cover {
+  height: 297mm; width: 210mm;
+  background: var(--dark);
+  color: #f2ede3;
+  padding: 34mm 24mm 22mm;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+.cover::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(242,237,227,.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(242,237,227,.05) 1px, transparent 1px);
+  background-size: 9mm 9mm;
+  mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 20%, transparent 80%);
+}
+.cover > * { position: relative; }
+.cover__mark {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--ff-m); font-size: 8.5pt; letter-spacing: .12em;
+  text-transform: uppercase; color: #8c8373;
+}
+.cover__mark b { color: var(--brass-l); font-weight: 600; }
+.cover__kicker {
+  font-family: var(--ff-m); font-size: 9pt; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--brass-l); margin-bottom: 8mm;
+}
+.cover h1 {
+  font-size: 31pt; font-weight: 700; letter-spacing: -0.03em;
+  margin-bottom: 6mm; max-width: 150mm;
+}
+.cover h1 em { color: var(--brass-l); }
+.cover__sub {
+  font-size: 12pt; color: #cfc7b8; max-width: 130mm; line-height: 1.55;
+}
+.cover__facts {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 6mm;
+  border-top: 1px solid rgba(242,237,227,.16); padding-top: 7mm;
+}
+.cover__facts div span {
+  display: block; font-family: var(--ff-m); font-size: 7.5pt; letter-spacing: .12em;
+  text-transform: uppercase; color: #8c8373; margin-bottom: 2mm;
+}
+.cover__facts div b {
+  font-family: var(--ff-m); font-size: 15pt; color: var(--brass-l); font-weight: 600;
+}
+.cover__foot {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  font-family: var(--ff-m); font-size: 8.5pt; color: #8c8373;
+}
+
+/* ── section opener ───────────────────────────────────────────────── */
+.opener {
+  background: var(--dark); color: #f2ede3;
+  padding: 30mm 22mm; height: 297mm; width: 210mm;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.opener::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(242,237,227,.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(242,237,227,.05) 1px, transparent 1px);
+  background-size: 9mm 9mm;
+  mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 20%, transparent 80%);
+}
+.opener > * { position: relative; }
+.opener__num {
+  font-family: var(--ff-m); font-size: 10pt; letter-spacing: .2em;
+  color: var(--brass-l); margin-bottom: 5mm;
+}
+.opener h2 { font-size: 26pt; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 5mm; }
+.opener p { font-size: 12pt; color: #cfc7b8; max-width: 135mm; }
+.opener__list { margin-top: 8mm; display: grid; gap: 3mm; }
+.opener__list span {
+  font-family: var(--ff-m); font-size: 9.5pt; color: #a89f8e;
+  padding-left: 6mm; border-left: 2px solid rgba(212,169,79,.4);
+}
+
+/* ── running head ─────────────────────────────────────────────────── */
+.head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 1px solid var(--rule); padding-bottom: 3mm; margin-bottom: 7mm;
+}
+.head b { font-family: var(--ff-m); font-size: 8pt; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-4); }
+.head span { font-family: var(--ff-m); font-size: 8pt; color: var(--ink-4); }
+
+/* ── headings ─────────────────────────────────────────────────────── */
+h2.sec {
+  font-size: 19pt; font-weight: 700; letter-spacing: -0.025em;
+  margin: 0 0 4mm; padding-bottom: 3mm; border-bottom: 2px solid var(--ink);
+}
+h2.sec .n { color: var(--brass); font-family: var(--ff-m); font-size: 13pt; margin-right: 4mm; }
+h3 { font-size: 12.5pt; font-weight: 600; margin: 8mm 0 3mm; }
+h4 { font-size: 10.5pt; font-weight: 600; margin: 6mm 0 2mm; color: var(--ink-2); }
+.lead { font-size: 11pt; color: var(--ink-2); margin-bottom: 6mm; max-width: 160mm; }
+
+/* ── the concept card: the heart of the document ──────────────────── */
+.concept {
+  border: 1px solid var(--rule-2); border-radius: 6px;
+  padding: 5mm 6mm; margin: 0 0 5mm; background: #fff;
+  page-break-inside: avoid;
+}
+.concept__head { display: flex; align-items: baseline; gap: 3mm; margin-bottom: 2.5mm; }
+.concept__n {
+  font-family: var(--ff-m); font-size: 7.5pt; font-weight: 600;
+  color: #fff; background: var(--ink); border-radius: 3px; padding: 1px 5px;
+  letter-spacing: .05em;
+}
+.concept__head h4 { margin: 0; font-size: 11.5pt; color: var(--ink); }
+.concept dl { margin: 0; display: grid; grid-template-columns: 26mm 1fr; gap: 1.6mm 4mm; }
+.concept dt {
+  font-family: var(--ff-m); font-size: 7.5pt; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-4); padding-top: .6mm;
+}
+.concept dd { margin: 0; font-size: 9.6pt; color: var(--ink-2); }
+.concept dd b { color: var(--ink); font-weight: 600; }
+.concept .say {
+  margin-top: 3mm; padding: 2.5mm 3.5mm; border-radius: 4px;
+  background: #f5f1e6; border-left: 2px solid var(--brass);
+  font-size: 9.4pt; color: var(--ink-2);
+}
+.concept .say b {
+  font-family: var(--ff-m); font-size: 7.5pt; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--brass); display: block; margin-bottom: 1mm;
+}
+
+/* ── tables ───────────────────────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; margin: 3mm 0 6mm; font-size: 9.4pt; }
+th {
+  text-align: left; font-family: var(--ff-m); font-size: 7.8pt; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-4); font-weight: 500;
+  border-bottom: 1px solid var(--rule-2); padding: 2mm 2.5mm 2mm 0;
+}
+td { padding: 2.2mm 2.5mm 2.2mm 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td.num, th.num { text-align: right; font-family: var(--ff-m); font-variant-numeric: tabular-nums; }
+td strong { color: var(--ink); }
+tbody tr:last-child td { border-bottom: 1px solid var(--rule-2); }
+
+/* ── code ─────────────────────────────────────────────────────────── */
+pre {
+  background: var(--dark); color: #e6dfd2; border-radius: 6px;
+  padding: 4mm 5mm; overflow: hidden; font-family: var(--ff-m);
+  font-size: 8.4pt; line-height: 1.62; margin: 3mm 0 5mm;
+  page-break-inside: avoid; white-space: pre-wrap; word-break: break-word;
+}
+pre .c { color: #8c8373; }
+pre .k { color: #d4a94f; }
+pre .s { color: #8aa070; }
+pre .n { color: #86a9b5; }
+pre .f { color: #b08bb0; }
+code.inline {
+  background: #efeade; padding: 1px 4px; border-radius: 3px;
+  font-family: var(--ff-m); font-size: 8.6pt;
+}
+
+/* ── figures ──────────────────────────────────────────────────────── */
+figure { margin: 4mm 0 6mm; page-break-inside: avoid; }
+figure svg { width: 100%; height: auto; display: block; }
+figcaption {
+  font-size: 8.4pt; color: var(--ink-4); margin-top: 2.5mm;
+  font-family: var(--ff-m); letter-spacing: .02em;
+}
+figure.dark { background: var(--dark); border-radius: 6px; padding: 5mm; }
+figure.dark figcaption { color: #8c8373; }
+
+/* ── swatches ─────────────────────────────────────────────────────── */
+.swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4mm; margin: 4mm 0 6mm; }
+.swatch { border: 1px solid var(--rule-2); border-radius: 5px; overflow: hidden; }
+.swatch__chip { height: 18mm; }
+.swatch__meta { padding: 2.5mm; font-size: 8.4pt; }
+.swatch__meta b { display: block; font-size: 9.4pt; }
+.swatch__meta code { background: none; padding: 0; font-size: 8pt; color: var(--ink-3); }
+.swatch__meta span { color: var(--ink-4); font-size: 7.8pt; }
+
+/* ── specimen ─────────────────────────────────────────────────────── */
+.specimen { border: 1px solid var(--rule-2); border-radius: 6px; padding: 5mm 6mm; margin: 3mm 0 5mm; }
+.specimen__row { display: flex; align-items: baseline; gap: 5mm; padding: 2.5mm 0; border-bottom: 1px solid var(--rule); }
+.specimen__row:last-child { border-bottom: none; }
+.specimen__meta { width: 38mm; flex: none; font-family: var(--ff-m); font-size: 7.6pt; color: var(--ink-4); line-height: 1.5; }
+.specimen__meta b { display: block; color: var(--ink-2); font-size: 8.4pt; }
+
+/* ── timeline ──────────────────────────────────────────────────────── */
+.timeline { margin: 5mm 0 6mm; }
+.tl-row { display: grid; grid-template-columns: 26mm 1fr; gap: 5mm; padding: 3mm 0; border-bottom: 1px solid var(--rule); }
+.tl-row:last-child { border-bottom: none; }
+.tl-row__when { font-family: var(--ff-m); font-size: 8.4pt; color: var(--brass); }
+.tl-row__what b { font-size: 10.4pt; }
+.tl-row__what p { margin: 1mm 0 0; font-size: 9.4pt; color: var(--ink-2); }
+
+/* ── questions ────────────────────────────────────────────────────── */
+.q { margin: 0 0 4mm; page-break-inside: avoid; }
+.q__q {
+  font-size: 10.6pt; font-weight: 600; color: var(--ink);
+  padding-left: 5mm; border-left: 2px solid var(--brass); margin-bottom: 2mm;
+}
+.q__a { padding-left: 5mm; font-size: 9.6pt; color: var(--ink-2); }
+.q__a b { color: var(--ink); }
+.q__a .tag {
+  display: inline-block; font-family: var(--ff-m); font-size: 7.2pt;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4);
+  border: 1px solid var(--rule-2); border-radius: 3px; padding: 0 4px; margin-left: 2mm;
+  vertical-align: 1px;
+}
+
+/* ── callouts ─────────────────────────────────────────────────────── */
+.note {
+  border-left: 2px solid var(--slate); background: #f0f4f5;
+  padding: 3.5mm 4.5mm; margin: 3mm 0 5mm; font-size: 9.6pt; color: var(--ink-2);
+  page-break-inside: avoid;
+}
+.note b { color: var(--ink); }
+.note.warn { border-left-color: var(--clay); background: #f8f0ec; }
+.note.good { border-left-color: var(--olive); background: #f1f4ee; }
+
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+.three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+.four { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; }
+.stat { border: 1px solid var(--rule-2); border-radius: 5px; padding: 4mm; text-align: center; }
+.stat b { display: block; font-family: var(--ff-m); font-size: 17pt; color: var(--brass); font-weight: 600; }
+.stat span { font-size: 8.2pt; color: var(--ink-3); }
+
+.toc { display: grid; grid-template-columns: 1fr 1fr; gap: 2mm 10mm; margin-top: 4mm; }
+.toc a {
+  display: flex; gap: 3mm; align-items: baseline;
+  padding: 1.6mm 0; border-bottom: 1px dotted var(--rule-2); color: var(--ink);
+  font-size: 10pt;
+}
+.toc a i { font-family: var(--ff-m); font-style: normal; color: var(--brass); font-size: 8.6pt; width: 8mm; flex: none; }
+.toc a span { color: var(--ink-4); font-family: var(--ff-m); font-size: 8.4pt; margin-left: auto; }
+
+.end {
+  background: var(--dark); color: #f2ede3; padding: 26mm 22mm; height: 297mm; width: 210mm;
+  display: flex; flex-direction: column; justify-content: center; text-align: left;
+}
+.end h2 { font-size: 24pt; margin-bottom: 6mm; }
+.end p { color: #cfc7b8; font-size: 11.5pt; max-width: 140mm; }
+.end__rule { width: 40mm; height: 2px; background: var(--brass-l); margin: 8mm 0; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     COVER
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page cover">
+  <div class="cover__mark"><b>AS</b> Ayanda Shongwe · BCom Accounting</div>
+
+  <div>
+    <div class="cover__kicker">A complete walkthrough</div>
+    <h1>Four projects, every concept, and <em>how to explain them</em></h1>
+    <p class="cover__sub">
+      South African payroll, tax and SARS compliance software — and the
+      reasoning behind every line of it. Written so that you can sit down
+      with an interviewer, a lecturer or a client and talk about it with
+      confidence.
+    </p>
+  </div>
+
+  <div class="cover__facts">
+    <div><span>Projects</span><b>4</b></div>
+    <div><span>Tests</span><b>262</b></div>
+    <div><span>Lines of code</span><b>11.5k</b></div>
+    <div><span>Dependencies</span><b>0</b></div>
+  </div>
+
+  <div class="cover__foot">
+    <div>Ayanda Shongwe</div>
+    <div>21 October 2026</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     CONTENTS
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="head"><b>Contents</b><span>Payroll Portfolio</span></div>
+
+  <h2 class="sec">What is in here</h2>
+  <p class="lead">
+    The first half explains <em>what</em> was built and the ideas behind
+    it. The second half is the part to rehearse: the questions you are
+    likely to be asked, and a way to answer each one.
+  </p>
+
+  <div class="toc">
+    <a href="#s1"><i>01</i> The one-minute version <span>p.3</span></a>
+    <a href="#s2"><i>02</i> What was built <span>p.4</span></a>
+    <a href="#s3"><i>03</i> The accounting you need <span>p.7</span></a>
+    <a href="#s4"><i>04</i> How the code fits together <span>p.11</span></a>
+    <a href="#s5"><i>05</i> The concepts, one by one <span>p.14</span></a>
+    <a href="#s6"><i>06</i> The design system <span>p.20</span></a>
+    <a href="#s7"><i>07</i> Testing <span>p.22</span></a>
+    <a href="#s8"><i>08</i> How it is hosted <span>p.23</span></a>
+    <a href="#s9"><i>09</i> The mistakes I made <span>p.24</span></a>
+    <a href="#s10"><i>10</i> Questions, with answers <span>p.26</span></a>
+    <a href="#s11"><i>11</i> The numbers <span>p.31</span></a>
+  </div>
+
+  <div class="note good" style="margin-top:8mm">
+    <b>How to use this document.</b> Read Part 1 to 4 once, properly.
+    Then use Part 10 as a script. Every answer in it is written the way
+    I would actually say it out loud — short, specific, and with the
+    number in it. An interviewer trusts a candidate who can say
+    "R56 172, because 44 118 plus 26% of the amount over R245 100, less
+    the R17 820 primary rebate" rather than one who says "I used the
+    SARS tables".
+  </div>
+
+  <h3>What is in each part</h3>
+  <table>
+    <thead><tr><th>Part</th><th>What it gives you</th></tr></thead>
+    <tbody>
+      <tr><td><strong>01 — The one-minute version</strong></td><td>What to say when someone asks "so what did you build?"</td></tr>
+      <tr><td><strong>02 — What was built</strong></td><td>The four projects, with a diagram of how they relate</td></tr>
+      <tr><td><strong>03 — The accounting</strong></td><td>The tax rules themselves, worked through, because this is what you know that a computer science student does not</td></tr>
+      <tr><td><strong>04 — Architecture</strong></td><td>How each project is put together, and why</td></tr>
+      <tr><td><strong>05 — The concepts</strong></td><td>Twenty-two named concepts: what they are, where they live, why they matter, and one sentence for each</td></tr>
+      <tr><td><strong>06 — The design system</strong></td><td>Colour, type, space and motion, with the reasons</td></tr>
+      <tr><td><strong>07 — Testing</strong></td><td>What is tested, what is not, and why the hand-worked numbers matter</td></tr>
+      <tr><td><strong>08 — Hosting</strong></td><td>How it runs for free, and the trade-offs</td></tr>
+      <tr><td><strong>09 — The mistakes</strong></td><td>The bugs I found and fixed. This is the best material in the document.</td></tr>
+      <tr><td><strong>10 — Questions</strong></td><td>Twenty-two questions with model answers</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     PART 1
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page" id="s1">
+  <div class="head"><b>Part 01</b><span>The one-minute version</span></div>
+
+  <h2 class="sec"><span class="n">01</span>The one-minute version</h2>
+
+  <p class="lead">
+    If you only memorise one paragraph, memorise this one.
+  </p>
+
+  <div class="note">
+    <b>"I build payroll and tax software for South African businesses, and
+    every number in it comes from the SARS tables rather than from
+    what I thought the rule was."</b>
+  </div>
+
+  <p>
+    That sentence works because it says three things at once: the
+    <b>domain</b> (payroll and tax in South Africa), the
+    <b>differentiator</b> (the numbers are right, and I can prove it),
+    and the <b>attitude</b> (I check the source instead of guessing).
+  </p>
+
+  <p>
+    Then, if they want more, there are three directions you can go, and
+    you should pick the one that fits the person you are talking to:
+  </p>
+
+  <div class="three">
+    <div class="concept" style="margin:0">
+      <div class="concept__head"><h4>To a recruiter</h4></div>
+      <p style="font-size:9.4pt;color:var(--ink-2)">
+        Lead with the <b>payroll suite</b>. It is the biggest thing, it
+        has a database, an API and a dashboard, and it solves a problem
+        a real business has. Mention that it has 148 tests and that the
+        tax figures are checked against SARS's own published tables.
+      </p>
+    </div>
+    <div class="concept" style="margin:0">
+      <div class="concept__head"><h4>To an accountant</h4></div>
+      <p style="font-size:9.4pt;color:var(--ink-2)">
+        Lead with the <b>domain knowledge</b>. The annualised method, the
+        s11F cap, the year-end reconciliation, the EMP201 against the
+        IRP5. This is where a BCom student has an unfair advantage and
+        should use it.
+      </p>
+    </div>
+    <div class="concept" style="margin:0">
+      <div class="concept__head"><h4>To a developer</h4></div>
+      <p style="font-size:9.4pt;color:var(--ink-2)">
+        Lead with the <b>engineering</b>. Zero dependencies, the engine
+        separated from the database, a JSON API with no framework, and
+        the same algorithm in Python and JavaScript with shared tests.
+      </p>
+    </div>
+  </div>
+
+  <h3>The four things, in one line each</h3>
+  <table>
+    <thead><tr><th>Project</th><th>What it does</th><th>Why it exists</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Payroll Suite</strong><br /><span style="font-size:8.4pt;color:var(--ink-4)">Python · SQLite · API · dashboard</span></td>
+        <td>A payroll system: employees in a database, monthly payslips, EMP201 declarations, IRP5 certificates, a deadline calendar and a dashboard.</td>
+        <td>It is the flagship. It shows the whole employer half of tax, and it is the one an employer could actually use.</td>
+      </tr>
+      <tr>
+        <td><strong>VAT 201 &amp; Payroll Suite</strong><br /><span style="font-size:8.4pt;color:var(--ink-4)">Python · CLI · CSV</span></td>
+        <td>Output tax less input tax, the six bi-monthly VAT periods with their real due dates, SDL, and a batch payroll run from a CSV.</td>
+        <td>It is the middle rung: the employer's side of tax, in the terminal, with a batch mode.</td>
+      </tr>
+      <tr>
+        <td><strong>Salary &amp; Tax Calculator</strong><br /><span style="font-size:8.4pt;color:var(--ink-4)">Python · CLI</span></td>
+        <td>What one employee pays: PAYE, UIF, the net pay, on the official 2026 and 2027 tables.</td>
+        <td>It is where it started, and it is the project that proves the numbers.</td>
+      </tr>
+      <tr>
+        <td><strong>The portfolio site</strong><br /><span style="font-size:8.4pt;color:var(--ink-4)">HTML · CSS · JavaScript</span></td>
+        <td>A workbook you can open: eight sheets, a formula bar that shows how every number was worked out, and the live models inside it.</td>
+        <td>It is the shop window, and it is the only piece a visitor can touch.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     PART 2
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page" id="s2">
+  <div class="head"><b>Part 02</b><span>What was built</span></div>
+
+  <h2 class="sec"><span class="n">02</span>What was built</h2>
+
+  <p class="lead">
+    Four projects, built in order. Each one needed the one before it, so
+    they read as a single body of work rather than four separate
+    assignments.
+  </p>
+
+  <figure>
+    <svg viewBox="0 0 720 330" role="img" aria-label="How the four projects relate">
+      <defs>
+        <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M0 0 L8 4 L0 8 z" fill="#9a938a"/>
+        </marker>
+        <marker id="ar2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M0 0 L8 4 L0 8 z" fill="#8a6a1f"/>
+        </marker>
+      </defs>
+
+      <!-- the site -->
+      <rect x="24" y="24" width="300" height="120" rx="8" fill="#f6f2e9" stroke="#cfc6b6"/>
+      <text x="42" y="50" font-family="IBM Plex Mono" font-size="9" fill="#8a6a1f" letter-spacing="1.6">THE PORTFOLIO SITE</text>
+      <text x="42" y="74" font-family="IBM Plex Sans" font-size="13" font-weight="600" fill="#1b1917">A workbook you can open</text>
+      <text x="42" y="93" font-family="IBM Plex Sans" font-size="9.5" fill="#45403a">8 sheets · formula bar · status bar</text>
+      <text x="42" y="108" font-family="IBM Plex Sans" font-size="9.5" fill="#45403a">8 sheets of live models inside it</text>
+      <text x="42" y="123" font-family="IBM Plex Sans" font-size="9.5" fill="#45403a">4 248 lines · no framework</text>
+
+      <!-- the engine -->
+      <rect x="396" y="24" width="300" height="120" rx="8" fill="#0d0c0a" stroke="#3a3630"/>
+      <text x="414" y="50" font-family="IBM Plex Mono" font-size="9" fill="#d4a94f" letter-spacing="1.6">THE ENGINE (JAVASCRIPT)</text>
+      <text x="414" y="74" font-family="IBM Plex Sans" font-size="13" font-weight="600" fill="#f2ede3">The same maths, twice</text>
+      <text x="414" y="93" font-family="IBM Plex Sans" font-size="9.5" fill="#cfc7b8">tax.js — PAYE, rebates, UIF</text>
+      <text x="414" y="108" font-family="IBM Plex Sans" font-size="9.5" fill="#cfc7b8">vat.js — VAT, SDL, payslips</text>
+      <text x="414" y="123" font-family="IBM Plex Sans" font-size="9.5" fill="#cfc7b8">31 self-tests in the console</text>
+
+      <line x1="324" y1="84" x2="392" y2="84" stroke="#8a6a1f" stroke-width="1.5" marker-end="url(#ar2)"/>
+
+      <!-- python row -->
+      <rect x="24" y="182" width="196" height="126" rx="8" fill="#fff" stroke="#cfc6b6"/>
+      <text x="40" y="205" font-family="IBM Plex Mono" font-size="8.4" fill="#8a6a1f" letter-spacing="1.4">SALARY &amp; TAX CALC</text>
+      <text x="40" y="224" font-family="IBM Plex Sans" font-size="11" font-weight="600" fill="#1b1917">One employee's payslip</text>
+      <text x="40" y="242" font-family="IBM Plex Sans" font-size="9" fill="#45403a">PAYE · UIF · net pay</text>
+      <text x="40" y="256" font-family="IBM Plex Sans" font-size="9" fill="#45403a">2026 and 2027 tables</text>
+      <text x="40" y="270" font-family="IBM Plex Sans" font-size="9" fill="#45403a">21 tests</text>
+      <text x="40" y="292" font-family="IBM Plex Mono" font-size="8" fill="#9a938a">cli.py</text>
+
+      <rect x="262" y="182" width="196" height="126" rx="8" fill="#fff" stroke="#cfc6b6"/>
+      <text x="278" y="205" font-family="IBM Plex Mono" font-size="8.4" fill="#8a6a1f" letter-spacing="1.4">VAT 201 &amp; PAYROLL</text>
+      <text x="278" y="224" font-family="IBM Plex Sans" font-size="11" font-weight="600" fill="#1b1917">The employer's side</text>
+      <text x="278" y="242" font-family="IBM Plex Sans" font-size="9" fill="#45403a">VAT periods · SDL</text>
+      <text x="278" y="256" font-family="IBM Plex Sans" font-size="9" fill="#45403a">batch payroll from CSV</text>
+      <text x="278" y="270" font-family="IBM Plex Sans" font-size="9" fill="#45403a">92 tests</text>
+      <text x="278" y="292" font-family="IBM Plex Mono" font-size="8" fill="#9a938a">cli_employer.py</text>
+
+      <rect x="500" y="182" width="196" height="126" rx="8" fill="#f6f2e9" stroke="#8a6a1f" stroke-width="1.5"/>
+      <text x="516" y="205" font-family="IBM Plex Mono" font-size="8.4" fill="#8a6a1f" letter-spacing="1.4">PAYROLL SUITE (FLAGSHIP)</text>
+      <text x="516" y="224" font-family="IBM Plex Sans" font-size="11" font-weight="600" fill="#1b1917">A system, not a script</text>
+      <text x="516" y="242" font-family="IBM Plex Sans" font-size="9" fill="#45403a">SQLite · 8 API endpoints</text>
+      <text x="516" y="256" font-family="IBM Plex Sans" font-size="9" fill="#45403a">EMP201 · EMP501 · IRP5</text>
+      <text x="516" y="270" font-family="IBM Plex Sans" font-size="9" fill="#45403a">148 tests · a dashboard</text>
+      <text x="516" y="292" font-family="IBM Plex Mono" font-size="8" fill="#9a938a">payroll-suite/</text>
+
+      <line x1="220" y1="245" x2="258" y2="245" stroke="#9a938a" stroke-width="1.2" marker-end="url(#ar)"/>
+      <line x1="458" y1="245" x2="496" y2="245" stroke="#9a938a" stroke-width="1.2" marker-end="url(#ar)"/>
+      <path d="M598 182 L598 168 L174 168 L174 180" fill="none" stroke="#9a938a" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#ar)"/>
+      <text x="386" y="162" font-family="IBM Plex Sans" font-size="8.4" fill="#9a938a" text-anchor="middle">one set of rules, implemented twice and checked against each other</text>
+    </svg>
+    <figcaption>How the four projects relate. The browser engine and the Python engine implement the same rules independently, and the same test cases run against both — that is what keeps them honest.</figcaption>
+  </figure>
+
+  <h3>Why there are four, and not one</h3>
+  <p>
+    Each project exists because the previous one ran into a wall.
+  </p>
+  <ul>
+    <li>
+      <b>The calculator</b> asked "what does one person pay?" It needed
+      the SARS tables, and it needed them to be right — so it needed
+      tests with hand-worked answers.
+    </li>
+    <li>
+      <b>The employer tool</b> asked "what does a business owe?" That
+      brought in VAT, SDL, the EMP201 and a batch of employees, which a
+      single payslip calculator could not hold.
+    </li>
+    <li>
+      <b>The payroll suite</b> asked "what happens when it is a real
+      business?" That needed a database, history, forms that reconcile
+      and a dashboard somebody could actually look at.
+    </li>
+    <li>
+      <b>The site</b> asked "how does anyone find out?" It needed the
+      models to run in a browser, which meant porting the engine to
+      JavaScript — and the port is what proved the engine was clean.
+    </li>
+  </ul>
+
+  <div class="note">
+    <b>Say this if asked "why four projects instead of one big one?"</b><br />
+    Because each one was a real answer to a real problem, and a person
+    can read and judge one project properly. Four small, finished,
+    tested things are more convincing than one large, unfinished thing.
+  </div>
+</section>
+
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     PART 3 — THE ACCOUNTING
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page opener">
+  <div class="opener__num">Part 03</div>
+  <h2>The accounting you need</h2>
+  <p>
+    This is the part a computer science student does not have. The rules
+    are public, they are specific, and you can be checked on them.
+    Learn them properly and you are never the weakest person in the
+    room.
+  </p>
+  <div class="opener__list">
+    <span>Progressive slab rates and the annualised method</span>
+    <span>Rebates, thresholds and the medical tax credit</span>
+    <span>UIF, SDL and the section 11F pension cap</span>
+    <span>VAT: output, input, periods and registration</span>
+    <span>EMP201, EMP501, IRP5 and the deadline calendar</span>
+  </div>
+</section>
+
+<section class="page" id="s3">
+  <div class="head"><b>Part 03</b><span>The accounting</span></div>
+
+  <h2 class="sec"><span class="n">03</span>The accounting you need</h2>
+
+  <h3>The slabs: tax is progressive, not flat</h3>
+  <p>
+    South African income tax is <b>progressive</b>. Each band has its own
+    rate, and you only pay that rate on the part of your income that
+    falls inside it. That is why the tax table is written as
+    "R44 118 <b>plus</b> 26% of the amount over R245 100" and not
+    "26% of everything".
+  </p>
+
+  <figure>
+    <svg viewBox="0 0 700 250" role="img" aria-label="The 2027 tax slabs as a staircase">
+      <text x="20" y="18" font-family="IBM Plex Mono" font-size="9" fill="#8a6a1f" letter-spacing="1.5">2027 TAX YEAR · 1 MAR 2026 – 28 FEB 2027</text>
+      <!-- the axes -->
+      <line x1="60" y1="210" x2="672" y2="210" stroke="#cfc6b6"/>
+      <line x1="60" y1="40" x2="60" y2="210" stroke="#cfc6b6"/>
+      <!-- the bars -->
+      <g>
+        <rect x="60"  y="140" width="102" height="70"  fill="#e9dcc0" stroke="#cfc6b6"/>
+        <rect x="162" y="116" width="102" height="94"  fill="#e0cfa8" stroke="#cfc6b6"/>
+        <rect x="264" y="96"  width="102" height="114" fill="#d7c28d" stroke="#cfc6b6"/>
+        <rect x="366" y="80"  width="102" height="130" fill="#cdb473" stroke="#cfc6b6"/>
+        <rect x="468" y="66"  width="102" height="144" fill="#c3a55f" stroke="#cfc6b6"/>
+        <rect x="570" y="54"  width="102" height="156" fill="#b9974c" stroke="#cfc6b6"/>
+      </g>
+      <!-- the rates -->
+      <g font-family="IBM Plex Mono" font-size="10" fill="#4f6b3c" font-weight="600">
+        <text x="111" y="130" text-anchor="middle">18%</text>
+        <text x="213" y="106" text-anchor="middle">26%</text>
+        <text x="315" y="86"  text-anchor="middle">31%</text>
+        <text x="417" y="70"  text-anchor="middle">36%</text>
+        <text x="519" y="56"  text-anchor="middle">39%</text>
+        <text x="621" y="44"  text-anchor="middle">41%</text>
+      </g>
+      <!-- the thresholds -->
+      <g font-family="IBM Plex Mono" font-size="8.4" fill="#6f675b">
+        <text x="111" y="226" text-anchor="middle">0</text>
+        <text x="213" y="226" text-anchor="middle">245 100</text>
+        <text x="315" y="226" text-anchor="middle">383 100</text>
+        <text x="417" y="226" text-anchor="middle">530 200</text>
+        <text x="519" y="226" text-anchor="middle">695 800</text>
+        <text x="621" y="226" text-anchor="middle">887 000</text>
+        <text x="111" y="242" text-anchor="middle">taxable income (R)</text>
+      </g>
+      <text x="672" y="242" font-family="IBM Plex Mono" font-size="8.4" fill="#6f675b" text-anchor="end">… 1 878 600+ at 45%</text>
+    </svg>
+    <figcaption>Each band taxes only the slice of income inside it. The 45% top band is not shown.</figcaption>
+  </figure>
+
+  <div class="note good">
+    <b>The worked example to have ready.</b> A salary of R30 000 a month:
+    <br /><br />
+    <b>1.</b> Annualised taxable income = R30 000 × 12 = <b>R360 000</b>
+    <br />
+    <b>2.</b> It falls in the second band, so tax = R44 118 + 26% × (R360 000 − R245 100) = R44 118 + R29 874 = <b>R73 992</b>
+    <br />
+    <b>3.</b> Less the primary rebate of <b>R17 820</b> = <b>R56 172</b> a year
+    <br />
+    <b>4.</b> Monthly PAYE = R56 172 ÷ 12 = <b>R4 681</b>
+    <br />
+    <b>5.</b> Plus UIF of 1% capped at R17 712 = <b>R177.12</b>
+    <br />
+    <b>6.</b> Net pay = R30 000 − R4 681 − R177.12 = <b>R25 141.88</b>
+  </div>
+
+  <h3>The annualised method: the rule people get wrong</h3>
+  <p>
+    Because the brackets are built around a <b>year</b> of income, you
+    cannot tax a month on its own. The month's taxable income is
+    annualised, taxed, and divided by twelve again.
+  </p>
+
+  <figure>
+    <svg viewBox="0 0 700 190" role="img" aria-label="The annualised method, step by step">
+      <g font-family="IBM Plex Sans" font-size="9" fill="#6f675b">
+        <text x="30" y="22" font-family="IBM Plex Mono" letter-spacing="1.4" fill="#8a6a1f">THE ANNUALISED METHOD</text>
+      </g>
+      <!-- step 1 -->
+      <rect x="30" y="44" width="140" height="70" rx="6" fill="#fff" stroke="#cfc6b6"/>
+      <text x="44" y="64" font-family="IBM Plex Mono" font-size="7.6" fill="#9a938a">STEP 1</text>
+      <text x="44" y="80" font-family="IBM Plex Sans" font-size="9.4" fill="#1b1917">Monthly taxable</text>
+      <text x="44" y="104" font-family="IBM Plex Mono" font-size="12" fill="#4f6b3c">R 29 600</text>
+      <!-- arrow -->
+      <line x1="174" y1="79" x2="206" y2="79" stroke="#9a938a" stroke-width="1.2" marker-end="url(#ar)"/>
+      <!-- step 2 -->
+      <rect x="212" y="44" width="140" height="70" rx="6" fill="#fff" stroke="#cfc6b6"/>
+      <text x="226" y="64" font-family="IBM Plex Mono" font-size="7.6" fill="#9a938a">STEP 2 · ANNUALISE</text>
+      <text x="226" y="80" font-family="IBM Plex Sans" font-size="9.4" fill="#1b1917">× 12</text>
+      <text x="226" y="104" font-family="IBM Plex Mono" font-size="12" fill="#4f6b3c">R 355 200</text>
+      <line x1="356" y1="79" x2="388" y2="79" stroke="#9a938a" stroke-width="1.2" marker-end="url(#ar)"/>
+      <!-- step 3 -->
+      <rect x="394" y="44" width="140" height="70" rx="6" fill="#fff" stroke="#cfc6b6"/>
+      <text x="408" y="64" font-family="IBM Plex Mono" font-size="7.6" fill="#9a938a">STEP 3 · TAX IT</text>
+      <text x="408" y="80" font-family="IBM Plex Sans" font-size="9.4" fill="#1b1917">slabs − rebates</text>
+      <text x="408" y="104" font-family="IBM Plex Mono" font-size="12" fill="#4f6b3c">R 36 012</text>
+      <line x1="538" y1="79" x2="570" y2="79" stroke="#9a938a" stroke-width="1.2" marker-end="url(#ar)"/>
+      <!-- step 4 -->
+      <rect x="576" y="44" width="94" height="70" rx="6" fill="#0d0c0a" stroke="#3a3630"/>
+      <text x="590" y="64" font-family="IBM Plex Mono" font-size="7.6" fill="#8c8373">STEP 4 · ÷ 12</text>
+      <text x="590" y="80" font-family="IBM Plex Sans" font-size="9.4" fill="#cfc7b8">monthly PAYE</text>
+      <text x="590" y="104" font-family="IBM Plex Mono" font-size="12" fill="#d4a94f">R 3 001</text>
+      <!-- the note -->
+      <rect x="30" y="132" width="640" height="40" rx="5" fill="#f5f1e6" stroke="#cfc6b6"/>
+      <text x="44" y="148" font-family="IBM Plex Sans" font-size="9" fill="#45403a">
+        <tspan font-weight="600" fill="#1b1917">The catch worth knowing:</tspan>
+        someone who joins in November is taxed as if they would earn a
+        full year, so the employer over-deducts for them.
+      </text>
+      <text x="44" y="163" font-family="IBM Plex Sans" font-size="9" fill="#45403a">
+        The year-end reconciliation in the payroll suite works out the
+        difference and puts it right on the last payslip of the year.
+      </text>
+    </svg>
+    <figcaption>The same four steps run for every payslip. The annualisation is why a December bonus does not push somebody into a higher bracket for the whole year.</figcaption>
+  </figure>
+
+  <h3>The rules that catch people out</h3>
+  <table>
+    <thead><tr><th>Rule</th><th>What it actually says</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Rebates</strong></td>
+        <td>Primary R17 820 for everyone. Add R9 765 at 65, and a further R3 249 at 75.</td>
+        <td>Rebates are a <b>credit against the tax</b>, not an exemption from income. They are why someone on R99 000 pays nothing at all.</td>
+      </tr>
+      <tr>
+        <td><strong>Medical tax credit</strong></td>
+        <td>R376 a month for the member, R376 for the first dependant, R254 for each one after (2027).</td>
+        <td>Also a credit against the tax, and you keep the <b>higher</b> of the table amount and what you actually pay.</td>
+      </tr>
+      <tr>
+        <td><strong>Section 11F</strong></td>
+        <td>A pension deduction is capped at the lowest of the actual contribution, 27.5% of remuneration, and R350 000 a year.</td>
+        <td>Without the cap, a high earner could shelter most of their income and pay no tax at all.</td>
+      </tr>
+      <tr>
+        <td><strong>UIF</strong></td>
+        <td>1% from the employee, 1% from the employer, on remuneration up to R17 712 a month.</td>
+        <td>So the maximum anyone ever contributes is R177.12 a month, and commission earners with half their pay in commission are excluded.</td>
+      </tr>
+      <tr>
+        <td><strong>SDL</strong></td>
+        <td>1% of the leviable amount, and employers with an annual payroll below R500 000 pay none.</td>
+        <td>A business cost, not a deduction from the employee. It is the employer's own money.</td>
+      </tr>
+      <tr>
+        <td><strong>VAT</strong></td>
+        <td>15% on supplies, 15% claimed back on inputs. Mandatory registration above R2.3m a year, voluntary above R120 000 (both from 1 April 2026).</td>
+        <td>Output tax less input tax. If the input is bigger, you claim the difference back.</td>
+      </tr>
+      <tr>
+        <td><strong>Interest</strong></td>
+        <td>The first R23 800 a year is exempt (R34 500 at 65 and over).</td>
+        <td>The exemption is used up first; only what is above it is taxable.</td>
+      </tr>
+      <tr>
+        <td><strong>Dividends</strong></td>
+        <td>Exempt from income tax, but 20% is withheld at source as a final tax.</td>
+        <td>You are done with it — there is nothing more to pay on a South African dividend.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>The three forms an employer files</h3>
+  <div class="three">
+    <div class="concept" style="margin:0">
+      <div class="concept__head"><span class="concept__n">MONTHLY</span><h4>EMP201</h4></div>
+      <p style="font-size:9.4pt;color:var(--ink-2)">
+        The monthly employer declaration. It declares the total payment
+        and splits it between PAYE, UIF and SDL. Due by the
+        <b>7th of the month</b> after the month it covers — and if the
+        7th is a Saturday, the Friday before.
+      </p>
+    </div>
+    <div class="concept" style="margin:0">
+      <div class="concept__head"><span class="concept__n">YEARLY</span><h4>EMP501</h4></div>
+      <p style="font-size:9.4pt;color:var(--ink-2)">
+        The annual employer reconciliation. It proves that what was
+        declared on the twelve EMP201s is the same as what the IRP5
+        certificates say was paid to the employees. Any difference has to
+        be explained.
+      </p>
+    </div>
+    <div class="concept" style="margin:0">
+      <div class="concept__head"><span class="concept__n">PER EMPLOYEE</span><h4>IRP5</h4></div>
+      <p style="font-size:9.4pt;color:var(--ink-2)">
+        The employee's tax certificate for the year: what they were paid,
+        what was deducted, and what the tax came to. Issued within
+        60 days of the end of the tax year.
+      </p>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>The best thing to say about the deadline logic:</b> a deadline that
+    falls on a public holiday is not on the public holiday. My code
+    rolls every date back to the previous business day, and there is a
+    test that checks an October payroll is due on Friday 6 November
+    2026, because the 7th is a Saturday. Small detail, but it is the
+    kind of detail that separates a real payroll from a toy one.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     PART 4 — ARCHITECTURE
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page" id="s4">
+  <div class="head"><b>Part 04</b><span>Architecture</span></div>
+
+  <h2 class="sec"><span class="n">04</span>How the code fits together</h2>
+
+  <p class="lead">
+    The same shape runs through all three Python projects, and it is the
+    single idea that makes them testable.
+  </p>
+
+  <figure>
+    <svg viewBox="0 0 700 300" role="img" aria-label="The layered architecture of the payroll suite">
+      <text x="20" y="18" font-family="IBM Plex Mono" font-size="9" fill="#8a6a1f" letter-spacing="1.6">PAYROLL SUITE · THE LAYERS</text>
+
+      <!-- presentation -->
+      <rect x="20" y="34" width="660" height="52" rx="6" fill="#f6f2e9" stroke="#cfc6b6"/>
+      <text x="36" y="53" font-family="IBM Plex Sans" font-size="10" font-weight="600" fill="#1b1917">Presentation</text>
+      <text x="36" y="70" font-family="IBM Plex Mono" font-size="8.4" fill="#6f675b">cli.py (argparse subcommands)  ·  server.py + wsgi.py (JSON API)  ·  reports.py (console, CSV, JSON)</text>
+      <text x="36" y="82" font-family="IBM Plex Sans" font-size="8.6" fill="#9a938a">Nothing in here knows how the tax is calculated. It only shows the answers.</text>
+
+      <!-- application -->
+      <rect x="20" y="98" width="660" height="52" rx="6" fill="#fff" stroke="#cfc6b6"/>
+      <text x="36" y="117" font-family="IBM Plex Sans" font-size="10" font-weight="600" fill="#1b1917">Application</text>
+      <text x="36" y="134" font-family="IBM Plex Mono" font-size="8.4" fill="#6f675b">engine.py (the payslip)  ·  compliance.py (EMP201, EMP501, IRP5, deadlines)  ·  db.py (storage)</text>
+      <text x="36" y="146" font-family="IBM Plex Sans" font-size="8.6" fill="#9a938a">The rules live here. This layer never prints and never touches the network.</text>
+
+      <!-- domain -->
+      <rect x="20" y="162" width="660" height="52" rx="6" fill="#fff" stroke="#8a6a1f" stroke-width="1.4"/>
+      <text x="36" y="181" font-family="IBM Plex Sans" font-size="10" font-weight="600" fill="#1b1917">Domain</text>
+      <text x="36" y="198" font-family="IBM Plex Mono" font-size="8.4" fill="#6f675b">tax_tables.py (the SARS rates)  ·  models.py (the shapes)  ·  config values</text>
+      <text x="36" y="210" font-family="IBM Plex Sans" font-size="8.6" fill="#9a938a">Pure data and pure rules. If SARS changes a number, this is the only file that changes.</text>
+
+      <!-- arrows -->
+      <g stroke="#9a938a" stroke-width="1.2" fill="none" marker-end="url(#ar)">
+        <line x1="350" y1="86" x2="350" y2="96"/>
+        <line x1="350" y1="150" x2="350" y2="160"/>
+        <line x1="350" y1="214" x2="350" y2="226"/>
+      </g>
+
+      <!-- infrastructure -->
+      <rect x="20" y="228" width="660" height="52" rx="6" fill="#0d0c0a" stroke="#3a3630"/>
+      <text x="36" y="247" font-family="IBM Plex Sans" font-size="10" font-weight="600" fill="#f2ede3">Infrastructure</text>
+      <text x="36" y="264" font-family="IBM Plex Mono" font-size="8.4" fill="#a89f8e">Python standard library  ·  sqlite3  ·  http.server  ·  csv  ·  json  ·  argparse  ·  unittest</text>
+      <text x="36" y="276" font-family="IBM Plex Sans" font-size="8.6" fill="#8c8373">Nothing to install. That is a deliberate constraint, and it is explained in Part 05.</text>
+    </svg>
+    <figcaption>Every dependency points downwards. The tax rules do not know that a database or a terminal exists.</figcaption>
+  </figure>
+
+  <h3>Why that matters</h3>
+  <p>
+    Because the engine never imports the database, you can test the
+    whole tax calculation without one. <b>58 of the 148 checks in the
+    payroll suite test the engine on its own</b>, with hand-worked
+    numbers, and they run in a fraction of a second. If the engine had
+    a database in it, every one of those tests would need a database,
+    and you would stop writing them.
+  </p>
+
+  <h3>The request path, end to end</h3>
+  <figure>
+    <svg viewBox="0 0 700 150" role="img" aria-label="A request through the stack">
+      <g>
+        <rect x="20" y="46" width="108" height="54" rx="6" fill="#fff" stroke="#cfc6b6"/>
+        <text x="74" y="70" text-anchor="middle" font-family="IBM Plex Sans" font-size="9.4" font-weight="600" fill="#1b1917">Browser</text>
+        <text x="74" y="84" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">fetch()</text>
+
+        <rect x="160" y="46" width="108" height="54" rx="6" fill="#fff" stroke="#cfc6b6"/>
+        <text x="214" y="70" text-anchor="middle" font-family="IBM Plex Sans" font-size="9.4" font-weight="600" fill="#1b1917">JSON API</text>
+        <text x="214" y="84" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">/api/payslips</text>
+
+        <rect x="300" y="46" width="108" height="54" rx="6" fill="#fff" stroke="#8a6a1f" stroke-width="1.3"/>
+        <text x="354" y="70" text-anchor="middle" font-family="IBM Plex Sans" font-size="9.4" font-weight="600" fill="#1b1917">Engine</text>
+        <text x="354" y="84" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">calculate()</text>
+
+        <rect x="440" y="46" width="108" height="54" rx="6" fill="#fff" stroke="#cfc6b6"/>
+        <text x="494" y="70" text-anchor="middle" font-family="IBM Plex Sans" font-size="9.4" font-weight="600" fill="#1b1917">SQLite</text>
+        <text x="494" y="84" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">payroll.db</text>
+
+        <rect x="580" y="46" width="100" height="54" rx="6" fill="#f6f2e9" stroke="#cfc6b6"/>
+        <text x="630" y="70" text-anchor="middle" font-family="IBM Plex Sans" font-size="9.4" font-weight="600" fill="#1b1917">SARS rules</text>
+        <text x="630" y="84" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">tax_tables</text>
+      </g>
+      <g stroke="#9a938a" stroke-width="1.2" fill="none" marker-end="url(#ar)">
+        <line x1="132" y1="73" x2="156" y2="73"/>
+        <line x1="272" y1="73" x2="296" y2="73"/>
+        <line x1="412" y1="73" x2="436" y2="73"/>
+        <line x1="552" y1="73" x2="576" y2="73"/>
+      </g>
+      <text x="350" y="30" text-anchor="middle" font-family="IBM Plex Sans" font-size="9" fill="#6f675b">
+        A click on the dashboard travels all the way down to the SARS tables and back
+      </text>
+    </svg>
+    <figcaption>The same shape in the browser, except the last two boxes are the JavaScript engine and the tax tables it carries.</figcaption>
+  </figure>
+
+  <h3>The data model</h3>
+  <p>
+    Four tables, and the relationships between them are the whole story:
+    a pay run is a month, a payslip is an employee inside a pay run.
+  </p>
+
+  <figure>
+    <svg viewBox="0 0 700 190" role="img" aria-label="The database schema">
+      <rect x="30" y="40" width="170" height="96" rx="6" fill="#fff" stroke="#cfc6b6"/>
+      <text x="46" y="60" font-family="IBM Plex Mono" font-size="9" fill="#8a6a1f">employees</text>
+      <text x="46" y="78" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">id            PK</text>
+      <text x="46" y="92" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">employee_number UNIQUE</text>
+      <text x="46" y="106" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">full_name</text>
+      <text x="46" y="120" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">age · start_date · salary</text>
+      <text x="46" y="132" font-family="IBM Plex Mono" font-size="8" fill="#9a938a">pension · medical</text>
+
+      <rect x="265" y="40" width="170" height="96" rx="6" fill="#fff" stroke="#8a6a1f" stroke-width="1.4"/>
+      <text x="281" y="60" font-family="IBM Plex Mono" font-size="9" fill="#8a6a1f">pay_runs</text>
+      <text x="281" y="78" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">id            PK</text>
+      <text x="281" y="92" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">period        UNIQUE</text>
+      <text x="281" y="106" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">pay_date</text>
+      <text x="281" y="120" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">status · notes</text>
+      <text x="281" y="132" font-family="IBM Plex Mono" font-size="8" fill="#9a938a">one row per month</text>
+
+      <rect x="500" y="40" width="170" height="96" rx="6" fill="#fff" stroke="#cfc6b6"/>
+      <text x="516" y="60" font-family="IBM Plex Mono" font-size="9" fill="#8a6a1f">payslips</text>
+      <text x="516" y="78" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">id            PK</text>
+      <text x="516" y="92" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">run_id        FK</text>
+      <text x="516" y="106" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">employee_id   FK</text>
+      <text x="516" y="120" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">every figure, stored</text>
+      <text x="516" y="132" font-family="IBM Plex Mono" font-size="8" fill="#9a938a">one row per payslip</text>
+
+      <g stroke="#9a938a" stroke-width="1.2" fill="none" marker-end="url(#ar)">
+        <line x1="204" y1="88" x2="261" y2="88"/>
+        <line x1="439" y1="88" x2="496" y2="88"/>
+      </g>
+      <text x="232" y="80" text-anchor="middle" font-family="IBM Plex Mono" font-size="7.4" fill="#9a938a">1 : many</text>
+      <text x="467" y="80" text-anchor="middle" font-family="IBM Plex Mono" font-size="7.4" fill="#9a938a">1 : many</text>
+
+      <rect x="30" y="152" width="640" height="26" rx="5" fill="#f5f1e6" stroke="#cfc6b6"/>
+      <text x="44" y="165" font-family="IBM Plex Sans" font-size="8.4" fill="#45403a">
+        A <tspan font-family="IBM Plex Mono" fill="#1b1917">meta</tspan> table stamps the schema version, so an old database keeps working when the code moves on.
+      </text>
+      <text x="44" y="177" font-family="IBM Plex Sans" font-size="8.4" fill="#45403a">
+        Foreign keys are enforced, and there are indexes on run, employee and period.
+      </text>
+    </svg>
+    <figcaption>The four tables. Nothing more complicated was needed, and nothing more complicated is easier to explain.</figcaption>
+  </figure>
+</section>
+<!-- ══════════════════════════════════════════════════════════════════
+     PART 5 — THE CONCEPTS
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page opener">
+  <div class="opener__num">Part 05</div>
+  <h2>The concepts, one by one</h2>
+  <p>
+    Twenty-two ideas, each with what it is, where it lives in the code,
+    why it matters, and a sentence you can say out loud when somebody
+    asks about it.
+  </p>
+  <div class="opener__list">
+    <span>The accounting — 7</span>
+    <span>The employer and the forms — 4</span>
+    <span>The engineering — 7</span>
+    <span>The craft — 4</span>
+  </div>
+</section>
+
+<section class="page" id="s5">
+  <div class="head"><b>Part 05</b><span>The accounting concepts</span></div>
+  <h2 class="sec" style="margin-bottom:6mm"><span class="n">05</span>The concepts, one by one</h2>
+  <p class="lead">Start with the seven that only a finance student would have.</p>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">A1</span><h4>Progressive slab rates</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>Tax is charged band by band. Each band has its own rate, and the rate applies only to the slice of income inside it. The SARS table is written as "R44 118 <b>plus</b> 26% of the amount over R245 100".</dd>
+      <dt>Where it lives</dt><dd><code>tax_tables.py → TAX_YEARS["2027"]["brackets"]</code>, and the arithmetic in <code>engine.py → annualised_tax()</code>.</dd>
+      <dt>Why it matters</dt><dd>Getting this wrong means every number downstream is wrong. It is the foundation everything else sits on.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "South African tax is progressive, so I don't apply one rate to the whole salary — I find the band the annualised income falls in and apply that rate only to the part above the band's floor."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">A2</span><h4>The annualised method</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>Because the brackets are built around a year of income, a month cannot be taxed alone. The month's taxable income is multiplied by twelve, taxed, and divided by twelve again.</dd>
+      <dt>Where it lives</dt><dd><code>engine.py → annualised_tax()</code>, and the same idea in <code>portfolio/assets/js/tax.js</code>.</dd>
+      <dt>Why it matters</dt><dd>It smooths the tax: a December bonus does not push somebody into a higher bracket for the whole year, and a month with no overtime does not drop them into a lower one. It also creates the mid-year-joiner problem that the year-end reconciliation exists to fix.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "I annualise the month's taxable income, tax that, then divide by twelve to get the PAYE. It means bonuses get spread rather than hitting one hard month."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">A3</span><h4>Rebates and tax thresholds</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>A rebate is a <b>credit against the tax</b>, not an exemption from income. Primary R17 820 for everyone, plus R9 765 at 65 and R3 249 at 75. The threshold is where the rebate exactly cancels the tax — R99 000 for someone under 65 in 2027.</dd>
+      <dt>Where it lives</dt><dd><code>tax_tables.py → rebates</code>, applied in <code>engine.py → annualised_tax()</code>.</dd>
+      <dt>Why it matters</dt><dd>It is why somebody earning R99 000 pays no tax at all, and why the secondary rebate only exists for pensioners. Treat rebates as an exemption and you will be wrong by R17 820 for most people.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "A rebate comes off the tax after the slab rates, not off the income before them — that difference is worth R17 820 to almost everybody."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">A4</span><h4>The medical scheme fees tax credit</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>Also a credit against the tax. R376 a month for the member, R376 for the first dependant and R254 for each dependant after that, for 2027. You keep the <b>higher</b> of the table amount and what you actually pay for your own membership.</dd>
+      <dt>Where it lives</dt><dd><code>tax_tables.py → medical_credit</code>, and <code>medical_credit()</code> in both engines.</dd>
+      <dt>Why it matters</dt><dd>It is a real amount of money — R18 912 a year for a family — and it is the thing most people leave on the table. It also has to be applied <b>after</b> the rebates, not before.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "The medical credit is a rebate too, and you take the higher of the tabulated amount and what you actually pay — so a member on an expensive scheme is not penalised."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">A5</span><h4>Section 11F: the pension cap</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>A pension or provident fund contribution is deductible, but only up to the lowest of three limits: the actual contribution, 27.5% of remuneration, and R350 000 a year.</dd>
+      <dt>Where it lives</dt><dd><code>payroll.py → allowance_for_retirement()</code> and <code>engine.py → calculate_pension()</code>.</dd>
+      <dt>Why it matters</dt><dd>Without the cap a high earner could put most of their salary into a pension and pay no tax at all. The cap is the anti-avoidance rule, and it is the kind of thing that makes the tax calculation real rather than arithmetic.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "The pension deduction is capped at 27.5% of pay and R350 000 a year, whichever is smaller — that cap is what stops the deduction from becoming a tax-avoidance scheme."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">A6</span><h4>UIF and the earnings ceiling</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>One percent from the employee and one percent from the employer, on remuneration, but only up to R17 712 a month. So nobody ever contributes more than R177.12 a month, whatever they earn. Commission earners whose commission is half or more of their pay are excluded entirely.</dd>
+      <dt>Where it lives</dt><dd><code>uif.py</code> and <code>engine.py → calculateUIF()</code>.</dd>
+      <dt>Why it matters</dt><dd>It is the clearest example in the project of a rule that a naive implementation gets wrong — applying 1% to the whole salary is the obvious mistake.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "UIF is one percent each side but only on the first R17 712 of pay, so it caps out at R177.12 a month — and commission earners are excluded."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">A7</span><h4>SDL and the small-employer exemption</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>One percent of the leviable amount — remuneration <b>after</b> the allowable deductions — and employers with an annual payroll below R500 000 pay none of it. It is a business cost; you may not take it off the employee.</dd>
+      <dt>Where it lives</dt><dd><code>payroll.py → calculate_sdl()</code>, with the exemption at <code>config.py → SDL_ANNUAL_PAYROLL_EXEMPTION</code>.</dd>
+      <dt>Why it matters</dt><dd>It is the difference between a small business's cost base and a large one's, and it is decided by the <b>employer's</b> annual payroll, not the employee's. Getting that scope wrong is a classic bug.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "SDL is a percent of the leviable amount and it's the employer's cost, and below R500 000 of annual payroll the employer is exempt entirely."</p>
+  </div>
+</section>
+
+<section class="page">
+  <div class="head"><b>Part 05</b><span>The employer and the forms</span></div>
+  <h2 class="sec" style="margin-bottom:6mm"><span class="n">05</span>The employer's side</h2>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">B1</span><h4>Output tax, input tax, and the net</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>Output tax is 15% of what you charged. Input tax is 15% of what you can claim back. The difference is what you pay SARS; if the input is bigger, you claim the difference back.</dd>
+      <dt>Where it lives</dt><dd><code>vat.py → calculate_vat()</code> and <code>vat.js → calculateVat()</code>.</dd>
+      <dt>Why it matters</dt><dd>It is simpler than it looks and easier to get wrong in the other direction — a business that over-claimed input tax is committing an offence.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "Output tax less input tax is the net position, and a negative net is a refund rather than a payment."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">B2</span><h4>The six bi-monthly VAT periods</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>A tax year runs 1 March to the end of February, and a vendor files a VAT201 every two months: March–April, May–June, July–August, September–October, November–December, January–February. Businesses with taxable supplies over R30 million file monthly instead.</dd>
+      <dt>Where it lives</dt><dd><code>vat.py → vat_periods()</code>, mirrored in <code>vat.js</code>.</dd>
+      <dt>Why it matters</dt><dd>Each period has a <b>different</b> deadline, and the deadline is in the month <b>after</b> the period ends — so the March–April period is due in May, not in April.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "Six two-month periods, and the return for a period is due in the month after that period ends — the March–April one is due in May."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">B3</span><h4>The EMP201, and the seventh of the month</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>The monthly declaration: the total payment, split between PAYE, UIF and SDL. Due within seven days after the month ends, so by the 7th of the following month.</dd>
+      <dt>Where it lives</dt><dd><code>compliance.py → emp201()</code> and <code>emp201_due_date()</code>.</dd>
+      <dt>Why it matters</dt><dd>Late payment carries a 10% penalty plus daily interest, and the declaration is the employer's own liability — if you get it wrong, the money is still owed.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "The EMP201 declares the total and splits it three ways, and it's due by the seventh of the next month — or the Friday before, if the seventh is a weekend."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">B4</span><h4>The EMP501 reconciliation</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>Once a year, the employer proves that the twelve EMP201 declarations add up to what the IRP5 certificates say was actually paid to the employees. Any difference has to be explained.</dd>
+      <dt>Where it lives</dt><dd><code>compliance.py → emp501()</code>, and the same check is in <code>tests/test_compliance.py</code>.</dd>
+      <dt>Why it matters</dt><dd>It is the one place where the employer's tax year closes. A payroll that produces payslips but cannot reconcile them is not finished.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "The EMP501 reconciles the twelve monthly declarations against the tax certificates, so the number the employer declared and the number the employee was taxed on are proven to be the same."</p>
+  </div>
+</section>
+
+<section class="page">
+  <div class="head"><b>Part 05</b><span>The engineering concepts</span></div>
+  <h2 class="sec" style="margin-bottom:6mm"><span class="n">05</span>The engineering concepts</h2>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">E1</span><h4>The standard library only</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>No pip install, no requirements.txt, no virtual environment. <code>sqlite3</code>, <code>http.server</code>, <code>json</code>, <code>csv</code>, <code>argparse</code>, <code>unittest</code> and <code>datetime</code> do all of it.</dd>
+      <dt>Where it lives</dt><dd>Every Python file. The <code>pyproject.toml</code> lists <code>dependencies = []</code>.</dd>
+      <dt>Why it matters</dt><dd>It means the project runs on any machine with Python, forever, with nothing to break. It is also a discipline: you learn the tool instead of the wrapper around it.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "I used nothing but the standard library, so the whole thing runs on any machine with Python and there is no install step and nothing to go stale."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">E2</span><h4>Separation of concerns</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>The tax rules, the storage and the presentation are three separate layers, and they only point one way. The engine does not know a database exists; the CLI does not know how the tax is calculated.</dd>
+      <dt>Where it lives</dt><dd><code>engine.py</code> (rules), <code>db.py</code> (storage), <code>cli.py</code> and <code>server.py</code> (presentation).</dd>
+      <dt>Why it matters</dt><dd>It is why 58 of the 148 checks can test the tax calculation on its own, with no database, in milliseconds. Layered code is not slower to write — it is faster to change.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "The engine never touches a database or the terminal, so the tax can be tested in isolation, and the same engine serves both the CLI and the API."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">E3</span><h4>Dataclasses as the domain model</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>Every real thing in the domain — an employee, a pay run, a payslip — is a dataclass with named fields, plus a <code>to_row()</code> and <code>from_row()</code> pair so it can go into and come out of SQLite without an ORM.</dd>
+      <dt>Where it lives</dt><dd><code>payroll_suite/models.py</code>.</dd>
+      <dt>Why it matters</dt><dd>The names in the code are the names in the accounting. <code>medical_dependants</code> means the same thing in the code, in the database and in the conversation with an employer.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "I modelled the domain as dataclasses with a row mapping, so the code reads like the accounting and there is no ORM in the way."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">E4</span><h4>SQLite, foreign keys and schema stamping</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>A single file database. Foreign keys are switched on, the schema is created with <code>IF NOT EXISTS</code>, and a <code>meta</code> table stamps the schema version so an old database keeps working when the code moves on.</dd>
+      <dt>Where it lives</dt><dd><code>payroll_suite/db.py</code>.</dd>
+      <dt>Why it matters</dt><dd>One file means the whole business's payroll can be copied onto a USB stick, backed up by copying it, and shipped to a client as one attachment.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "The whole payroll is one SQLite file, so backup is copying it, and the schema stamps its version so old data never breaks."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">E5</span><h4>The WSGI adapter</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>Most free Python hosts want a WSGI callable, not a script. The suite ships <code>wsgi.py</code>, which wraps the same API in a WSGI application, so the identical code runs on a laptop and on a free host.</dd>
+      <dt>Where it lives</dt><dd><code>payroll_suite/wsgi.py</code>.</dd>
+      <dt>Why it matters</dt><dd>It means "run it locally" and "host it for free" are the same code, not two implementations that drift apart.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "I wrote a small WSGI adapter so the same code runs on a free host as well as locally, rather than maintaining two servers."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">E6</span><h4>A JSON API with real error handling</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>Eight endpoints, a router, a typed error class, and errors that come back as JSON with a message somebody can act on. The dashboard only ever talks to it in JSON.</dd>
+      <dt>Where it lives</dt><dd><code>payroll_suite/server.py</code>, and the same routes again in <code>wsgi.py</code>.</dd>
+      <dt>Why it matters</dt><dd>The API is what makes the dashboard possible without a framework, and it means the calculations can be driven by anything that can send JSON.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "Eight JSON endpoints, no framework, and the errors come back as readable messages rather than stack traces."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">E7</span><h4>Test fixtures worked out by hand</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>Every expected number in the test suite was calculated by hand from the SARS tables and typed in as a literal. No test computes its own expectation with the same code it is testing.</dd>
+      <dt>Where it lives</dt><dd><code>tests/test_engine.py</code>, <code>tests/test_vat.py</code>, <code>tests/test_payroll.py</code> and <code>tests/test_compliance.py</code>.</dd>
+      <dt>Why it matters</dt><dd>It is the difference between testing and checking that a function still does what it did. A test that recomputes the answer proves nothing.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "Every expected figure in the tests is a literal I worked out from the SARS tables by hand, so the test is an independent check rather than a snapshot of the code."</p>
+  </div>
+</section>
+
+<section class="page">
+  <div class="head"><b>Part 05</b><span>The craft concepts</span></div>
+  <h2 class="sec" style="margin-bottom:6mm"><span class="n">05</span>The craft concepts</h2>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">C1</span><h4>The conceit: the site is a workbook</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>Rather than a scrolling page with sections, the site is a spreadsheet: a formula bar, one open sheet, sheet tabs, a status bar, and a name box. Click any number and the formula bar shows how it was worked out.</dd>
+      <dt>Where it lives</dt><dd><code>portfolio/index.html</code> and <code>portfolio/assets/css/styles.css</code>, section 27.</dd>
+      <dt>Why it matters</dt><dd>It is the thing that makes the site memorable, and it is not decoration — it is <b>the interface for the work</b>. A payroll person recognises a spreadsheet instantly, and the site's own subject matter explains its own design.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "I made the portfolio a workbook rather than a scrolling page, because that is the tool the work actually lives in, and it lets me show the formula behind every number."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">C2</span><h4>One authored moment</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>One deliberate transition — the sheet changing — and nothing else that moves without a reason. The mouse-following cursor glow and the 3D card tilt were both removed.</dd>
+      <dt>Where it lives</dt><dd><code>portfolio/assets/js/main.js</code> and the <code>sheetIn</code> keyframe.</dd>
+      <dt>Why it matters</dt><dd>Scattered motion reads as decoration; one moment reads as a decision. The two effects that were cut were also the most expensive things on the page while scrolling.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "There is exactly one animation — the sheet change. Everything else that moved was decoration, and two of those were the biggest cost while scrolling."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">C3</span><h4>The frame budget</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>At 60fps a frame is 16.7ms; on a 120Hz screen it is 8ms. Only <code>transform</code> and <code>opacity</code> skip layout and paint, so those are the only things worth animating. A blurred background costs a great deal more than it looks like.</dd>
+      <dt>Where it lives</dt><dd>The performance work in <code>styles.css</code> — the removal of the blurred aurora, the flat surfaces, and the deliberate use of <code>transform: scaleX()</code> rather than animating a width on the progress bar.</dd>
+      <dt>Why it matters</dt><dd>It is the difference between a site that feels cheap and one that feels considered, and it is measurable rather than a matter of taste.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "I only animate transform and opacity, because those skip layout and paint, and I took out the blurred background — it looked like nothing and cost a great deal."</p>
+  </div>
+
+  <div class="concept">
+    <div class="concept__head"><span class="concept__n">C4</span><h4>Themed browser surfaces</h4></div>
+    <dl>
+      <dt>What it is</dt><dd>The scrollbar, the text selection, the caret, the focus ring and the numerals in the tables are all themed from the palette. The figures use tabular numerals so the columns line up.</dd>
+      <dt>Where it lives</dt><dd><code>styles.css</code> — the scrollbar and selection rules, and <code>font-variant-numeric: tabular-nums</code> on every money column.</dd>
+      <dt>Why it matters</dt><dd>These are the parts of a page nobody drew, and they are the first thing that gives away that a page was assembled rather than built. For a finance site the numerals matter doubly: a column of Rand amounts that does not line up is a broken ledger.</dd>
+    </dl>
+    <p class="say"><b>Say it like this:</b> "I themed the scrollbar, the selection and the caret, and the money uses tabular figures so the columns line up — in a spreadsheet, ragged numbers are a bug."</p>
+  </div>
+</section>
+<!-- ══════════════════════════════════════════════════════════════════
+     PART 6 — THE DESIGN SYSTEM
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page" id="s6">
+  <div class="head"><b>Part 06</b><span>The design system</span></div>
+
+  <h2 class="sec"><span class="n">06</span>The design system</h2>
+
+  <p class="lead">
+    The site is a ledger, not a dashboard. That single decision decides
+    the palette, the type and the motion — and it rules out the two
+    things a portfolio site usually leans on, which are a violet gradient
+    and a floating mouse glow.
+  </p>
+
+  <h3>Colour: a printed figure on a page</h3>
+  <p>
+    Warm ink for the ground, brass for the accent, olive for money in and
+    terracotta for money out. Every colour clears 4.5:1 against every
+    surface it is used on, in both themes.
+  </p>
+
+  <div class="swatches">
+    <div class="swatch">
+      <div class="swatch__chip" style="background:#d4a94f"></div>
+      <div class="swatch__meta"><b>Brass</b><code>#d4a94f</code><span>the accent · 8.09:1</span></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__chip" style="background:#8aa070"></div>
+      <div class="swatch__meta"><b>Olive</b><code>#8aa070</code><span>money in · 6.19:1</span></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__chip" style="background:#c2705a"></div>
+      <div class="swatch__meta"><b>Terracotta</b><code>#c2705a</code><span>money out · 4.86:1</span></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__chip" style="background:#86a9b5"></div>
+      <div class="swatch__meta"><b>Slate</b><code>#86a9b5</code><span>information · 7.05:1</span></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__chip" style="background:#0d0c0a"></div>
+      <div class="swatch__meta"><b>Ink</b><code>#0d0c0a</code><span>the ground · 15.18:1</span></div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>What was thrown away and why.</b> The first version was cyan,
+    violet and pink on near-black, with gradient text on the headings
+    and frosted-glass cards. It looked like every other portfolio. The
+    thing that changed it was reading the palette of a real financial
+    document: the brass of a printed figure, the green of a credit, the
+    red of a debit, and the warm off-white of the paper it is printed on.
+  </div>
+
+  <h3>Type: IBM Plex, and a ledger's numbers</h3>
+  <p>
+    Two families, and a rule: the sans for the words, the mono for
+    anything that is a number. Every money column uses tabular figures,
+    so the digits line up in a column.
+  </p>
+
+  <div class="specimen">
+    <div class="specimen__row">
+      <div class="specimen__meta"><b>Display</b>IBM Plex Sans 700<br />31 pt / 3.5 rem<br />−0.03em tracking</div>
+      <div style="font-size:26pt;font-weight:700;letter-spacing:-.03em;line-height:1.1">The payroll suite</div>
+    </div>
+    <div class="specimen__row">
+      <div class="specimen__meta"><b>Body</b>IBM Plex Sans 400<br />10.2 pt / 1 rem<br />1.62 line height</div>
+      <div>The tax is annualised, taxed, and divided by twelve again — which is what smooths a bonus across the year.</div>
+    </div>
+    <div class="specimen__row">
+      <div class="specimen__meta"><b>Data</b>IBM Plex Mono 500<br />tabular figures<br />right aligned</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;text-align:right">R 1 234 567.89</div>
+    </div>
+    <div class="specimen__row">
+      <div class="specimen__meta"><b>Micro label</b>IBM Plex Mono 500<br />12.5 pt floor<br />letterspaced caps</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:#8a6a1f">Net monthly pay</div>
+    </div>
+  </div>
+
+  <h3>Motion: one moment, and a budget</h3>
+  <table>
+    <thead><tr><th>Property</th><th>Cost per frame</th><th>What I animate</th></tr></thead>
+    <tbody>
+      <tr><td><code>transform</code>, <code>opacity</code></td><td>Composite only — the browser does not re-measure anything</td><td>The sheet change; the hover lifts; the progress bar</td></tr>
+      <tr><td><code>background-color</code>, <code>color</code></td><td>Paint, but no layout</td><td>Hover and focus states</td></tr>
+      <tr><td><code>width</code>, <code>height</code>, <code>top</code></td><td>Layout, then paint, then composite — a full re-measure of the page</td><td>Nothing</td></tr>
+      <tr><td><code>filter: blur()</code>, <code>backdrop-filter</code></td><td>Expensive, and the cost scales with the size of the element</td><td>Nothing — all of it was removed</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note good">
+    <b>The performance mode</b> in the toolbar is the honest version of
+    this. The page measures its own frame rate while you scroll, and if
+    more than about a third of the frames are late, it switches the
+    decoration off and says so. It is the same idea a spreadsheet has:
+    a degraded mode that still does the work.
+  </div>
+
+  <h3>Accessibility, treated as a requirement</h3>
+  <div class="two">
+    <div>
+      <ul>
+        <li>Every colour pair clears 4.5:1, checked in both themes</li>
+        <li>Headings run h1 → h2 → h3 in order, with no skipped levels</li>
+        <li>Keyboard: tabs, arrow keys between cells, <kbd>Ctrl</kbd>+<kbd>PageDown</kbd> between sheets, <kbd>Esc</kbd> closes the palette</li>
+        <li>Focus rings are visible on everything, in the accent colour</li>
+        <li>The cells are real buttons and inputs with labels</li>
+        <li><code>prefers-reduced-motion</code> switches every animation off</li>
+        <li>It still works with JavaScript switched off</li>
+      </ul>
+    </div>
+    <div>
+      <figure style="margin:0">
+        <svg viewBox="0 0 300 210" role="img" aria-label="A sketch of the formula bar and a sheet">
+          <rect x="0" y="0" width="300" height="26" rx="5" fill="#0d0c0a"/>
+          <rect x="10" y="7" width="34" height="12" rx="3" fill="#2a2724"/>
+          <text x="27" y="16" font-family="IBM Plex Mono" font-size="7.5" fill="#d4a94f" text-anchor="middle">B12</text>
+          <text x="54" y="16" font-family="IBM Plex Mono" font-size="7.5" fill="#8c8373">fx</text>
+          <rect x="68" y="5" width="222" height="16" rx="3" fill="#1a1815"/>
+          <text x="76" y="16" font-family="IBM Plex Mono" font-size="7.2" fill="#cfc7b8">=ROUND(MAX(0,B9+B10+B11)/12, 0)</text>
+          <rect x="0" y="36" width="300" height="150" rx="5" fill="#fdfcf9" stroke="#cfc6b6"/>
+          <g font-family="IBM Plex Mono" font-size="7" fill="#9a938a">
+            <text x="8" y="50">A</text><text x="26" y="50">B</text><text x="46" y="50">C</text>
+            <text x="8" y="66">1</text><text x="8" y="86">2</text><text x="8" y="106">3</text>
+          </g>
+          <g stroke="#e2dcd0">
+            <line x1="20" y1="36" x2="20" y2="186"/><line x1="40" y1="36" x2="40" y2="186"/>
+            <line x1="60" y1="36" x2="60" y2="186"/><line x1="80" y1="36" x2="80" y2="186"/>
+            <line x1="0" y1="56" x2="300" y2="56"/><line x1="0" y1="76" x2="300" y2="76"/>
+            <line x1="0" y1="96" x2="300" y2="96"/><line x1="0" y1="116" x2="300" y2="116"/>
+          </g>
+          <rect x="60" y="76" width="20" height="20" fill="none" stroke="#8a6a1f" stroke-width="1.2"/>
+          <rect x="60" y="76" width="20" height="20" fill="none" stroke="#8a6a1f" stroke-width="1.2" transform="translate(0.5,0.5)"/>
+          <text x="26" y="89" font-family="IBM Plex Sans" font-size="7" fill="#45403a">R 30 000</text>
+          <text x="66" y="109" font-family="IBM Plex Sans" font-size="7" fill="#45403a">R 3 001</text>
+          <rect x="0" y="194" width="300" height="14" rx="4" fill="#131210"/>
+          <text x="8" y="204" font-family="IBM Plex Mono" font-size="7" fill="#8c8373">Cover · Projects · PAYE · VAT 201 · Payroll</text>
+        </svg>
+        <figcaption>The workbook frame: a name box, an fx, the formula, the sheet, and the tabs.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     PART 7 — TESTING
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page" id="s7">
+  <div class="head"><b>Part 07</b><span>Testing</span></div>
+
+  <h2 class="sec"><span class="n">07</span>Testing</h2>
+
+  <p class="lead">
+    262 checks across four suites, and every expected number in them was
+    worked out by hand from the SARS tables.
+  </p>
+
+  <div class="four">
+    <div class="stat"><b>114</b><span>checks · the calculator and the employer tool</span></div>
+    <div class="stat"><b>148</b><span>checks · the payroll suite</span></div>
+    <div class="stat"><b>31</b><span>checks that run in the browser console</span></div>
+    <div class="stat"><b>4</b><span>Python versions tested on every push</span></div>
+  </div>
+
+  <h3>What is tested, and what each suite is for</h3>
+  <table>
+    <thead><tr><th>Suite</th><th>Checks</th><th>What it proves</th></tr></thead>
+    <tbody>
+      <tr><td><code>test_engine.py</code></td><td class="num">58</td><td>The tax calculation itself: the slabs, the rebates, the medical credit, the s11F cap, overtime at 1.5x and 2x, the annualised method, the year-end reconciliation</td></tr>
+      <tr><td><code>test_db.py</code></td><td class="num">27</td><td>That things survive being written and read, and that a pay run can be replaced without leaving half a month behind</td></tr>
+      <tr><td><code>test_compliance.py</code></td><td class="num">41</td><td>The EMP201, the IRP5, the EMP501 and the deadline calendar, including a 7th that falls on a Saturday</td></tr>
+      <tr><td><code>test_api.py</code></td><td class="num">22</td><td>That the HTTP API answers correctly, end to end, over a real socket</td></tr>
+      <tr><td><code>test_paye.py</code> · <code>test_vat.py</code> · <code>test_payroll.py</code></td><td class="num">114</td><td>The first two projects, with the same approach</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The one thing that makes the tests worth having</h3>
+  <p>
+    Every expected value is a <b>literal</b>, typed in by hand from the
+    SARS tables:
+  </p>
+
+  <pre><span class="c"># a R30 000 a month salary, 2027 tax year, 34 years old</span>
+<span class="c">#   annualised taxable   = 30 000 x 12                     = 355 200</span>
+<span class="c">#   slab tax             = 44 118 + 26% x (355 200 - 245 100) = 72 744</span>
+<span class="c">#   less primary rebate                                  = 17 820</span>
+<span class="c">#   less medical credit (R1 576 a month x 12)           = 18 912</span>
+<span class="c">#   annual tax           = 72 744 - 17 820 - 18 912    = 36 012</span>
+<span class="c">#   monthly PAYE         = 36 012 / 12                  = 3 001</span>
+
+<span class="f">close</span>(<span class="n">calculatePayslip</span>(thandi, <span class="s">"2027"</span>, 2_664_000).payeMonthly, <span class="n">3_235</span>)
+<span class="f">close</span>(<span class="n">calculatePayslip</span>(thandi, <span class="s">"2027"</span>, 2_664_000).netMonthly, <span class="n">27_087.88</span>)</pre>
+
+  <div class="note good">
+    <b>The distinction worth being able to state.</b> A test that
+    recomputes the expected answer with the same function it is testing
+    proves nothing beyond "the function is deterministic". Every
+    expected number here is a literal I calculated myself, so a change
+    in the code that breaks the tax shows up as a failure instead of
+    quietly agreeing with itself.
+  </div>
+
+  <h3>The tests that run in the browser</h3>
+  <p>
+    The JavaScript engine is a second, independent implementation of the
+    same rules. It carries the same hand-worked cases, and you can run
+    them yourself in the console:
+  </p>
+
+  <pre><span class="c">// open the browser console on the site and type:</span>
+<span class="f">Tax</span>.selfTest()   <span class="c">// 12 checks — the PAYE engine</span>
+<span class="f">Vat</span>.selfTest()   <span class="c">// 19 checks — VAT, SDL, payslips, the EMP201</span></pre>
+
+  <p>
+    This is the thing I would point at first in an interview. Two
+    implementations, written from the same source tables, agreeing on
+    every figure — that is a much stronger claim than "I wrote some
+    tests".
+  </p>
+
+  <h3>What is deliberately not tested</h3>
+  <ul>
+    <li><b>No mocking of the tax rules.</b> The whole point is that the real tables are used.</li>
+    <li><b>No test for a tax year that does not exist.</b> There is a validation error, but no test for the behaviour of a table from 2024, because there is no table from 2024.</li>
+    <li><b>No end-to-end browser test in CI.</b> The CI runs the Python suites on four versions. The browser self-tests run when you open the console, and I check them by hand before every release.</li>
+    <li><b>No load or performance testing.</b> Six employees is not a scale test, and I would not claim otherwise.</li>
+  </ul>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     PART 8 — HOSTING
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page" id="s8">
+  <div class="head"><b>Part 08</b><span>Hosting</span></div>
+
+  <h2 class="sec"><span class="n">08</span>How it is hosted</h2>
+
+  <p class="lead">
+    The website runs on GitHub Pages, free, forever, with no server to
+    pay for and nothing to maintain.
+  </p>
+
+  <figure>
+    <svg viewBox="0 0 700 200" role="img" aria-label="The deployment pipeline">
+      <rect x="20" y="40" width="150" height="70" rx="6" fill="#fff" stroke="#cfc6b6"/>
+      <text x="95" y="66" text-anchor="middle" font-family="IBM Plex Sans" font-size="10" font-weight="600" fill="#1b1917">You push</text>
+      <text x="95" y="82" text-anchor="middle" font-family="IBM Plex Mono" font-size="8.4" fill="#6f675b">git push origin main</text>
+      <text x="95" y="98" text-anchor="middle" font-family="IBM Plex Sans" font-size="8.4" fill="#9a938a">the code and the site</text>
+
+      <rect x="200" y="40" width="150" height="70" rx="6" fill="#0d0c0a" stroke="#3a3630"/>
+      <text x="275" y="66" text-anchor="middle" font-family="IBM Plex Sans" font-size="10" font-weight="600" fill="#f2ede3">GitHub Actions</text>
+      <text x="275" y="82" text-anchor="middle" font-family="IBM Plex Mono" font-size="8.4" fill="#a89f8e">tests.yml · pages.yml</text>
+      <text x="275" y="98" text-anchor="middle" font-family="IBM Plex Sans" font-size="8.4" fill="#8c8373">262 checks, then publish</text>
+
+      <rect x="380" y="40" width="150" height="70" rx="6" fill="#fff" stroke="#cfc6b6"/>
+      <text x="455" y="66" text-anchor="middle" font-family="IBM Plex Sans" font-size="10" font-weight="600" fill="#1b1917">GitHub Pages</text>
+      <text x="455" y="82" text-anchor="middle" font-family="IBM Plex Mono" font-size="8.4" fill="#6f675b">github.io</text>
+      <text x="455" y="98" text-anchor="middle" font-family="IBM Plex Sans" font-size="8.4" fill="#9a938a">static files, served free</text>
+
+      <rect x="560" y="40" width="120" height="70" rx="6" fill="#f6f2e9" stroke="#8a6a1f" stroke-width="1.4"/>
+      <text x="620" y="66" text-anchor="middle" font-family="IBM Plex Sans" font-size="10" font-weight="600" fill="#1b1917">Live</text>
+      <text x="620" y="82" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#6f675b">~20 seconds</text>
+      <text x="620" y="98" text-anchor="middle" font-family="IBM Plex Sans" font-size="8.4" fill="#9a938a">after the push</text>
+
+      <g stroke="#9a938a" stroke-width="1.2" fill="none" marker-end="url(#ar)">
+        <line x1="174" y1="75" x2="196" y2="75"/>
+        <line x1="354" y1="75" x2="376" y2="75"/>
+        <line x1="534" y1="75" x2="556" y2="75"/>
+      </g>
+      <text x="350" y="26" text-anchor="middle" font-family="IBM Plex Sans" font-size="9" fill="#6f675b">
+        One push runs the tests and, if they pass, publishes the site
+      </text>
+    </svg>
+    <figcaption>The site publishes itself. If the tests fail, nothing is published — which is the point of having them in CI at all.</figcaption>
+  </figure>
+
+  <div class="two">
+    <div>
+      <h4>The website — GitHub Pages</h4>
+      <p>
+        The site is pure static files, so it does not need a server at
+        all. GitHub serves it straight from the repository, and a
+        workflow republishes it whenever the <code>portfolio</code>
+        folder changes. It costs nothing, there is nothing to patch, and
+        it cannot go down.
+      </p>
+      <p>
+        I also added the workflow rather than using the built-in
+        "deploy from a branch" option, because Pages can only publish
+        the root of a branch or a <code>/docs</code> folder — and this
+        site lives in a <code>portfolio</code> folder inside a
+        repository that also holds the Python projects. A workflow can
+        point anywhere, and it means the site is only rebuilt when
+        something in it actually changed.
+      </p>
+    </div>
+    <div>
+      <h4>The payroll app — PythonAnywhere</h4>
+      <p>
+        The payroll suite needs a process that stays running and a
+        database, so it cannot be static. It is set up to run on
+        PythonAnywhere's free tier through the WSGI adapter.
+      </p>
+      <p>
+        The honest limitation: the free tier has one app, a subdomain
+        rather than a custom domain, and on some hosts the filesystem is
+        ephemeral — so the database would need to live somewhere that
+        persists. For a portfolio I would rather run it from my own
+        machine when I am demoing it than pretend it is a hosted product.
+      </p>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>One thing I would say about the deployment if asked.</b> The
+    site is deliberately static and dependency-free, which is not a
+    limitation I worked around — it is the reason it still builds in
+    five years with nobody maintaining it. The CI is the part I would
+    defend hardest: it is what makes "push and it works" a safe thing
+    to say.
+  </div>
+</section>
+<!-- ══════════════════════════════════════════════════════════════════
+     PART 9 — THE MISTAKES
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page" id="s9">
+  <div class="head"><b>Part 09</b><span>The mistakes</span></div>
+
+  <h2 class="sec"><span class="n">09</span>The mistakes I made</h2>
+
+  <p class="lead">
+    This is the most useful part of the document. Anyone can list what
+    they built. Being able to say what went wrong, and what the fix was,
+    is what separates a person who has built something from a person who
+    has only read about it.
+  </p>
+
+  <h3>1. The annualised method, done wrong</h3>
+  <p>
+    The first version divided the month's pay by the number of months
+    the employee had worked. That produced a tax figure that <b>halved
+    every month</b> for somebody who joined in November — because
+    "months worked" was growing while the pay stayed the same. The
+    numbers looked plausible and were completely wrong.
+  </p>
+  <p>
+    <b>The fix</b> was to go back to the SARS guide and read how
+    annualisation actually works, then rebuild the model around
+    <code>monthly taxable × 12</code>. The mid-year joiner problem is
+    real, but it belongs to the <b>year-end reconciliation</b>, not to
+    the monthly calculation.
+  </p>
+  <div class="note">
+    <b>What I would say:</b> "My first annualised implementation was
+    wrong — I divided the month's pay by the months worked, which halved
+    the tax each month for a new joiner. I caught it because the test
+    fixtures stopped agreeing with the hand-worked numbers, and the fix
+    was to read the SARS guide properly rather than patch the
+    arithmetic."
+  </div>
+
+  <h3>2. A formula that did not add up</h3>
+  <p>
+    The formula bar shows the working for every number. To check it, I
+    wrote a small evaluator in Python, rebuilt the formulas the
+    JavaScript builds, and compared <b>what the formula evaluates to</b>
+    against <b>what the cell displays</b>.
+  </p>
+  <p>It found three bugs that no screenshot would have shown:</p>
+  <ul>
+    <li>the net pay formula omitted the medical contribution, so it was R1 200 out;</li>
+    <li>the slab formula was hardcoded to the second band, so it was wrong for anyone earning more than R383 100;</li>
+    <li>the rebate was hardcoded to the primary rebate, so it was wrong for a pensioner.</li>
+  </ul>
+  <p>
+    All three were invisible on the page, because the page was showing
+    the engine's answer, which was correct. Only the <i>explanation</i>
+    was wrong — and the explanation is the part a reader trusts.
+  </p>
+  <div class="note good">
+    <b>What I would say:</b> "I wrote a spreadsheet evaluator to check
+    that every formula in the formula bar actually evaluates to the
+    number next to it. It found three wrong formulas — a missing
+    medical contribution, a hardcoded tax band, and a hardcoded rebate
+    that ignored the age rebates. The numbers on the page were right;
+    the story about them was not."
+  </div>
+
+  <h3>3. A class name that meant two things</h3>
+  <p>
+    The income-breakdown bar and the toolbar at the top of the page were
+    both called <code>.bar</code>. The toolbar's rule came later in the
+    stylesheet, so the breakdown bar inherited a 54-pixel height and
+    the wrong background. It rendered as an empty grey pill.
+  </p>
+  <p>
+    <b>The fix</b> was to rename the breakdown to
+    <code>.breakdown</code> — and to notice that I only found it
+    because I took a screenshot and looked at it. The DOM said the
+    segment was 80 pixels wide with the right colour. It was, and it was
+    still invisible.
+  </p>
+  <div class="note">
+    <b>What I would say:</b> "Two different components were both called
+    '.bar', and the cascade gave the one underneath the other's styles.
+    I found it by taking a screenshot and noticing the bar was empty
+    while the DOM said the segments were eighty pixels wide. I renamed
+    it, and I now give the two of them different names on purpose."
+  </div>
+
+  <h3>4. Reading the wrong keys</h3>
+  <p>
+    The payroll demo in the browser read
+    <code>payslip.gross_remuneration</code> — the name the
+    <b>Python</b> model uses. The JavaScript engine returns
+    <code>grossRemuneration</code>. Every row in the table read
+    "undefined".
+  </p>
+  <p>
+    <b>The fix</b> was to make the two engines use the same names, and
+    then to look at the rendered page rather than the code.
+  </p>
+
+  <h3>5. Four tests that were lying</h3>
+  <p>
+    Four checks in the browser self-test were comparing a string with a
+    numeric helper, so <code>Math.abs("01 Mar 2026" - "01 Mar 2026")</code>
+    was <code>NaN</code> and the comparison was always false. They had
+    never passed; they had never been run in a browser.
+  </p>
+  <p>
+    <b>The fix</b> was a comparison helper that knows about both, and
+    then running the browser tests as part of the check before every
+    release.
+  </p>
+
+  <h3>6. A page that would not lay out</h3>
+  <p>
+    I rewrote the stylesheet with a script that deleted rules by regular
+    expression. One pattern ate a closing brace, and the page came out
+    with the sheet area collapsed to zero height and the content
+    invisible.
+  </p>
+  <p>
+    <b>The fix</b> was to stop patching and write the stylesheet
+    properly, with a script that parses the file into rules, changes
+    whole rules, and refuses to write the file if the braces do not
+    balance. It is a small thing, but it is the reason the design pass
+    is trustworthy.
+  </p>
+
+  <div class="note">
+    <b>The pattern behind all six:</b> every one of them was a case of
+    trusting that the code was right because it looked right. The
+    fixes were all the same shape — <b>make the computer check the
+    claim</b>. A test that evaluates the formula. A screenshot that
+    looks at the pixels. A brace counter that refuses to write a broken
+    file. A test in the browser rather than only in Python.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     PART 10 — THE QUESTIONS
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page" id="s10">
+  <div class="head"><b>Part 10</b><span>Questions, with answers</span></div>
+
+  <h2 class="sec"><span class="n">10</span>Questions you might be asked</h2>
+
+  <p class="lead">
+    Twenty-two questions, grouped by who is likely to ask them. The
+    answers are written to be said out loud — short, specific, and with
+    a number in them. Read them once, then close the document and try
+    from memory.
+  </p>
+
+  <h3 style="margin-top:7mm">About the accounting</h3>
+
+  <div class="q">
+    <div class="q__q">How do you calculate an employee's PAYE?<span class="tag">Accounting</span></div>
+    <div class="q__a">
+      I annualise the month's taxable income, tax it on the SARS slab
+      rates, subtract the age rebates and the medical tax credit, and
+      divide by twelve. For a R30 000 salary that is R355 200 annualised,
+      R44 118 plus 26% of the amount over R245 100, less the R17 820
+      primary rebate, less the medical credit, which gives R36 012 a year
+      and <b>R3 001</b> a month.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">Why does the tax get annualised?<span class="tag">Accounting</span></div>
+    <div class="q__a">
+      Because the brackets are built around a year of income, so you
+      cannot tax a month on its own. Annualising also smooths things: a
+      December bonus does not push somebody into a higher band for the
+      whole year, and a month with no overtime does not drop them into
+      a lower one.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">What is the section 11F limit and why does it exist?<span class="tag">Accounting</span></div>
+    <div class="q__a">
+      A pension deduction is capped at the lowest of the actual
+      contribution, 27.5% of remuneration, and R350 000 a year. It exists
+      to stop high earners turning a pension fund into a tax-avoidance
+      scheme — without it, most of a large salary could be sheltered.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">A 68-year-old earns R95 000 a month. What do they pay?<span class="tag">Accounting</span></div>
+    <div class="q__a">
+      Let me work it: R95 000 a month is R1 140 000 annualised, less
+      the R4 750 pension, so R1 083 000 taxable. That is in the band
+      over R887 000, so R259 783 plus 41%, which is R340 143. She gets
+      the primary <i>and</i> secondary rebate because she is over 65 —
+      R27 585 — and the medical credit. That brings it to
+      <b>R24 171</b> a month.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">What is the difference between a rebate and an exemption?<span class="tag">Accounting</span></div>
+    <div class="q__a">
+      A rebate comes off the tax <b>after</b> the calculation; an
+      exemption comes off the income <b>before</b> it. That is worth
+      R17 820 a year to almost everybody, and the interest exemption
+      works the other way — the first R23 800 is exempt, and only what
+      is above it is taxed.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">What is the medical tax credit, and what is the trap?<span class="tag">Accounting</span></div>
+    <div class="q__a">
+      It is a credit against the tax for being on a medical scheme:
+      R376 a month for the member, R376 for the first dependant, R254
+      for each one after, in 2027. The trap is that you keep the
+      <b>higher</b> of the tabulated amount and what you actually pay,
+      and it is a credit against the tax, not a deduction from income.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">When would an employer not pay SDL?<span class="tag">Accounting</span></div>
+    <div class="q__a">
+      Below R500 000 of annual payroll. It is 1% of the leviable
+      amount — remuneration <i>after</i> the allowable deductions — and it
+      is the employer's own cost, so it may not be taken off the
+      employee's pay.
+    </div>
+  </div>
+
+  <h3 style="margin-top:7mm">About the employer's compliance</h3>
+
+  <div class="q">
+    <div class="q__q">What are the three forms an employer files?<span class="tag">Compliance</span></div>
+    <div class="q__a">
+      The <b>EMP201</b> is monthly — the total payment split between
+      PAYE, UIF and SDL, due by the 7th of the following month. The
+      <b>IRP5</b> is per employee per year — their tax certificate.
+      The <b>EMP501</b> is the annual reconciliation that proves the
+      twelve EMP201s add up to what the IRP5s say was paid.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">Why does your code roll deadlines back a day?<span class="tag">Compliance</span></div>
+    <div class="q__a">
+      Because a deadline that falls on a weekend or a public holiday is
+      not on that day — it moves to the last business day before. An
+      October 2026 payroll is due on Friday 6 November, because the 7th
+      is a Saturday. There is a test for exactly that case.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">How does the VAT201 period work?<span class="tag">Compliance</span></div>
+    <div class="q__a">
+      Six two-month periods in a tax year — March–April, May–June, and
+      so on through to January–February — and each return is due in the
+      month <b>after</b> the period ends. So the March–April period is
+      due in May. Businesses over R30 million of taxable supplies file
+      monthly instead.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">What is the year-end reconciliation you built?<span class="tag">Compliance</span></div>
+    <div class="q__a">
+      Because annualising taxes somebody as if they would earn a full
+      year, a joiner is over-taxed during the year. The reconciliation
+      works out their <b>real</b> liability on what they actually
+      earned, compares it with what was deducted, and gives the
+      difference back on the last payslip. In the demo, an employee who
+      joined in November was taxed R4 180 he did not owe, and the
+      system gives it back.
+    </div>
+  </div>
+
+  <h3 style="margin-top:7mm">About the engineering</h3>
+
+  <div class="q">
+    <div class="q__q">Why no dependencies?<span class="tag">Engineering</span></div>
+    <div class="q__a">
+      It means the project runs on any machine with Python, with no
+      install step and nothing to go stale in two years. It also keeps
+      me honest — I had to understand the tool rather than the wrapper
+      around it. The trade-off is that I built the small things myself:
+      the argument parser, the HTTP server and the CSV writer.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">How is the code structured?<span class="tag">Engineering</span></div>
+    <div class="q__a">
+      Three layers that only point one way. The <b>domain</b> layer is
+      the SARS rates and the shapes. The <b>application</b> layer is the
+      engine, the compliance rules and the storage. The
+      <b>presentation</b> layer is the CLI and the API. The engine never
+      imports the database, which is why 58 of the 148 checks test the
+      tax on its own.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">Why is there a database at all?<span class="tag">Engineering</span></div>
+    <div class="q__a">
+      Because a payroll without history is a calculator. The database
+      holds the employees, the pay runs and the payslips, and it lets
+      the EMP501 reconcile a whole year. It is one SQLite file, so
+      backup is copying it and the whole business fits in an email
+      attachment.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">What does the API look like?<span class="tag">Engineering</span></div>
+    <div class="q__a">
+      Eight JSON endpoints over a small WSGI application — an overview
+      for the dashboard, the employees, the payslips for a month, the
+      EMP201, the deadlines, the IRP5 certificates, the EMP501
+      reconciliation, and one endpoint that runs a payroll. No framework:
+      the standard library's <code>http.server</code> plus about 380
+      lines of my own.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">How do you know the tax is right?<span class="tag">Engineering</span></div>
+    <div class="q__a">
+      Two ways. First, every expected figure in the test suite is a
+      literal I calculated by hand from the SARS tables, so the tests
+      are an independent check. Second, the tax engine exists twice —
+      once in Python and once in JavaScript — written from the same
+      tables, and both carry the same test cases. If the two
+      implementations disagree, one of them is wrong, and the tests find
+      out which.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">What would you do differently?<span class="tag">Engineering</span></div>
+    <div class="q__a">
+      I would write the browser tests into the CI instead of running
+      them by hand before a release. And I would keep the tax tables in
+      one file that both engines read, rather than maintaining the same
+      numbers in Python and JavaScript — right now a change has to be
+      made twice, and a test is what catches the time somebody forgets.
+    </div>
+  </div>
+
+  <h3 style="margin-top:7mm">About the design</h3>
+
+  <div class="q">
+    <div class="q__q">Why does the site look like a spreadsheet?<span class="tag">Design</span></div>
+    <div class="q__a">
+      Because that is the tool the work actually lives in, and it lets
+      me show the working. Click any number in the PAYE model and the
+      formula bar shows the actual accounting — the slab, the rebate,
+      the medical credit — rather than a line of code. It is a
+      portfolio that demonstrates the portfolio.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">What is the one thing you would change about the design?<span class="tag">Design</span></div>
+    <div class="q__a">
+      The palette started as the usual cyan and violet on near-black,
+      and it looked like every other portfolio. Replacing it with warm
+      ink and brass, and taking out the frosted glass, was the change
+      that made it feel like a document instead of a dashboard. I would
+      do that earlier.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">How do you know the site is fast?<span class="tag">Design</span></div>
+    <div class="q__a">
+      Two ways. I only animate <code>transform</code> and
+      <code>opacity</code>, because those skip layout and paint, and I
+      removed the blurred background and the frosted glass, which were
+      the expensive parts. And the page measures its own frame rate
+      while you scroll — if the machine cannot keep up, it turns the
+      decoration off and says so.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">What is the performance mode for?<span class="tag">Design</span></div>
+    <div class="q__a">
+      The same reason a spreadsheet has a degraded mode. The site looks
+      the same and does exactly the same work; it just stops pretending
+      to be a document with a glowing mouse cursor on it. I would rather
+      degrade honestly than have the site stutter on a four-year-old
+      laptop.
+    </div>
+  </div>
+
+  <h3 style="margin-top:7mm">About how you work</h3>
+
+  <div class="q">
+    <div class="q__q">How do you make sure you have the right rules?<span class="tag">Process</span></div>
+    <div class="q__a">
+      I go to the source. The SARS rates page, the Budget tax guide, the
+      guide for employers in respect of employees' tax. Then I put the
+      figures in one file with the source in a comment, so there is
+      exactly one place to change when the rules do. In 2026 the VAT
+      registration threshold went from R1 million to R2.3 million on
+      1 April, and that came from the Budget guide, not from memory.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">Tell me about a bug you found.<span class="tag">Process</span></div>
+    <div class="q__a">
+      The annualised one, which I described in Part 9 — my first
+      implementation halved the tax each month for a new joiner. What I
+      would emphasise is the method: the hand-worked test figures
+      disagreed with the code, so I went back to the SARS guide rather
+      than adjusting the code until the test passed. That is the
+      difference between fixing a symptom and fixing a rule.
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q__q">What is next?<span class="tag">Process</span></div>
+    <div class="q__a">
+      Provisional tax. The IRP6 estimator for a freelancer with no
+      employer to deduct PAYE, the first and second payments, and the
+      comparison against the final liability. It is the one part of the
+      employee's side of the tax I have not built, and it is the part
+      that most people who use the tax tables never need.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     PART 11 — THE NUMBERS
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="page" id="s11">
+  <div class="head"><b>Part 11</b><span>The numbers</span></div>
+
+  <h2 class="sec"><span class="n">11</span>The numbers</h2>
+
+  <p class="lead">
+    For when somebody asks how big it is. All of it is in the
+    repository, and the CI proves it still works.
+  </p>
+
+  <div class="four">
+    <div class="stat"><b>4</b><span>projects</span></div>
+    <div class="stat"><b>262</b><span>tests, all passing</span></div>
+    <div class="stat"><b>11.5k</b><span>lines of code</span></div>
+    <div class="stat"><b>0</b><span>third-party dependencies</span></div>
+  </div>
+
+  <h3 style="margin-top:7mm">The inventory</h3>
+  <table>
+    <thead><tr><th>Area</th><th class="num">Files</th><th class="num">Lines</th><th>What is in it</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Payroll suite</strong> (Python)</td><td class="num">16</td><td class="num">3 569</td><td>11 modules: the engine, the rules, the models, the database, the forms, the reports, the CLI, the API, the WSGI adapter and the seed data</td></tr>
+      <tr><td><strong>Calculator &amp; employer tool</strong> (Python)</td><td class="num">10</td><td class="num">1 645</td><td>Two command-line tools, the shared report formatting, the tax tables and the configuration</td></tr>
+      <tr><td><strong>The portfolio site</strong></td><td class="num">11</td><td class="num">4 248</td><td>The workbook: the page, the stylesheet, four scripts and the social preview image</td></tr>
+      <tr><td><strong>The dashboard</strong></td><td class="num">3</td><td class="num">1 009</td><td>The payroll suite's own dashboard, served by the same API</td></tr>
+      <tr><td><strong>Tests</strong></td><td class="num">7</td><td class="num">1 345</td><td>Four Python suites, plus the browser self-tests inside the site</td></tr>
+    </tbody>
+  </table>
+
+  <h3>What is inside the payroll suite</h3>
+  <table>
+    <thead><tr><th>Module</th><th class="num">Lines</th><th>Job</th></tr></thead>
+    <tbody>
+      <tr><td><code>cli.py</code></td><td class="num">499</td><td>Eleven subcommands: init, add-employee, list, payrun, payslips, emp201, irp5, emp501, deadlines, export, serve</td></tr>
+      <tr><td><code>engine.py</code></td><td class="num">408</td><td>The payslip: annualisation, overtime, the pension cap, the medical credit, UIF, SDL, and the year-end reconciliation</td></tr>
+      <tr><td><code>server.py</code></td><td class="num">382</td><td>The JSON API and the static file server behind the dashboard</td></tr>
+      <tr><td><code>compliance.py</code></td><td class="num">307</td><td>EMP201, IRP5, the EMP501 reconciliation and the deadline calendar</td></tr>
+      <tr><td><code>db.py</code></td><td class="num">313</td><td>The SQLite layer: schema, migrations, and the queries</td></tr>
+      <tr><td><code>reports.py</code></td><td class="num">236</td><td>The console reports and the CSV and JSON exports</td></tr>
+      <tr><td><code>models.py</code></td><td class="num">200</td><td>The dataclasses and their row mappings</td></tr>
+      <tr><td><code>tax_tables.py</code></td><td class="num">165</td><td>Every SARS rate, in one file, with the sources</td></tr>
+      <tr><td><code>seed.py</code></td><td class="num">131</td><td>The demo staff</td></tr>
+      <tr><td><code>wsgi.py</code></td><td class="num">128</td><td>The WSGI adapter for free hosts</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The API</h3>
+  <table>
+    <thead><tr><th>Endpoint</th><th>Returns</th></tr></thead>
+    <tbody>
+      <tr><td><code>GET /api/overview</code></td><td>The headline numbers, the trend by month, and the next deadlines</td></tr>
+      <tr><td><code>GET /api/employees</code></td><td>Everybody on the payroll</td></tr>
+      <tr><td><code>GET /api/payslips?period=2026-10</code></td><td>The payslips for a month</td></tr>
+      <tr><td><code>GET /api/emp201?period=2026-10</code></td><td>The monthly declaration and its due date</td></tr>
+      <tr><td><code>GET /api/irp5?year=2027</code></td><td>The employee tax certificates for a year</td></tr>
+      <tr><td><code>GET /api/emp501?year=2027</code></td><td>The annual reconciliation</td></tr>
+      <tr><td><code>GET /api/deadlines?year=2027</code></td><td>The employer's calendar for a year</td></tr>
+      <tr><td><code>POST /api/run</code></td><td>Runs a payroll for a month and stores it</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The sources everything came from</h3>
+  <ul>
+    <li><a href="https://www.sars.gov.za/tax-rates/income-tax/rates-of-tax-for-individuals/">SARS — Rates of tax for individuals</a> — the brackets, rebates and thresholds</li>
+    <li><a href="https://www.sars.gov.za/tax-rates/income-tax/interest-and-dividends/">SARS — Interest and dividends</a> — the exemptions and the 20% withholding</li>
+    <li><a href="https://www.sars.gov.za/tax-rates/other-taxes/">SARS — Other taxes</a> — the SDL and the VAT rates</li>
+    <li><a href="https://www.sars.gov.za/types-of-tax/pay-as-you-earn/completing-the-monthly-employer-declaration-emp201/">SARS — The EMP201</a> — what is declared and when</li>
+    <li><a href="https://www.sars.gov.za/guide-to-the-employer-reconciliation-process/">SARS — Employer reconciliation</a> — the EMP501</li>
+    <li><a href="https://www.sars.gov.za/types-of-tax/unemployment-insurance-fund/">SARS — UIF</a> — the rates and the R17 712 ceiling</li>
+    <li>The Budget 2026 tax guide — the VAT registration thresholds that changed on 1 April 2026</li>
+  </ul>
+
+  <div class="note">
+    <b>The disclaimer, which is also in the repository.</b> This is study
+    work, not a payroll system anybody should trust with a salary. It
+    has not had the testing, legal review and edge-case handling that a
+    real product needs. Every figure should be checked against SARS.
+    Keeping that on the front of the project, rather than hiding it,
+    is part of the point.
+  </div>
+</section>
+
+<section class="page end">
+  <h2>That is the whole thing.</h2>
+  <div class="end__rule"></div>
+  <p>
+    Four projects, 262 tests, one tax engine implemented twice, and a
+    website that shows its working.
+  </p>
+  <p style="margin-top:8mm">
+    If somebody asks about any part of it, the answer is in Parts 3 to 5
+    and the number is in Part 11.
+  </p>
+</section>
+
+</body>
+</html>
