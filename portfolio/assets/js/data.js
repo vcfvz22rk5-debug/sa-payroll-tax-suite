@@ -12,7 +12,7 @@
       automatically.
 
    status must be one of:  "live" | "in-progress" | "planned"
-   accent must be one of:  "cyan" | "violet" | "pink" | "green" | "amber"
+   accent must be one of:  "brass" | "olive" | "plum" | "slate" | "terracotta"
    ═══════════════════════════════════════════════════════════════════ */
 
 
@@ -36,24 +36,24 @@ const PROFILE = {
 /* ── 2. ACCENT COLOURS ────────────────────────────────────────────
    Per-card theming. Add your own by extending this object.      */
 const ACCENTS = {
-  cyan:   { fg: "#67e8f9", bg: "rgba(103,232,249,.13)", bd: "rgba(103,232,249,.30)", grad: "linear-gradient(120deg,#67e8f9,#a78bfa)" },
-  violet: { fg: "#a78bfa", bg: "rgba(167,139,250,.13)", bd: "rgba(167,139,250,.30)", grad: "linear-gradient(120deg,#a78bfa,#f472b6)" },
-  pink:   { fg: "#f472b6", bg: "rgba(244,114,182,.13)", bd: "rgba(244,114,182,.30)", grad: "linear-gradient(120deg,#f472b6,#fbbf24)" },
-  green:  { fg: "#34d399", bg: "rgba(52,211,153,.13)",  bd: "rgba(52,211,153,.30)",  grad: "linear-gradient(120deg,#34d399,#67e8f9)" },
-  amber:  { fg: "#fbbf24", bg: "rgba(251,191,36,.13)",  bd: "rgba(251,191,36,.30)",  grad: "linear-gradient(120deg,#fbbf24,#f472b6)" },
+  brass:      { fg: "#d4a94f", bg: "rgba(212,169,79,.13)",  bd: "rgba(212,169,79,.30)" },
+  olive:      { fg: "#8aa070", bg: "rgba(138,160,112,.13)", bd: "rgba(138,160,112,.30)" },
+  terracotta: { fg: "#c2705a", bg: "rgba(194,112,90,.13)",  bd: "rgba(194,112,90,.30)" },
+  slate:      { fg: "#86a9b5", bg: "rgba(134,169,181,.13)", bd: "rgba(134,169,181,.30)" },
+  plum:       { fg: "#b08bb0", bg: "rgba(176,139,176,.13)", bd: "rgba(176,139,176,.30)" },
 };
 
 
 /* ── 3. PROJECTS ──────────────────────────────────────────────────
    ⭐ featured: true  →  spans two columns (use for one hero project)
-   🎨 accent:          →  "cyan" | "violet" | "pink" | "green" | "amber"
+   🎨 accent:          →  "brass" | "olive" | "plum" | "slate" | "terracotta"
    🔗 links:           →  { repo, demo, docs }   (use "#" to hide one)
    ─────────────────────────────────────────────────────────────── */
 const PROJECTS = [
   {
     id: "payroll-suite",
     featured: true,
-    accent: "cyan",
+    accent: "brass",
     icon: "i-building",
     status: "live",
     year: "2026",
@@ -79,18 +79,18 @@ const PROJECTS = [
 
   {
     id: "paye-calculator",
-    accent: "violet",
+    accent: "olive",
     icon: "i-calculator",
     status: "live",
     year: "2026",
     title: "SA Salary & Tax Calculator",
     tagline: "PAYE, UIF & net pay from official SARS tables",
     description:
-      "A command-line tool that does what every South African employee does by hand every month: work out your PAYE, your UIF and your actual take-home pay. Built on the official SARS tax tables for the 2026 and 2027 tax years - with rebates applied by age, and retirement contributions capped by section 11F.",
+      "A command-line tool that does what every South African employee does by hand every month: work out your PAYE, your UIF and your actual take-home pay. Built on the official SARS tax tables for the 2026 and 2027 tax years, with rebates applied by age, and retirement contributions capped by section 11F.",
     points: [
       "Progressive slab rates straight from SARS, for 2026 & 2027",
       "Primary / secondary / tertiary rebates applied by age",
-      "UIF employee + employer split, capped at the R17,712 threshold",
+      "UIF employee and employer split, capped at the R17,712 threshold",
       "Section 11F limit: 27.5% of salary, max R350,000 a year",
       "Medical scheme fees tax credit, interest exemption and dividends tax",
       "21 hand-calculated unit tests that prove the maths matches SARS",
@@ -105,7 +105,7 @@ const PROJECTS = [
 
   {
     id: "paye-web",
-    accent: "pink",
+    accent: "plum",
     icon: "i-code",
     status: "live",
     year: "2026",
@@ -129,7 +129,7 @@ const PROJECTS = [
 
   {
     id: "vat-payroll",
-    accent: "green",
+    accent: "slate",
     icon: "i-receipt",
     status: "live",
     year: "2026",
@@ -155,7 +155,7 @@ const PROJECTS = [
 
   {
     id: "tax-rules",
-    accent: "amber",
+    accent: "terracotta",
     icon: "i-book",
     status: "live",
     year: "2026",
@@ -179,7 +179,7 @@ const PROJECTS = [
 
   {
     id: "provisional-tax",
-    accent: "violet",
+    accent: "olive",
     icon: "i-chart",
     status: "planned",
     year: "2027",

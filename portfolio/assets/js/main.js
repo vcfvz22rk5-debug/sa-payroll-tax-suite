@@ -24,7 +24,7 @@
       maximumFractionDigits: 2,
     })})`;
   };
-  const num = (n) => Number(n || 0).toLocaleString("en-Z");
+  const num = (n) => Number(n || 0).toLocaleString("en-ZA");
   const pct = (n, dp = 1) => `${(n * 100).toFixed(dp)}%`;
 
   const esc = (s) =>
@@ -195,6 +195,7 @@
   function initCells() {
     const formulaBar = $("#formula");
     const nameBox = $("#name-box");
+    const bar = $("#bar");
 
     document.addEventListener("click", (e) => {
       const cell = e.target.closest?.("[data-formula]");
@@ -229,6 +230,7 @@
 
     selectCell = (cell) => {
       $$("[data-formula].is-selected").forEach((el) => el.classList.remove("is-selected"));
+      bar?.classList.toggle("is-inspecting", !!cell);
       if (!cell) {
         if (formulaBar) {
           formulaBar.textContent = "Pick a cell to see how it is calculated.";
@@ -338,19 +340,12 @@
     termRule("-"),
     termRow("ANNUAL TAX (PAYE basis) ...........", "R 56,172.00", "t-green"),
     termRow("Monthly PAYE (annual / 12) .........", "R 4,681.00", "t-green"),
-    ``,
-    termRow("UIF employee 1% on R17,712.00 (capped)...", "R 177.12", "t-amber"),
-    termRow("UIF employer 1% (business cost) ...", "R 177.12", "t-amber"),
+    termRow("UIF employee 1% (capped) ..........", "R 177.12", "t-amber"),
     termRule(),
     termRow("NET MONTHLY PAY ...................", "R 25,141.88", "t-green"),
-    termRow("Total monthly deductions ..........", "R 4,858.12", "t-amber"),
-    `  <span class="t-dim">Effective tax rate: 15.6%   Marginal rate (top slab): 26%</span>`,
+    `<span class="t-dim">  Effective tax rate: 15.6%   Marginal rate: 26%</span>`,
     termRule(),
-    ``,
-    `  <span class="t-dim">Estimate for study/portfolio use only - not an official SARS</span>`,
-    `  <span class="t-dim">payscale result. Always verify against sars.gov.za.</span>`,
-    ``,
-    `<span class="t-green">✔ 9 tests passed</span>  <span class="t-dim">— built from the official SARS tables</span>`,
+    `<span class="t-green">✔ 9 tests passed</span>  <span class="t-dim">— from the official SARS tables</span>`,
   ];
 
   function initTerminal() {
@@ -359,20 +354,10 @@
     TERM_LINES.forEach((line, i) => {
       const span = document.createElement("span");
       span.className = "t-line";
-      span.style.animationDelay = `${250 + i * 80}ms`;
+      span.style.animationDelay = `${120 + i * 42}ms`;
       span.innerHTML = line || "&nbsp;";
       body.appendChild(span);
     });
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-     7. MARQUEE
-     ═══════════════════════════════════════════════════════════════ */
-  function initMarquee() {
-    const track = $("#marquee-track");
-    if (!track) return;
-    const items = MARQUEE.map((m) => `<span class="marquee__item"><i></i>${esc(m)}</span>`).join("");
-    track.innerHTML = items + items;
   }
 
   /* ═══════════════════════════════════════════════════════════════
@@ -707,7 +692,7 @@
       const rows = [
         { label: "Gross salary (monthly)", value: rand(r.grossMonthly), num: r.grossMonthly,
           ref: ref.gross, formula: `=${Math.round(r.grossMonthly)}` },
-        { label: "Annualised gross (× 12)", value: rand(r.grossAnnualised), num: r.grossAnnualised,
+        { label: "Annualised gross (× 12)", value: rand(r.grossAnnual), num: r.grossAnnual,
           ref: ref.annual, formula: `=${ref.gross}*12` },
         ...(hasRa
           ? [{ label: "Less: retirement / RA deduction", value: randNeg(r.raAnnual), num: -r.raAnnual,
@@ -896,12 +881,12 @@
         .map((p, i) => {
           const ref = `E${i + 5}`;
           return `<tr>
-            <td>${esc(p.employee_name)}<span class="ledger__role">${esc(p.employee_number)}</span></td>
-            <td class="num" data-num="${p.gross_remuneration}" data-ref="B${i + 5}" data-formula="=basic + overtime + bonus + commission + fringe + leave">${rand(p.gross_remuneration)}</td>
-            <td class="num" data-num="${p.paye}" data-ref="C${i + 5}" data-formula="=ROUND(MAX(0, tax on (B${i + 5}-pension)*12 - rebates - medical)/12, 0)">${rand(p.paye)}</td>
-            <td class="num" data-num="${p.uif_employee}" data-ref="D${i + 5}" data-formula="=MIN(B${i + 5}, 17712) * 1%">${rand(p.uif_employee)}</td>
+            <td>${esc(p.name)}<span class="ledger__role">${esc(p.employeeNumber)}</span></td>
+            <td class="num" data-num="${p.grossMonthly}" data-ref="B${i + 5}" data-formula="=basic + overtime + bonus + commission + fringe + leave">${rand(p.grossMonthly)}</td>
+            <td class="num" data-num="${p.payeMonthly}" data-ref="C${i + 5}" data-formula="=ROUND(MAX(0, tax on (B${i + 5}-pension)*12 - rebates - medical)/12, 0)">${rand(p.payeMonthly)}</td>
+            <td class="num" data-num="${p.uifEmployee}" data-ref="D${i + 5}" data-formula="=MIN(B${i + 5}, 17712) * 1%">${rand(p.uifEmployee)}</td>
             <td class="num" data-num="${p.sdl}" data-ref="E${i + 5}" data-formula="=(B${i + 5} - pension) * 1%">${rand(p.sdl)}</td>
-            <td class="num" data-num="${p.net_pay}" data-ref="F${i + 5}" data-formula="=B${i + 5}-C${i + 5}-D${i + 5}-pension-medical">${rand(p.net_pay)}</td>
+            <td class="num" data-num="${p.netMonthly}" data-ref="F${i + 5}" data-formula="=B${i + 5}-C${i + 5}-D${i + 5}-pension-medical">${rand(p.netMonthly)}</td>
           </tr>`;
         })
         .join("");
@@ -909,11 +894,11 @@
       const sum = (key) => payroll.payslips.reduce((t, p) => t + Number(p[key] || 0), 0);
       foot.innerHTML = `<tr>
         <td>Total</td>
-        <td class="num" data-num="${sum("gross_remuneration")}" data-ref="B10" data-formula="=SUM(B5:B9)">${rand(sum("gross_remuneration"))}</td>
-        <td class="num" data-num="${sum("paye")}" data-ref="C10" data-formula="=SUM(C5:C9)">${rand(sum("paye"))}</td>
-        <td class="num" data-num="${sum("uif_employee")}" data-ref="D10" data-formula="=SUM(D5:D9)">${rand(sum("uif_employee"))}</td>
+        <td class="num" data-num="${sum("grossMonthly")}" data-ref="B10" data-formula="=SUM(B5:B9)">${rand(sum("grossMonthly"))}</td>
+        <td class="num" data-num="${sum("payeMonthly")}" data-ref="C10" data-formula="=SUM(C5:C9)">${rand(sum("payeMonthly"))}</td>
+        <td class="num" data-num="${sum("uifEmployee")}" data-ref="D10" data-formula="=SUM(D5:D9)">${rand(sum("uifEmployee"))}</td>
         <td class="num" data-num="${sum("sdl")}" data-ref="E10" data-formula="=SUM(E5:E9)">${rand(sum("sdl"))}</td>
-        <td class="num" data-num="${sum("net_pay")}" data-ref="F10" data-formula="=SUM(F5:F9)">${rand(sum("net_pay"))}</td>
+        <td class="num" data-num="${sum("netMonthly")}" data-ref="F10" data-formula="=SUM(F5:F9)">${rand(sum("netMonthly"))}</td>
       </tr>`;
 
       cards.innerHTML = `
@@ -1114,78 +1099,6 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     17. CURSOR GLOW + CARD TILT
-     ═══════════════════════════════════════════════════════════════ */
-  const isLite = () => document.documentElement.classList.contains("is-lite");
-
-  function initPointerFx() {
-    const glow = $(".fx__cursor");
-    const fine = window.matchMedia?.("(pointer: fine)").matches;
-    if (!fine) return;
-
-    let x = window.innerWidth / 2, y = window.innerHeight / 2;
-    let cx = x, cy = y, raf = null;
-
-    window.addEventListener("mousemove", (e) => {
-      if (isLite()) return;
-      x = e.clientX; y = e.clientY;
-      glow?.classList.add("is-on");
-      if (!raf) raf = requestAnimationFrame(loop);
-    });
-
-    function loop() {
-      cx += (x - cx) * 0.12;
-      cy += (y - cy) * 0.12;
-      if (glow) glow.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
-      raf = Math.abs(x - cx) > 0.5 || Math.abs(y - cy) > 0.5 ? requestAnimationFrame(loop) : null;
-    }
-
-    $$(".card").forEach((card) => {
-      let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
-      let tiltRaf = null;
-      let hovering = false;
-
-      const paint = () => {
-        currentX += (targetX - currentX) * 0.14;
-        currentY += (targetY - currentY) * 0.14;
-        const lift = hovering ? -6 : 0;
-        card.style.transform =
-          `perspective(900px) rotateY(${currentX.toFixed(2)}deg) ` +
-          `rotateX(${(-currentY).toFixed(2)}deg) translateY(${lift}px)`;
-        tiltRaf =
-          Math.abs(targetX - currentX) > 0.05 || Math.abs(targetY - currentY) > 0.05
-            ? requestAnimationFrame(paint)
-            : null;
-      };
-
-      const kick = () => { if (!tiltRaf) tiltRaf = requestAnimationFrame(paint); };
-
-      card.addEventListener("mousemove", (e) => {
-        if (isLite()) return;
-        const r = card.getBoundingClientRect();
-        targetX = ((e.clientX - r.left) / r.width - 0.5) * 7;
-        targetY = ((e.clientY - r.top) / r.height - 0.5) * 7;
-        hovering = true;
-        card.classList.add("is-tilting");
-        kick();
-      });
-
-      card.addEventListener("mouseenter", () => {
-        if (isLite()) return;
-        hovering = true;
-        card.classList.add("is-tilting");
-        kick();
-      });
-
-      card.addEventListener("mouseleave", () => {
-        targetX = 0; targetY = 0; hovering = false;
-        card.classList.remove("is-tilting");
-        kick();
-      });
-    });
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
      18. PERFORMANCE MODE
      ═══════════════════════════════════════════════════════════════ */
   let toastTimer = null;
@@ -1275,7 +1188,6 @@
     initCells();
     renderStats();
     initTerminal();
-    initMarquee();
     renderFocus();
     renderProjects();
     renderTimeline();
@@ -1285,7 +1197,6 @@
     initVatDemo();
     initPayrollDemo();
     initPalette();
-    initPointerFx();
     initPerformanceWatch();
   }
 

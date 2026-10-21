@@ -26,7 +26,7 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/styles.css" />
 
 <!-- Progressive enhancement: only hide reveal-animated content if JS is alive -->
@@ -126,8 +126,6 @@
      ══════════════════════════════════════════════════════════════ -->
 <div class="fx" aria-hidden="true">
   <div class="fx__grid"></div>
-  <div class="fx__noise"></div>
-  <div class="fx__cursor"></div>
 </div>
 
 <a class="skip-link" href="#sheets">Skip to content</a>
@@ -201,7 +199,7 @@
           </h1>
           <p class="cover__lead">
             BCom Accounting student in South Africa, building software that
-            <strong>actually solves accounting problems</strong> — starting with
+            <strong>actually solves accounting problems</strong>, starting with
             the SARS tax tables nobody wants to work through by hand.
           </p>
           <div class="cover__cta">
@@ -212,7 +210,7 @@
               <svg class="ico"><use href="#i-spark"/></svg> Open the PAYE model
             </button>
           </div>
-          <dl class="cover__stats" id="hero-stats"></dl>
+          <dl class="ledger-strip" id="hero-stats"></dl>
         </div>
 
         <div class="cover__right">
@@ -229,10 +227,6 @@
         </div>
       </div>
 
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee__track" id="marquee-track"></div>
-      </div>
-
       <div class="about">
         <div class="about__text">
           <h2 class="sheet__title">Accounting brain, <span class="grad-text">engineer's hands</span></h2>
@@ -240,7 +234,7 @@
             I study accounting at university, but I spend most of my evenings
             writing code. The overlap is the sweet spot: I know what a
             progressive tax slab, a rebate and a payslip actually
-            <em>mean</em> — so when I build software, it models the real
+            <em>mean</em>. So when I build software, it models the real
             rule instead of a made-up one.
           </p>
           <p>
@@ -262,7 +256,7 @@
         </div>
 
         <aside class="about__card glass">
-          <h3 class="about__card-title">What I'm working on</h3>
+          <h2 class="about__card-title">What I'm working on</h2>
           <ul class="about__list" id="focus-list"></ul>
           <div class="about__card-foot">
             <span class="pulse" aria-hidden="true"></span>
@@ -277,7 +271,6 @@
   <section class="sheet" data-sheet="projects" aria-label="Selected work" hidden>
     <div class="sheet__inner">
       <div class="sheet__head">
-        <span class="eyebrow">02 — Selected work</span>
         <h1 class="sheet__title">Projects that <span class="grad-text">actually run</span></h1>
         <p class="sheet__sub">
           Each one is built from a real problem, tested, and documented.
@@ -293,7 +286,7 @@
       </div>
 
       <div class="grid grid--projects" id="project-grid"></div>
-      <p class="grid__empty" id="project-empty" hidden>Nothing here yet — check back soon.</p>
+      <p class="grid__empty" id="project-empty" hidden>Nothing here yet. Check back soon.</p>
     </div>
   </section>
 
@@ -301,11 +294,10 @@
   <section class="sheet" data-sheet="paye" aria-label="PAYE model" hidden>
     <div class="sheet__inner">
       <div class="sheet__head">
-        <span class="eyebrow">03 — Live model</span>
         <h1 class="sheet__title">The <span class="grad-text">PAYE model</span></h1>
         <p class="sheet__sub">
           The exact logic from the Python project, ported to JavaScript.
-          Type a salary and watch the maths happen — no install, no server.
+          Type a salary and watch the maths happen. No install, no server.
         </p>
       </div>
 
@@ -369,11 +361,11 @@
             <span class="calc__net" id="o-net">R 0.00</span>
           </div>
 
-          <div class="bar" id="o-bar" role="img" aria-label="Breakdown of gross salary">
-            <span class="bar__seg bar__seg--tax" id="o-seg-tax"></span>
-            <span class="bar__seg bar__seg--uif" id="o-seg-uif"></span>
-            <span class="bar__seg bar__seg--ra" id="o-seg-ra"></span>
-            <span class="bar__seg bar__seg--net" id="o-seg-net"></span>
+          <div class="breakdown" id="o-bar" role="img" aria-label="Breakdown of gross salary">
+            <span class="breakdown__seg breakdown__seg--tax" id="o-seg-tax"></span>
+            <span class="breakdown__seg breakdown__seg--uif" id="o-seg-uif"></span>
+            <span class="breakdown__seg breakdown__seg--ra" id="o-seg-ra"></span>
+            <span class="breakdown__seg breakdown__seg--net" id="o-seg-net"></span>
           </div>
 
           <ul class="legend">
@@ -386,13 +378,13 @@
           <dl class="calc__rows" id="o-rows"></dl>
 
           <div class="calc__slabs">
-            <h4>Which tax slab are you in?</h4>
+            <h2 class="mini-title">Which tax slab are you in?</h2>
             <div class="slabs" id="o-slabs"></div>
           </div>
 
           <p class="calc__disclaimer">
             <svg class="ico"><use href="#i-spark"/></svg>
-            Study &amp; portfolio tool — not an official SARS payscale result.
+            Study and portfolio tool, not an official SARS payscale result.
             Always verify against sars.gov.za.
           </p>
         </div>
@@ -404,7 +396,6 @@
   <section class="sheet" data-sheet="vat" aria-label="VAT 201 model" hidden>
     <div class="sheet__inner">
       <div class="sheet__head">
-        <span class="eyebrow">04 — Live model</span>
         <h1 class="sheet__title">The <span class="grad-text">VAT 201</span> model</h1>
         <p class="sheet__sub">
           Output tax less input tax at 15%, the six bi-monthly periods, and
@@ -460,9 +451,9 @@
             <span class="calc__net" id="v-net">R 0.00</span>
           </div>
 
-          <div class="bar" id="v-bar" role="img" aria-label="Output tax against input tax">
-            <span class="bar__seg bar__seg--out" id="v-seg-out"></span>
-            <span class="bar__seg bar__seg--in" id="v-seg-in"></span>
+          <div class="breakdown" id="v-bar" role="img" aria-label="Output tax against input tax">
+            <span class="breakdown__seg breakdown__seg--out" id="v-seg-out"></span>
+            <span class="breakdown__seg breakdown__seg--in" id="v-seg-in"></span>
           </div>
 
           <ul class="legend">
@@ -473,7 +464,7 @@
           <dl class="calc__rows" id="v-rows"></dl>
 
           <div class="calc__slabs">
-            <h4>VAT periods &amp; deadlines</h4>
+            <h2 class="mini-title">VAT periods &amp; deadlines</h2>
             <ul class="periods" id="v-periods"></ul>
           </div>
 
@@ -491,7 +482,6 @@
   <section class="sheet" data-sheet="payroll" aria-label="Payroll model" hidden>
     <div class="sheet__inner">
       <div class="sheet__head">
-        <span class="eyebrow">05 — Live model</span>
         <h1 class="sheet__title">The <span class="grad-text">payroll run</span></h1>
         <p class="sheet__sub">
           A five-employee payroll, the same data as the Python project.
@@ -502,9 +492,9 @@
       <div class="payroll glass">
         <div class="payroll__bar">
           <div class="payroll__bar-copy">
-            <h3 class="payroll__title">Priced and posted</h3>
+            <h2 class="payroll__title">Priced and posted</h2>
             <p class="payroll__sub">
-              <code>data/employees.csv</code> in the Python project — the same
+              <code>data/employees.csv</code> in the Python project: the same
               five people, the same numbers.
             </p>
           </div>
@@ -538,7 +528,7 @@
 
         <p class="calc__disclaimer">
           <svg class="ico"><use href="#i-spark"/></svg>
-          SDL is 1% of the leviable amount and is a business cost — employers
+          SDL is 1% of the leviable amount and is a business cost. Employers
           with an annual payroll below R500 000 are exempt.
         </p>
       </div>
@@ -549,7 +539,6 @@
   <section class="sheet" data-sheet="case" aria-label="Case study" hidden>
     <div class="sheet__inner">
       <div class="sheet__head">
-        <span class="eyebrow">06 — Case study</span>
         <h1 class="sheet__title">How I built the <span class="grad-text">payroll suite</span></h1>
         <p class="sheet__sub">
           One project, written up properly: the problem, the design decisions
@@ -559,23 +548,23 @@
 
       <div class="case">
         <div class="case__story">
-          <h3 class="case__heading">The problem</h3>
+          <h2 class="case__heading">The problem</h2>
           <p>
             My first tool calculated one employee's take-home pay. That is
             the easy half. The half that actually keeps a business in
             trouble is the employer's side: the forms, the deadlines, and
-            the cases that break the simple maths — an employee who joined
+            the cases that break the simple maths, like an employee who joined
             in November, a month with a bonus, a commission earner who is
             not a UIF contributor.
           </p>
 
-          <h3 class="case__heading">The decision that mattered</h3>
+          <h2 class="case__heading">The decision that mattered</h2>
           <p>
             The interesting problem was the tax itself. SARS's brackets are
             built around a <em>year</em> of income, so a month cannot be
             taxed on its own. The engine annualises the month's taxable
-            income, taxes that, and divides by twelve — which is what a
-            real payroll does, and what smooths out bonuses and gaps in
+            income, taxes that, and divides by twelve, which is what a
+            real payroll does and what smooths out bonuses and gaps in
             overtime.
           </p>
           <p>
@@ -630,7 +619,6 @@
   <section class="sheet" data-sheet="timeline" aria-label="The journey" hidden>
     <div class="sheet__inner">
       <div class="sheet__head">
-        <span class="eyebrow">07 — The journey</span>
         <h1 class="sheet__title">Built in the <span class="grad-text">open</span></h1>
         <p class="sheet__sub">
           Every project follows a plan, and the plan is public. Here is where
@@ -641,7 +629,6 @@
       <ol class="timeline" id="timeline"></ol>
 
       <div class="sheet__head sheet__head--sub">
-        <span class="eyebrow">08 — Toolkit</span>
         <h1 class="sheet__title">What I work <span class="grad-text">with</span></h1>
       </div>
       <div class="grid grid--skills" id="skill-grid"></div>
@@ -653,7 +640,6 @@
     <div class="sheet__inner">
       <div class="contact glass">
         <div class="contact__copy">
-          <span class="eyebrow">09 — Contact</span>
           <h1 class="sheet__title">Let's talk about <span class="grad-text">tax, code &amp; internships</span></h1>
           <p>
             Got a role that needs someone who understands both the numbers
@@ -662,7 +648,6 @@
           <div class="contact__links" id="contact-links"></div>
         </div>
         <div class="contact__card">
-          <div class="contact__card-glow" aria-hidden="true"></div>
           <span class="contact__label">Email me</span>
           <a class="contact__email" id="contact-email" href="#">
             ayandayeshongwe@icloud.com
@@ -729,7 +714,7 @@
 <noscript>
   <div class="noscript">
     This portfolio uses a little JavaScript to switch between the sheets and
-    run the tax models. Please enable JavaScript — or email me directly and
+    run the tax models. Please enable JavaScript, or email me directly and
     I'll send you the details.
   </div>
 </noscript>

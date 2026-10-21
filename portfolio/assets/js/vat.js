@@ -207,6 +207,7 @@ const Vat = (() => {
 
     return {
       name,
+      employeeNumber: employee.employeeNumber || "",
       taxYear,
       grossMonthly,
       grossAnnual,
@@ -304,6 +305,14 @@ const Vat = (() => {
      The same hand-checked cases as tests/test_vat.py and
      tests/test_payroll.py. Open the console and run Vat.selfTest(). */
   function selfTest() {
+    // A number within a penny, or exactly the same string.
+    const close = (actual, expected, tolerance = 0.01) => {
+      if (typeof actual === "string" || typeof expected === "string") {
+        return String(actual) === String(expected);
+      }
+      return Math.abs(actual - expected) <= tolerance;
+    };
+
     const cases = [
       ["VAT: R100 000 of sales -> R15 000 output tax",
         () => calculateVat(100_000, 0).outputTax, 15_000],
@@ -348,7 +357,7 @@ const Vat = (() => {
     let passed = 0;
     for (const [name, fn, expected] of cases) {
       const actual = fn();
-      const ok = Math.abs(actual - expected) <= 0.01;
+      const ok = close(actual, expected);
       console.log(`${ok ? "  ok -" : "  FAIL -"} ${name}`);
       if (ok) passed++;
       else console.log(`         expected ${expected}, got ${actual}`);
