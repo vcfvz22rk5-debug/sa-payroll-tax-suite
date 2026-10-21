@@ -5,8 +5,11 @@ vanilla JavaScript — no build step, no dependencies, no `npm install`.
 
 **The site is a spreadsheet.** There is one formula bar across the top, one
 sheet open at a time, a row of sheet tabs underneath and a status bar with
-the totals along the bottom. Click any cell and the formula bar shows you
-how that number was worked out — in accounting terms, not code.
+the totals along the bottom. Click any number and the formula bar shows
+you how it was worked out — in accounting terms, not code.
+
+The palette is a ledger rather than a dashboard: warm ink, brass, olive
+and terracotta, on ruled paper. Nothing is glowing, nothing is neon.
 
 ---
 
@@ -222,9 +225,10 @@ portfolio/
   SUM / COUNT / AVERAGE, and a name box that shows the cell you have
   selected. Click any number and the formula bar shows the working:
   `=MAX(0, 44118 + 26%*(342000-245100) - 17820 - 18912) / 12`.
-- **Dark-first design** with a graph-paper grid, frosted glass cards and a
-  grain overlay. Light theme included — the toggle in the toolbar
-  remembers your choice.
+- **A ledger palette.** Warm ink, brass, olive and terracotta on ruled
+  paper. No gradients on text, no glows, no frosted glass.
+- **Dark-first, with a light theme.** The toggle in the toolbar remembers
+  your choice.
 - **Command palette** — press `Ctrl/⌘ + K` to jump to any sheet, project
   or link. It does fuzzy matching, so "vt" finds "VAT 201".
 - **Filterable project grid** — live / in progress / planned.
@@ -240,7 +244,9 @@ portfolio/
   switch it by hand with the gauge in the toolbar.
 - **Responsive** from 320px up.
 - **Accessible** — semantic landmarks, skip link, visible focus rings,
-  labelled inputs, and `aria-live` on the copy-to-clipboard confirmation.
+  labelled inputs, real headings in order, and `aria-live` on the
+  copy-to-clipboard confirmation. Every colour clears WCAG AA (4.5:1) in
+  both themes.
 - **Respects `prefers-reduced-motion`** — animations switch off for anyone
   who asks the OS for them.
 - **Works without JavaScript** — the content is still in the page; JS only
