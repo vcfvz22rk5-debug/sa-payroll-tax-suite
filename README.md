@@ -16,6 +16,11 @@ Three tools in one repository, built as a portfolio project that combines
 > also has live browser versions of the engines.
 > See [`portfolio/`](portfolio/) — or open `portfolio/index.html` directly.
 
+> 📄 **The full write-up:** [`portfolio/docs/portfolio-walkthrough.pdf`](portfolio/docs/portfolio-walkthrough.pdf)
+> — thirty-six pages covering every project, every concept, the design
+> decisions, the mistakes, and the questions I was asked.
+> The source is [`portfolio/docs/guide.html`](portfolio/docs/guide.html).
+
 > 🚀 **Want to put this online?** See **[DEPLOY.md](DEPLOY.md)** — the
 > website on GitHub Pages, free forever, about fifteen minutes.
 

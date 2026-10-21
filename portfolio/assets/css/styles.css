@@ -779,6 +779,24 @@ em { font-style: normal; color: var(--a1); }
 .case__points .ico { color: var(--a4); font-size: 1rem; margin-top: 3px; flex: none; }
 
 .case__side { min-width: 0; }
+.case__doc {
+  display: flex; align-items: flex-start; gap: 12px;
+  margin-top: 16px; padding: 16px 18px;
+  border: 1px solid var(--border); border-radius: var(--r);
+  background: var(--surface); color: var(--text-soft);
+  transition: border-color .25s var(--ease), transform .25s var(--ease),
+              background-color .25s var(--ease);
+}
+.case__doc:hover {
+  transform: translateY(-2px);
+  border-color: var(--a1);
+  background: var(--surface-2);
+}
+.case__doc .ico { font-size: 1.3rem; color: var(--a1); margin-top: 2px; }
+.case__doc span { font-size: .8125rem; line-height: 1.5; }
+.case__doc b {
+  display: block; color: var(--text); font-size: .9375rem; margin-bottom: 3px;
+}
 .arch {
   padding: 24px 20px; border-radius: var(--r-lg);
   border: 1px solid var(--border);

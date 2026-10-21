@@ -6,7 +6,7 @@
  * site. The fonts are embedded in the PDF.
  *
  *     npm i -D playwright && npx playwright install chromium
- *     node docs/build_pdf.mjs
+ *     node portfolio/docs/build_pdf.mjs
  *
  * On a machine without the browser libraries:
  *     npx playwright install-deps chromium

@@ -30,4 +30,3 @@ skills-lock.json
 
 # The PDF builder needs a headless browser
 node_modules/
-docs/portfolio-walkthrough.pdf
